@@ -1,0 +1,97 @@
+# Economic Indicators from Satellite Imagery
+
+## Overview
+
+This project investigates whether modern computer vision models can estimate socioeconomic conditions using publicly available satellite imagery.
+
+Using satellite images paired with U.S. Census data, the goal is to train machine learning models that predict economic indicators such as median household income and analyze which visual characteristics are most informative.
+
+Rather than focusing solely on predictive accuracy, this project emphasizes understanding the strengths, limitations, and potential applications of satellite-based economic estimation.
+
+---
+
+## Motivation
+
+Official economic statistics are expensive to collect and are often published with significant delays.
+
+Satellite imagery is updated frequently and covers nearly every location on Earth, making it a promising alternative data source for estimating economic conditions.
+
+Recent advances in deep learning have demonstrated that satellite imagery contains useful information about infrastructure, land use, transportation networks, and development that may correlate with socioeconomic outcomes.
+
+This project aims to explore these relationships using modern computer vision techniques.
+
+---
+
+## Research Questions
+
+Primary Question:
+
+> To what extent can satellite imagery be used to estimate median household income at the census tract level?
+
+Secondary Questions:
+
+- How accurately can deep learning models estimate local income?
+- Which geographic regions are most difficult to predict?
+- Which visual features contribute most to model predictions?
+- How well do pretrained computer vision models perform compared to simpler approaches?
+- What limitations and biases arise when using satellite imagery to estimate economic conditions?
+
+---
+
+## Objectives
+
+- Build a dataset linking satellite imagery with U.S. Census income data.
+- Train computer vision models to predict median household income.
+- Evaluate prediction performance across different regions.
+- Interpret model predictions using explainability techniques.
+- Document the full workflow and publish all code.
+
+---
+
+## Technologies
+
+- Python
+- PyTorch
+- pandas
+- NumPy
+- scikit-learn
+- Rasterio / GeoPandas (if needed)
+- Matplotlib
+- Git
+
+---
+
+## Dataset
+
+Satellite imagery:
+(To be determined)
+
+Economic data:
+American Community Survey (ACS)
+
+Target variable:
+Median Household Income
+
+---
+
+## Expected Outcomes
+
+- End-to-end machine learning pipeline
+- Public GitHub repository
+- Technical report
+- Visualizations
+- Model evaluation
+- Reproducible code
+
+---
+
+## Future Directions
+
+Potential extensions include:
+
+- Poverty estimation
+- Housing value prediction
+- Multi-task learning
+- Nighttime lights integration
+- Temporal economic forecasting
+- Cross-country evaluation
