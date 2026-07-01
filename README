@@ -6,7 +6,10 @@ This project investigates whether modern computer vision models can estimate soc
 
 Using satellite images paired with U.S. Census data, the goal is to train machine learning models that predict economic indicators such as median household income and analyze which visual characteristics are most informative.
 
-Rather than focusing solely on predictive accuracy, this project emphasizes understanding the strengths, limitations, and potential applications of satellite-based economic estimation.
+Rather than focusing solely on predictive accuracy, this project emphasizes understanding the strengths, limitations, and potential applications of satellite-based economic estimation across different geographic regions. 
+
+GUIDING QUESTION: 
+To what extent can modern computer vision models estimate multiple socioeconomic indicators from publicly available satellite imagery, and what are the strengths and limitations of these predictions across different regions?
 
 ---
 
