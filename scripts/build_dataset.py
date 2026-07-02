@@ -3,8 +3,12 @@ import pandas as pd
 
 from src.satellite import get_image
 from src.config import PROJECT_ROOT
+from src.census import get_income_date
 
-#get tracts
+#get median_incomes from census api
+income_df = get_income_date()
+
+#get tracts for google maps api
 tracts = gpd.read_file(
     "/Users/braydenwinnicki/Downloads/cb_2025_09_tract_500k/cb_2025_09_tract_500k.shp"
 )
@@ -30,14 +34,28 @@ for i in range(len(tracts)):
     except Exception as e:
         print(f"Failed at {i}: {e}")
     
-    if len(rows) % 10 == 0:
-        df = pd.DataFrame(rows)
-        df.to_csv(csv_path, index=False)
+    #save every 100 file for safety, greater than 0 checks for a none empty datset 
+    if len(rows) > 0 and len(rows) % 10 == 0:
+        image_df = pd.DataFrame(rows)
+
+        #merge with income data 
+        checkpoint_df = image_df.merge(
+        income_df,
+        on="GEOID",
+        how="left"
+        )
+        checkpoint_df.to_csv(csv_path, index=False)
         print(f"Checkpoint saved ({len(rows)} rows)")
 
+#final save 
+image_df = pd.DataFrame(rows)
 
-df = pd.DataFrame(rows)
+final_df = image_df.merge(
+    income_df,
+    on="GEOID",
+    how="left"
+)
 
-df.to_csv(csv_path, index=False)
+final_df.to_csv(csv_path, index=False)
 
 print("Dataset saved →", csv_path)
