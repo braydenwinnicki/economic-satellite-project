@@ -1,1 +1,1 @@
-GEOID,lat,lon,image_path
+GEOID      , lat               , lon               , image_path                                                              , median_income
