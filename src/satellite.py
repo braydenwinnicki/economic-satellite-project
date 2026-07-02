@@ -1,7 +1,7 @@
 import os
 import requests
 
-from config import IMAGE_DIR
+from src.config import IMAGE_DIR
 
 api_key = os.getenv("GOOGLE_MAPS_API_KEY")
 
