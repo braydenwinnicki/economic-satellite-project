@@ -35,7 +35,7 @@ for i in range(len(tracts)):
         print(f"Failed at {i}: {e}")
     
     #save every 100 file for safety, greater than 0 checks for a none empty datset 
-    if len(rows) > 0 and len(rows) % 10 == 0:
+    if len(rows) > 0 and len(rows) % 100 == 0:
         image_df = pd.DataFrame(rows)
 
         #merge with income data 
@@ -58,4 +58,4 @@ final_df = image_df.merge(
 
 final_df.to_csv(csv_path, index=False)
 
-print("Dataset saved →", csv_path)
+print("****Full Dataset saved**** →", csv_path)
