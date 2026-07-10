@@ -16,6 +16,13 @@ from sklearn.metrics import mean_absolute_error
 
 model = ConvNN()
 
+model.load_state_dict(
+    torch.load(PROJECT_ROOT / "models" / "cnn_v1.pth")
+)
+
+model.eval()
+
+
 #split data
 
 df = pd.read_csv("/Users/braydenwinnicki/CODE/econ_project/data/processed/processed_ct_tracts.csv")
@@ -72,21 +79,28 @@ optimizer = torch.optim.Adam(  #an optimizer adjusts weights via gradient
     lr=0.001
 )
 
+#testing 
 
-#training 
+all_predictions = []
+all_targets = []
 
-epochs = 10
 
-model.train() #turn on train mode
+with torch.no_grad():
 
-for epoch in range(epochs):
 
     total_loss = 0
+    
+    model.eval() # put on test mode
 
-    for images, incomes in train_loader:
+
+    for images, incomes in test_loader:
 
         # forward pass
         predictions = model(images)
+
+
+        all_predictions.extend(predictions.squeeze().tolist())
+        all_targets.extend(incomes.tolist())
 
         # calculate error
         loss = criterion(
@@ -94,30 +108,80 @@ for epoch in range(epochs):
             incomes.float()
         )
 
-        # clear old gradients
-        optimizer.zero_grad()
-
-        # calculate gradients
-        loss.backward()
-
-        # update weights
-        optimizer.step()
-
         total_loss += loss.item()
 
-
-    avg_loss = total_loss / len(train_loader)
-
-    print(f"train Epoch {epoch+1}: {avg_loss:.4f}")
+    avg_test_loss = total_loss / len(test_loader)
 
 
+        
 
 
+#calculate error via MAE 
 
-#save model
-torch.save(
-    model.state_dict(),
-    PROJECT_ROOT / "models" / "cnn_v1.pth"
+predictions_dollars = [
+    p * std_income + mean_income
+    for p in all_predictions]
+
+targets_dollars = [
+    t * std_income + mean_income
+    for t in all_targets]
+
+mae = mean_absolute_error(targets_dollars, predictions_dollars)
+
+avg_test_loss = total_loss / len(test_loader)
+
+print(f"AVG TEST LOSS: {avg_test_loss}")
+print(f"TESTING MAE: {mae}")
+
+
+#graph results 
+import matplotlib.pyplot as plt
+
+
+# Scatter plot
+plt.scatter(
+    targets_dollars,
+    predictions_dollars,
+    alpha=0.6
 )
 
-print("Saved model to models/cnn_v1.pth")
+# Perfect prediction line
+min_income = min(targets_dollars)
+max_income = max(targets_dollars)
+
+plt.plot(
+    [min_income, max_income],
+    [min_income, max_income],
+    "r--",
+    linewidth=2,
+    label="Perfect Prediction"
+)
+
+plt.xlabel("Actual Median Income ($)")
+plt.ylabel("Predicted Median Income ($)")
+plt.title("Predicted vs Actual Median Income")
+
+plt.legend()
+
+plt.tight_layout()
+plt.show()
+
+#print 10 worst errors
+
+errors = [
+    abs(p - t)
+    for p, t in zip(predictions_dollars, targets_dollars)
+]
+
+results = pd.DataFrame({
+    "Actual": targets_dollars,
+    "Predicted": predictions_dollars,
+    "Error": errors
+})
+
+print(
+    results.sort_values(
+        by="Error",
+        ascending=False
+    ).head(10)
+)

@@ -1,20 +1,24 @@
 import sys
 from pathlib import Path
-import pandas as pd
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
+from models.resnet_frozen import ResNetRegressor
+import pandas as pd
 from models.dataset import CensusDataset
 from torch.utils.data import DataLoader
 import torch
-from torchvision import transforms
 from torch.utils.data import DataLoader
-from models.cnn import ConvNN
 import torch.nn as nn
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 
 
-model = ConvNN()
+
+model = ResNetRegressor()
+transform = model.weights.transforms()
+
+
 
 #split data
 
@@ -34,14 +38,6 @@ df_train["median_income"] = (
 df_test["median_income"] = (
     df_test["median_income"] - mean_income
 ) / std_income
-
-
-
-transform = transforms.Compose([
-    transforms.Resize((224,224)),
-    transforms.ToTensor()
-])
-
 
 train_dataset = CensusDataset(
     df_train,
@@ -71,7 +67,6 @@ optimizer = torch.optim.Adam(  #an optimizer adjusts weights via gradient
     model.parameters(),
     lr=0.001
 )
-
 
 #training 
 
@@ -111,13 +106,10 @@ for epoch in range(epochs):
     print(f"train Epoch {epoch+1}: {avg_loss:.4f}")
 
 
-
-
-
 #save model
 torch.save(
     model.state_dict(),
-    PROJECT_ROOT / "models" / "cnn_v1.pth"
+    PROJECT_ROOT / "models" / "resnet18_frozen.pth"
 )
 
-print("Saved model to models/cnn_v1.pth")
+print("Saved model to models/resnet18_frozen.pth")
