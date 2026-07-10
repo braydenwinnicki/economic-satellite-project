@@ -14,10 +14,7 @@ class ResNetRegressor(nn.Module):
         for param in self.model.parameters():
             param.requires_grad = False
 
-        self.model.fc = nn.Linear(
-            self.model.fc.in_features,
-            1
-        )
+        self.model.fc = nn.Linear(self.model.fc.in_features, 1)
 
     def forward(self, x):
         return self.model(x)

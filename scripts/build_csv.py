@@ -5,10 +5,10 @@ from src.satellite import get_image
 from src.config import PROJECT_ROOT
 from src.census import get_income_date
 
-#get median_incomes from census api
+# get median_incomes from census api
 income_df = get_income_date()
 
-#get tracts for google maps api
+# get tracts for google maps api
 tracts = gpd.read_file(
     "/Users/braydenwinnicki/Downloads/cb_2025_09_tract_500k/cb_2025_09_tract_500k.shp"
 )
@@ -16,7 +16,7 @@ tracts = gpd.read_file(
 csv_path = PROJECT_ROOT / "data" / "ct_tracts.csv"
 
 
-#build dataset
+# build dataset
 rows = []
 
 for i in range(len(tracts)):
@@ -33,28 +33,20 @@ for i in range(len(tracts)):
         rows.append(get_image(lat, lon, geoid))
     except Exception as e:
         print(f"Failed at {i}: {e}")
-    
-    #save every 100 file for safety, greater than 0 checks for a none empty datset 
+
+    # save every 100 file for safety, greater than 0 checks for a none empty datset
     if len(rows) > 0 and len(rows) % 100 == 0:
         image_df = pd.DataFrame(rows)
 
-        #merge with income data 
-        checkpoint_df = image_df.merge(
-        income_df,
-        on="GEOID",
-        how="left"
-        )
+        # merge with income data
+        checkpoint_df = image_df.merge(income_df, on="GEOID", how="left")
         checkpoint_df.to_csv(csv_path, index=False)
         print(f"Checkpoint saved ({len(rows)} rows)")
 
-#final save 
+# final save
 image_df = pd.DataFrame(rows)
 
-final_df = image_df.merge(
-    income_df,
-    on="GEOID",
-    how="left"
-)
+final_df = image_df.merge(income_df, on="GEOID", how="left")
 
 final_df.to_csv(csv_path, index=False)
 

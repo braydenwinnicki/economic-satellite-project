@@ -10,9 +10,8 @@ if api_key is None:
 
 
 def get_image(lat, lon, geoid, zoom=17, size="400x400"):
-    
+
     # Download one satellite image and return metadata.
-    
 
     url = (
         "https://maps.googleapis.com/maps/api/staticmap?"
@@ -33,9 +32,4 @@ def get_image(lat, lon, geoid, zoom=17, size="400x400"):
 
     print(f"Saved image → {filename}")
 
-    return {
-        "GEOID": geoid,
-        "lat": lat,
-        "lon": lon,
-        "image_path": str(filename)
-    }
+    return {"GEOID": geoid, "lat": lat, "lon": lon, "image_path": str(filename)}
