@@ -11,6 +11,8 @@ from torch.utils.data import DataLoader
 from models.cnn import ConvNN
 import torch.nn as nn
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error
+
 
 model = ConvNN()
 
@@ -106,33 +108,16 @@ for epoch in range(epochs):
 
     avg_loss = total_loss / len(train_loader)
 
-    print(f"Epoch {epoch+1}: {avg_loss:.4f}")
+    print(f"train Epoch {epoch+1}: {avg_loss:.4f}")
 
 
 
-#testing 
 
 
-with torch.no_grad():
+#save model
+torch.save(
+    model.state_dict(),
+    PROJECT_ROOT / "models" / "cnn_v1.pth"
+)
 
-    total_loss = 0
-    
-    model.eval() # put on test mode
-
-    for images, incomes in test_loader:
-
-        # forward pass
-        predictions = model(images)
-
-        # calculate error
-        loss = criterion(
-            predictions.squeeze(),
-            incomes.float()
-        )
-
-        total_loss += loss.item()
-
-
-    avg_test_loss = total_loss / len(test_loader)
-
-    print(f"AVG TEST LOSS: {avg_test_loss}")
+print("Saved model to models/cnn_v1.pth")
