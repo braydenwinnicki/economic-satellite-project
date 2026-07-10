@@ -14,65 +14,46 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 
 
-
 model = ResNetRegressor()
 transform = model.weights.transforms()
 
 
+# split data
 
-#split data
+df = pd.read_csv(
+    "/Users/braydenwinnicki/CODE/econ_project/data/processed/processed_ct_tracts.csv"
+)
 
-df = pd.read_csv("/Users/braydenwinnicki/CODE/econ_project/data/processed/processed_ct_tracts.csv")
+df_train, df_test = train_test_split(df, test_size=0.20, random_state=42)
 
-df_train, df_test = train_test_split(df, test_size=.20, random_state=42)
-
-#use z-scale normalizing to shrink numbers and help the dataset. dont use test.mean() becuase it would leak
+# use z-scale normalizing to shrink numbers and help the dataset. dont use test.mean() becuase it would leak
 
 mean_income = df_train["median_income"].mean()
 std_income = df_train["median_income"].std()
 
-df_train["median_income"] = (
-    df_train["median_income"] - mean_income
-) / std_income
+df_train["median_income"] = (df_train["median_income"] - mean_income) / std_income
 
-df_test["median_income"] = (
-    df_test["median_income"] - mean_income
-) / std_income
+df_test["median_income"] = (df_test["median_income"] - mean_income) / std_income
 
-train_dataset = CensusDataset(
-    df_train,
-    transform=transform
+train_dataset = CensusDataset(df_train, transform=transform)
+
+test_dataset = CensusDataset(df_test, transform=transform)
+
+train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+
+test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True)
+
+
+criterion = nn.MSELoss()  # mean squared loss
+optimizer = torch.optim.Adam(  # an optimizer adjusts weights via gradient
+    model.parameters(), lr=0.001
 )
 
-test_dataset = CensusDataset(
-    df_test,
-    transform=transform
-    )
-
-train_loader = DataLoader(
-    train_dataset,
-    batch_size=32,
-    shuffle=True
-)
-
-test_loader = DataLoader(
-    test_dataset,
-    batch_size=32,
-    shuffle=True
-)
-
-
-criterion = nn.MSELoss() #mean squared loss
-optimizer = torch.optim.Adam(  #an optimizer adjusts weights via gradient
-    model.parameters(),
-    lr=0.001
-)
-
-#training 
+# training
 
 epochs = 10
 
-model.train() #turn on train mode
+model.train()  # turn on train mode
 
 for epoch in range(epochs):
 
@@ -84,10 +65,7 @@ for epoch in range(epochs):
         predictions = model(images)
 
         # calculate error
-        loss = criterion(
-            predictions.squeeze(),
-            incomes.float()
-        )
+        loss = criterion(predictions.squeeze(), incomes.float())
 
         # clear old gradients
         optimizer.zero_grad()
@@ -100,16 +78,12 @@ for epoch in range(epochs):
 
         total_loss += loss.item()
 
-
     avg_loss = total_loss / len(train_loader)
 
     print(f"train Epoch {epoch+1}: {avg_loss:.4f}")
 
 
-#save model
-torch.save(
-    model.state_dict(),
-    PROJECT_ROOT / "models" / "resnet18_frozen.pth"
-)
+# save model
+torch.save(model.state_dict(), PROJECT_ROOT / "models" / "resnet18_frozen.pth")
 
 print("Saved model to models/resnet18_frozen.pth")

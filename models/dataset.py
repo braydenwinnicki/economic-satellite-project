@@ -6,11 +6,8 @@ import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 
 
+transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()])
 
-transform = transforms.Compose([
-    transforms.Resize((224,224)),
-    transforms.ToTensor()
-])
 
 class CensusDataset(Dataset):
     def __init__(self, data, transform=transform):
@@ -21,7 +18,7 @@ class CensusDataset(Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
-        
+
         row = self.data.iloc[idx]
 
         image = Image.open(row["image_path"].strip()).convert("RGB")
@@ -32,5 +29,3 @@ class CensusDataset(Dataset):
             image = self.transform(image)
 
         return image, income
-
-
