@@ -12,8 +12,8 @@ from torch.utils.data import DataLoader
 from models.cnn import ConvNN
 import torch.nn as nn
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error
-
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+import numpy as np
 
 model = ConvNN()
 
@@ -47,9 +47,9 @@ train_dataset = CensusDataset(df_train, transform=transform)
 
 test_dataset = CensusDataset(df_test, transform=transform)
 
-train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+train_loader = DataLoader(train_dataset, batch_size=32, shuffle=False)
 
-test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True)
+test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 
 
 criterion = nn.MSELoss()  # mean squared loss
@@ -95,10 +95,16 @@ mae = mean_absolute_error(targets_dollars, predictions_dollars)
 
 avg_test_loss = total_loss / len(test_loader)
 
+rmse = np.sqrt(mean_squared_error(targets_dollars, predictions_dollars))
+
+r2 = r2_score(targets_dollars, predictions_dollars)
+
 print(f"AVG TEST LOSS: {avg_test_loss}")
 print(f"TESTING MAE: {mae}")
+print(f"TESTING RMSE: {rmse}")
+print(f"TESTING Rsquared: {r2}")
 
-
+"""
 # graph results
 import matplotlib.pyplot as plt
 
@@ -126,13 +132,16 @@ plt.legend()
 
 plt.tight_layout()
 plt.show()
+"""
+# put results in a dataframe
 
-# print 10 worst errors
+results = df_test.copy().reset_index(drop=True)
 
-errors = [abs(p - t) for p, t in zip(predictions_dollars, targets_dollars)]
+results["prediction"] = predictions_dollars
+results["actual"] = targets_dollars
 
-results = pd.DataFrame(
-    {"Actual": targets_dollars, "Predicted": predictions_dollars, "Error": errors}
-)
+results["error"] = (results["prediction"] - results["actual"]).abs()
 
-print(results.sort_values(by="Error", ascending=False).head(10))
+worst = results.sort_values(by="error", ascending=False)
+# print 10 worst for eval
+print(worst[["GEOID", "median_income", "prediction", "error", "image_path"]].head(10))
