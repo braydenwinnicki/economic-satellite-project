@@ -20,7 +20,7 @@ csv_path = PROJECT_ROOT / "data" / "ct_tracts.csv"
 tracts = tracts.to_crs(epsg=3857)
 
 MIN_TILES = 4
-MAX_TILES = 25
+MAX_TILES = 50
 
 
 def tiles_for_area(area_sq_m):
@@ -28,7 +28,7 @@ def tiles_for_area(area_sq_m):
     scales with linear dimension, not raw area - keeps things from
     exploding for huge rural tracts)."""
     area_sq_km = area_sq_m / 1_000_000 #convert to km for ease 
-    n = int(np.sqrt(area_sq_km)) + MIN_TILES # use sqrt to focus on linear side lengths so crazy areas dont mess things up
+    n = int(np.sqrt(area_sq_km)) * 3 + MIN_TILES # use sqrt to focus on linear side lengths so crazy areas dont mess things up, multiply by 3 to get more coverage
     return max(MIN_TILES, min(MAX_TILES, n)) # if n is in range return it, if not send back other option
 
 
