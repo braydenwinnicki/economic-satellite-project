@@ -42,9 +42,11 @@ train_dataset = CensusDataset(df_train, transform=transform)
 
 test_dataset = CensusDataset(df_test, transform=transform)
 
-train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, collate_fn=collate_fn
+)
 
-test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True)
+test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True, collate_fn=collate_fn
+)
 
 
 criterion = nn.MSELoss()  # mean squared loss
@@ -63,10 +65,10 @@ for epoch in range(epochs):
 
     total_loss = 0
 
-    for images, incomes in train_loader:
+    for images, mask, incomes in train_loader:
 
         # forward pass
-        predictions = model(images)
+        predictions = model(images, mask)
 
         # calculate error
         loss = criterion(predictions.squeeze(), incomes.float())

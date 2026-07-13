@@ -1,6 +1,8 @@
 import pandas as pd
 
-df = pd.read_csv("/Users/braydenwinnicki/CODE/econ_project/data/raw/ct_tracts_tiles.csv")
+df = pd.read_csv(
+    "/Users/braydenwinnicki/CODE/econ_project/data/raw/ct_tracts_tiles.csv"
+)
 
 df.columns = df.columns.str.strip()
 

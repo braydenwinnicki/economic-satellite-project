@@ -69,10 +69,10 @@ with torch.no_grad():
 
     model.eval()  # put on test mode
 
-    for images, incomes in test_loader:
+    for images, mask, incomes in test_loader:
 
         # forward pass
-        predictions = model(images)
+        predictions = model(images, mask)
 
         all_predictions.extend(predictions.squeeze().tolist())
         all_targets.extend(incomes.tolist())
