@@ -1,19 +1,21 @@
 import pandas as pd
 
-df = pd.read_csv("/Users/braydenwinnicki/CODE/econ_project/data/raw/ct_tracts.csv")
+df = pd.read_csv("/Users/braydenwinnicki/CODE/econ_project/data/raw/ct_tracts_tiles.csv")
 
 df.columns = df.columns.str.strip()
-
 
 df["median_income"] = df["median_income"].replace(-666666666, pd.NA)
 
 df = df.dropna(subset="median_income")
 
-
 df.to_csv(
-    "/Users/braydenwinnicki/CODE/econ_project/data/processed_ct_tracts.csv", index=False
+    "/Users/braydenwinnicki/CODE/econ_project/data/processed/processed_ct_tracts_tiles.csv",
+    index=False,
 )
 
+print(f"Rows before filtering (already dropped in CSV read): irrelevant, check below")
+print(f"Rows after filtering: {len(df)}")
+print(f"Unique tracts remaining: {df['GEOID'].nunique()}")
 
 # matplotlib setup if needed
 """

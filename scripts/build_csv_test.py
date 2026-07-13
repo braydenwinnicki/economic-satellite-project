@@ -76,7 +76,9 @@ for i in range(len(tracts)):
     polygon_latlon = tracts_latlon.iloc[i].geometry
     points = get_grid_points(polygon_latlon, n_tiles)
 
-    print(f"Tract {i} ({geoid}): area={area/1_000_000:.2f} km², requesting {n_tiles} tiles, got {len(points)} valid points")
+    print(
+        f"Tract {i} ({geoid}): area={area/1_000_000:.2f} km², requesting {n_tiles} tiles, got {len(points)} valid points"
+    )
 
     for tile_idx, (lat, lon) in enumerate(points):
         try:
