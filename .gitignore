@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+
+# Data and caches
+data/
+*.pt
+
+# Trained models
+*.pth
+
+# Images
+*.jpg
+*.jpeg
+*.png
+
+# Mac
+.DS_Store
