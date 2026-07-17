@@ -88,7 +88,7 @@ def main():
 )
 
     # training loop
-    epochs = 10
+    epochs = 30
 
     model.train()  # enable training behavior
 
