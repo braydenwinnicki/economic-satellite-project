@@ -1,11 +1,17 @@
+#optimzed for kaggle GPU run
+
+
 def main():
 
     import sys
     from pathlib import Path
 
     # ensure project imports work when run as a script
-    PROJECT_ROOT = Path(__file__).resolve().parents[1]
-    sys.path.insert(0, str(PROJECT_ROOT))
+    PROJECT_ROOT = Path.cwd()
+
+    if PROJECT_ROOT.name != "economic-satellite-project":
+        PROJECT_ROOT = PROJECT_ROOT / "economic-satellite-project"
+        sys.path.insert(0, str(PROJECT_ROOT))
 
     from models.resnet_frozen import ResNetRegressor
     import pandas as pd
@@ -40,8 +46,8 @@ def main():
 
     # load CSV of tiles and GEOIDs
     df = pd.read_csv(
-        "/Users/braydenwinnicki/CODE/econ_project/data/processed/processed_ct_tracts_tiles.csv",
-        dtype={"GEOID": str},
+        PROJECT_ROOT / "data/processed/processed_ct_tracts_tiles.csv",
+        dtype={"GEOID": str}
     )
 
     df.columns = df.columns.str.strip()
@@ -61,11 +67,12 @@ def main():
     # create dataset using cached images
     train_dataset = CensusDataset(
         df_train,
-        "/Users/braydenwinnicki/CODE/econ_project/data/processed/census_images_cache.pt",
+        PROJECT_ROOT / "data/processed/census_images_cache.pt",
+        dtype={"GEOID": str}
     )
 
     # choose batch size based on device to avoid MPS OOM
-    default_batch = 32
+    default_batch = 64
     if device.type == "mps":
         default_batch = 8
 
@@ -76,7 +83,7 @@ def main():
         batch_size=default_batch,
         shuffle=True,
         collate_fn=collate_fn,
-        num_workers=4,
+        num_workers=8,
         persistent_workers=True,
         pin_memory=pin_memory,
     )
@@ -85,7 +92,10 @@ def main():
     optimizer = torch.optim.Adam(
     filter(lambda p: p.requires_grad, model.parameters()),
     lr=0.0001
+    
 )
+
+    scaler = torch.cuda.amp.GradScaler()
 
     # training loop
     epochs = 30
@@ -104,15 +114,14 @@ def main():
             incomes = incomes.to(device)
 
             # forward pass
-            predictions = model(images, mask)
+            with torch.cuda.amp.autocast():
+                predictions = model(images, mask)
+                loss = criterion(predictions.squeeze(), incomes.float())
 
-            # compute loss
-            loss = criterion(predictions.squeeze(), incomes.float())
-
-            # backward/update
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
+                optimizer.zero_grad()
+                scaler.scale(loss).backward()
+                scaler.step(optimizer)
+                scaler.update()
 
             total_loss += loss.item()
 
