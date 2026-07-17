@@ -1,89 +1,129 @@
-import sys
-from pathlib import Path
+def main():
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(PROJECT_ROOT))
-from models.resnet_frozen import ResNetRegressor
-import pandas as pd
-from models.dataset import CensusDataset
-from torch.utils.data import DataLoader
-import torch
-from torch.utils.data import DataLoader
-import torch.nn as nn
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error
+    import sys
+    from pathlib import Path
+
+    # ensure project imports work when run as a script
+    PROJECT_ROOT = Path(__file__).resolve().parents[1]
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+    from models.resnet_frozen import ResNetRegressor
+    import pandas as pd
+    from models.dataset import CensusDataset
+    from torch.utils.data import DataLoader
+    import torch
+    from torch.utils.data import DataLoader
+    import torch.nn as nn
+    from sklearn.metrics import mean_absolute_error
+    from models.collate import collate_fn
+    from src.splitting import split_by_tract
+
+    # instantiate frozen resnet and get its preprocessing transforms
+    model = ResNetRegressor()
+    transform = model.weights.transforms()
+
+    # device autodetection: prefer CUDA, then MPS, else CPU
+    if torch.cuda.is_available():
+        device = torch.device("cuda")
+    else:
+        mps = getattr(torch.backends, "mps", None)
+        if mps is not None and torch.backends.mps.is_available():
+            device = torch.device("mps")
+        else:
+            device = torch.device("cpu")
+
+    model.to(device)
+    try:
+        torch.backends.cudnn.benchmark = True
+    except Exception:
+        pass
+
+    # load CSV of tiles and GEOIDs
+    df = pd.read_csv(
+        "/Users/braydenwinnicki/CODE/econ_project/data/processed/processed_ct_tracts_tiles.csv",
+        dtype={"GEOID": str},
+    )
+
+    df.columns = df.columns.str.strip()
+
+    # split train/test by tract so all tiles from the same tract stay together
+    df_train, df_test = split_by_tract(df, test_size=0.20, random_state=42)
+
+    # compute normalization stats from the training tracts only
+    train_tract_labels = df_train.drop_duplicates(subset="GEOID")["median_income"]
+    mean_income = train_tract_labels.mean()
+    std_income = train_tract_labels.std()
+    if std_income == 0:
+        std_income = 1.0
+
+    df_train["median_income"] = (df_train["median_income"] - mean_income) / std_income
+
+    # create dataset using cached images
+    train_dataset = CensusDataset(
+        df_train,
+        "/Users/braydenwinnicki/CODE/econ_project/data/processed/census_images_cache.pt",
+    )
+
+    # choose batch size based on device to avoid MPS OOM
+    default_batch = 32
+    if device.type == "mps":
+        default_batch = 8
+
+    # DataLoader with multiple workers for speed and persistent workers to reduce overhead
+    pin_memory = device.type == "cuda"
+    train_loader = DataLoader(
+        train_dataset,
+        batch_size=default_batch,
+        shuffle=True,
+        collate_fn=collate_fn,
+        num_workers=4,
+        persistent_workers=True,
+        pin_memory=pin_memory,
+    )
+
+    criterion = nn.MSELoss()  # mean squared loss
+    optimizer = torch.optim.Adam(  # optimize only the final FC layer of resnet
+        model.model.fc.parameters(), lr=0.001
+    )
+
+    # training loop
+    epochs = 10
+
+    model.train()  # enable training behavior
+
+    for epoch in range(epochs):
+
+        total_loss = 0
+
+        for images, mask, incomes, geoids in train_loader:
+
+            # move tensors to device; cached images are float32
+            images = images.float().to(device)
+            mask = mask.to(device)
+            incomes = incomes.to(device)
+
+            # forward pass
+            predictions = model(images, mask)
+
+            # compute loss
+            loss = criterion(predictions.squeeze(), incomes.float())
+
+            # backward/update
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+
+            total_loss += loss.item()
+
+        avg_loss = total_loss / len(train_loader)
+
+        print(f"train Epoch {epoch+1}: {avg_loss:.4f}")
+
+    # save the trained model weights
+    torch.save(model.state_dict(), PROJECT_ROOT / "models" / "resnet18_frozen.pth")
+
+    print("Saved model to models/resnet18_frozen.pth")
 
 
-model = ResNetRegressor()
-transform = model.weights.transforms()
-
-
-# split data
-
-df = pd.read_csv(
-    "/Users/braydenwinnicki/CODE/econ_project/data/processed/processed_ct_tracts.csv"
-)
-
-df_train, df_test = train_test_split(df, test_size=0.20, random_state=42)
-
-# use z-scale normalizing to shrink numbers and help the dataset. dont use test.mean() becuase it would leak
-
-mean_income = df_train["median_income"].mean()
-std_income = df_train["median_income"].std()
-
-df_train["median_income"] = (df_train["median_income"] - mean_income) / std_income
-
-df_test["median_income"] = (df_test["median_income"] - mean_income) / std_income
-
-train_dataset = CensusDataset(df_train, transform=transform)
-
-test_dataset = CensusDataset(df_test, transform=transform)
-
-train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
-
-test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True)
-
-
-criterion = nn.MSELoss()  # mean squared loss
-optimizer = torch.optim.Adam(  # an optimizer adjusts weights via gradient
-    model.parameters(), lr=0.001
-)
-
-# training
-
-epochs = 10
-
-model.train()  # turn on train mode
-
-for epoch in range(epochs):
-
-    total_loss = 0
-
-    for images, incomes in train_loader:
-
-        # forward pass
-        predictions = model(images)
-
-        # calculate error
-        loss = criterion(predictions.squeeze(), incomes.float())
-
-        # clear old gradients
-        optimizer.zero_grad()
-
-        # calculate gradients
-        loss.backward()
-
-        # update weights
-        optimizer.step()
-
-        total_loss += loss.item()
-
-    avg_loss = total_loss / len(train_loader)
-
-    print(f"train Epoch {epoch+1}: {avg_loss:.4f}")
-
-
-# save model
-torch.save(model.state_dict(), PROJECT_ROOT / "models" / "resnet18_frozen.pth")
-
-print("Saved model to models/resnet18_frozen.pth")
+if __name__ == "__main__":
+    main()
