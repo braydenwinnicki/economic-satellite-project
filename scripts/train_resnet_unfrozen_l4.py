@@ -130,8 +130,10 @@ def main():
         print(f"train Epoch {epoch+1}: {avg_loss:.4f}")
 
     # save the trained model weights
-    torch.save(model.state_dict(), "/kaggle/input/datasets/braydenwinnicki/resnet-unfrozen-l4.pt")
-
+    torch.save(
+        model.state_dict(),
+        "/kaggle/working/resnet-unfrozen-l4.pt"
+)
     print("Saved model to models/resnet18_frozen.pth")
 
 
