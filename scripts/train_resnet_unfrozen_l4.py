@@ -46,8 +46,7 @@ def main():
 
     # load CSV of tiles and GEOIDs
     df = pd.read_csv(
-        "/kaggle/input/datasets/braydenwinnicki/processed-csv-tracts-tiles/processed_ct_tracts_tiles.csv",
-        dtype={"GEOID": str}
+        "/kaggle/input/datasets/braydenwinnicki/processed-csv-tracts-tiles/processed_ct_tracts_tiles.csv"
     )
 
     df.columns = df.columns.str.strip()
@@ -67,8 +66,7 @@ def main():
     # create dataset using cached images
     train_dataset = CensusDataset(
         df_train,
-        "/kaggle/input/datasets/braydenwinnicki/census-images-cache-pt/census_images_cache.pt",
-        dtype={"GEOID": str}
+        "/kaggle/input/datasets/braydenwinnicki/census-images-cache-pt/census_images_cache.pt"
     )
 
     # choose batch size based on device to avoid MPS OOM
