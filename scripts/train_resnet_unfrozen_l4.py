@@ -132,7 +132,7 @@ def main():
     # save the trained model weights
     torch.save(
         model.state_dict(),
-        "/kaggle/working/resnet-unfrozen-l4.pt"
+        "/kaggle/working/resnet-unfrozen-l4.pth"
 )
     print("Saved model to models/resnet18_frozen.pth")
 
