@@ -46,7 +46,7 @@ def main():
 
     # load CSV of tiles and GEOIDs
     df = pd.read_csv(
-        PROJECT_ROOT / "data/processed/processed_ct_tracts_tiles.csv",
+        "/kaggle/input/datasets/braydenwinnicki/processed-csv-tracts-tiles/processed_ct_tracts_tiles.csv",
         dtype={"GEOID": str}
     )
 
@@ -67,7 +67,7 @@ def main():
     # create dataset using cached images
     train_dataset = CensusDataset(
         df_train,
-        PROJECT_ROOT / "data/processed/census_images_cache.pt",
+        "/kaggle/input/datasets/braydenwinnicki/census-images-cache-pt/census_images_cache.pt",
         dtype={"GEOID": str}
     )
 
@@ -130,7 +130,7 @@ def main():
         print(f"train Epoch {epoch+1}: {avg_loss:.4f}")
 
     # save the trained model weights
-    torch.save(model.state_dict(), PROJECT_ROOT / "models" / "resnet18_frozen.pth")
+    torch.save(model.state_dict(), "/kaggle/input/datasets/braydenwinnicki/resnet-unfrozen-l4.pt")
 
     print("Saved model to models/resnet18_frozen.pth")
 
