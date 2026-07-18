@@ -46,7 +46,7 @@ def main():
 
     # load CSV of tiles and GEOIDs
     df = pd.read_csv(
-        "/kaggle/input/datasets/braydenwinnicki/processed-csv-tracts-tiles/processed_ct_tracts_tiles.csv",
+        PROJECT_ROOT / "data/processed/processed_ct_tracts_tiles.csv",
         dtype={"GEOID": str}
     )
 
@@ -67,7 +67,7 @@ def main():
     # create dataset using cached images
     train_dataset = CensusDataset(
         df_train,
-        "/kaggle/input/datasets/braydenwinnicki/census-images-cache-pt/census_images_cache.pt",
+        PROJECT_ROOT / "data/processed/census_images_cache.pt",
         dtype={"GEOID": str}
     )
 
