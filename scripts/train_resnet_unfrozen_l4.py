@@ -104,8 +104,7 @@ def main():
 
         total_loss = 0
 
-        for images, mask, incomes, geoids in train_loader:
-
+        for batch_idx, (images, mask, incomes, geoids) in enumerate(train_loader):
             # move tensors to device; cached images are float32
             images = images.float().to(device)
             mask = mask.to(device)
@@ -122,6 +121,9 @@ def main():
                 scaler.update()
 
             total_loss += loss.item()
+
+            if batch_idx % 50 == 0:
+                print(f"Epoch {epoch+1}, Batch {batch_idx}/{len(train_loader)}")
 
         avg_loss = total_loss / len(train_loader)
 
