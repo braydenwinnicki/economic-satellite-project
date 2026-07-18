@@ -70,7 +70,7 @@ def main():
     )
 
     # choose batch size based on device to avoid MPS OOM
-    default_batch = 64
+    default_batch = 16
     if device.type == "mps":
         default_batch = 8
 
@@ -81,9 +81,9 @@ def main():
         batch_size=default_batch,
         shuffle=True,
         collate_fn=collate_fn,
-        num_workers=8,
+        num_workers=2,
         persistent_workers=True,
-        pin_memory=pin_memory,
+        pin_memory=False,
     )
 
     criterion = nn.MSELoss()  # mean squared loss
