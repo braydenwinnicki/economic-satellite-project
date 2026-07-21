@@ -96,7 +96,7 @@ def main():
     scaler = torch.cuda.amp.GradScaler()
 
     # training loop
-    epochs = 30
+    epochs = 70
 
     model.train()  # enable training behavior
 
@@ -121,9 +121,6 @@ def main():
                 scaler.update()
 
             total_loss += loss.item()
-
-            if batch_idx % 50 == 0:
-                print(f"Epoch {epoch+1}, Batch {batch_idx}/{len(train_loader)}")
 
         avg_loss = total_loss / len(train_loader)
 
