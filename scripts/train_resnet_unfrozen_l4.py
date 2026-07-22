@@ -13,7 +13,7 @@ def main():
         PROJECT_ROOT = PROJECT_ROOT / "economic-satellite-project"
         sys.path.insert(0, str(PROJECT_ROOT))
 
-    from models.resnet_frozen import ResNetRegressor
+    from models.resnet_unfrozen_l4 import ResNetRegressorUnfrozen
     import pandas as pd
     from models.dataset import CensusDataset
     from torch.utils.data import DataLoader
@@ -23,9 +23,11 @@ def main():
     from sklearn.metrics import mean_absolute_error
     from models.collate import collate_fn
     from src.splitting import split_by_tract
+    from models.resnet_unfrozen_l3 import ResNetRegressorUnrozen
+
 
     # instantiate frozen resnet and get its preprocessing transforms
-    model = ResNetRegressor()
+    model = ResNetRegressorUnfrozen()
     transform = model.weights.transforms()
 
     # device autodetection: prefer CUDA, then MPS, else CPU

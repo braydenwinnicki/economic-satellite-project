@@ -2,7 +2,7 @@ from torchvision.models import resnet18, ResNet18_Weights
 import torch.nn as nn
 
 
-class ResNetRegressorUnrozen(nn.Module):
+class ResNetRegressorUnfrozen(nn.Module):
 
     def __init__(self):
         super().__init__()

@@ -13,7 +13,7 @@ def main():
         PROJECT_ROOT = PROJECT_ROOT / "economic-satellite-project"
         sys.path.insert(0, str(PROJECT_ROOT))
 
-    from models.resnet_frozen import ResNetRegressor
+    from models.resnet_unfrozen_l3 import ResNetRegressorUnfrozen
     import pandas as pd
     from models.dataset import CensusDataset
     from torch.utils.data import DataLoader

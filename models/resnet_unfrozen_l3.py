@@ -45,4 +45,4 @@ class ResNetRegressorUnrozen(nn.Module):
 
 
 if __name__ == "__main__":
-    print(ResNetRegressor())
+    print(ResNetRegressorUnfrozen())
