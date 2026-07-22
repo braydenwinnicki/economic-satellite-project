@@ -134,7 +134,7 @@ def main():
         model.state_dict(),
         "/kaggle/working/resnet-unfrozen-l3.pth"
 )
-    print("Saved model to models/resnet18_frozen.pth")
+    print("Saved model to models/resnet_unfrozen_l3.pth")
 
 
 if __name__ == "__main__":
