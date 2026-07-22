@@ -15,10 +15,10 @@ class ResNetRegressorUnfrozen(nn.Module):
         for param in self.model.parameters():
             param.requires_grad = False
         #unfreze l3
-        for param in model.resnet.layer3.parameters():
+        for param in self.model.layer3.parameters():
             param.requires_grad = True
         #unfreeze l4
-        for param in model.resnet.layer4.parameters():
+        for param in self.model.layer4.parameters():
             param.requires_grad = True
 
         # replace classifier
