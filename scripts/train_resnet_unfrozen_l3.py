@@ -91,8 +91,7 @@ def main():
     optimizer = torch.optim.AdamW([ 
     {"params": model.model.layer3.parameters(), "lr":1e-5},
     {"params": model.model.layer4.parameters(), "lr":1e-5},
-    {"params": model.fc.parameters(), "lr":1e-4}
-])
+    {"params": model.model.fc.parameters(), "lr":1e-4}
     
 
 
