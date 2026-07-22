@@ -87,13 +87,14 @@ def main():
     )
 
     criterion = nn.MSELoss()  # mean squared loss
-    optimizer = torch.optim.AdamW([.  #adjust for each learned section of the model
+    #adjust for each learned section of the model
+    optimizer = torch.optim.AdamW([ 
     {"params": model.resnet.layer3.parameters(), "lr":1e-5},
     {"params": model.resnet.layer4.parameters(), "lr":1e-5},
     {"params": model.fc.parameters(), "lr":1e-4}
 ])
     
-)
+
 
     scaler = torch.cuda.amp.GradScaler()
 
