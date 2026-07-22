@@ -96,7 +96,7 @@ def main():
     scaler = torch.cuda.amp.GradScaler()
 
     # training loop
-    epochs = 70
+    epochs = 25
 
     model.train()  # enable training behavior
 
