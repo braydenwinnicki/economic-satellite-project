@@ -89,8 +89,8 @@ def main():
     criterion = nn.MSELoss()  # mean squared loss
     #adjust for each learned section of the model
     optimizer = torch.optim.AdamW([ 
-    {"params": model.resnet.layer3.parameters(), "lr":1e-5},
-    {"params": model.resnet.layer4.parameters(), "lr":1e-5},
+    {"params": model.model.layer3.parameters(), "lr":1e-5},
+    {"params": model.model.layer4.parameters(), "lr":1e-5},
     {"params": model.fc.parameters(), "lr":1e-4}
 ])
     

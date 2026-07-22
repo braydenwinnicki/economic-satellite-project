@@ -9,7 +9,7 @@ class ResNetRegressorUnrozen(nn.Module):
 
         self.weights = ResNet18_Weights.DEFAULT
 
-        self.resnet = resnet18(weights=self.weights)
+        self.model = resnet18(weights=self.weights)
 
         #freeeze all
         for param in self.model.parameters():
