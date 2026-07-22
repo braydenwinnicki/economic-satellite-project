@@ -25,7 +25,7 @@ def main():
     from src.splitting import split_by_tract
 
     # instantiate frozen resnet and get its preprocessing transforms
-    model = ResNetRegressor()
+    model = ResNetRegressorUnfrozen()
     transform = model.weights.transforms()
 
     # device autodetection: prefer CUDA, then MPS, else CPU
