@@ -1,4 +1,4 @@
-#optimzed for kaggle GPU run
+# optimzed for kaggle GPU run
 
 
 def main():
@@ -23,8 +23,6 @@ def main():
     from sklearn.metrics import mean_absolute_error
     from models.collate import collate_fn
     from src.splitting import split_by_tract
-    from models.resnet_unfrozen_l3 import ResNetRegressorUnrozen
-
 
     # instantiate frozen resnet and get its preprocessing transforms
     model = ResNetRegressorUnfrozen()
@@ -68,7 +66,7 @@ def main():
     # create dataset using cached images
     train_dataset = CensusDataset(
         df_train,
-        "/kaggle/input/datasets/braydenwinnicki/census-images-cache-pt/census_images_cache.pt"
+        "/kaggle/input/datasets/braydenwinnicki/census-images-cache-pt/census_images_cache.pt",
     )
 
     # choose batch size based on device to avoid MPS OOM
@@ -89,12 +87,12 @@ def main():
     )
 
     criterion = nn.MSELoss()  # mean squared loss
-    optimizer = torch.optim.Adam(
-    filter(lambda p: p.requires_grad, model.parameters()),
-    lr=0.0001
-    
-)
-
+    optimizer = torch.optim.AdamW(
+        [
+            {"params": model.model.layer4.parameters(), "lr": 1e-5},
+            {"params": model.model.fc.parameters(), "lr": 1e-4},
+        ]
+    )
     scaler = torch.cuda.amp.GradScaler()
 
     # training loop
@@ -129,11 +127,8 @@ def main():
         print(f"train Epoch {epoch+1}: {avg_loss:.4f}")
 
     # save the trained model weights
-    torch.save(
-        model.state_dict(),
-        "/kaggle/working/resnet-unfrozen-l4.pth"
-)
-    print("Saved model to models/resnet18_frozen.pth")
+    torch.save(model.state_dict(), "/kaggle/working/resnet-unfrozen-l4.pth")
+    print("Saved model to /kaggle/working/resnet-unfrozen-l4.pth")
 
 
 if __name__ == "__main__":

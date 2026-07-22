@@ -11,13 +11,13 @@ class ResNetRegressorUnfrozen(nn.Module):
 
         self.model = resnet18(weights=self.weights)
 
-        #freeeze all
+        # freeeze all
         for param in self.model.parameters():
             param.requires_grad = False
-        #unfreze l3
+        # unfreze l3
         for param in self.model.layer3.parameters():
             param.requires_grad = True
-        #unfreeze l4
+        # unfreeze l4
         for param in self.model.layer4.parameters():
             param.requires_grad = True
 

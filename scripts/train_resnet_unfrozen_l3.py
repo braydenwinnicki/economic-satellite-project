@@ -1,4 +1,4 @@
-#optimzed for kaggle GPU run
+# optimzed for kaggle GPU run
 
 
 def main():
@@ -66,11 +66,12 @@ def main():
     # create dataset using cached images
     train_dataset = CensusDataset(
         df_train,
-        "/kaggle/input/datasets/braydenwinnicki/census-images-cache-pt/census_images_cache.pt"
+        "/kaggle/input/datasets/braydenwinnicki/census-images-cache-pt/census_images_cache.pt",
     )
 
     # choose batch size based on device to avoid MPS OOM
-    default_batch = 16
+    default_batch = 32
+
     if device.type == "mps":
         default_batch = 8
 
@@ -81,24 +82,25 @@ def main():
         batch_size=default_batch,
         shuffle=True,
         collate_fn=collate_fn,
-        num_workers=2,
+        num_workers=4,
         persistent_workers=True,
-        pin_memory=False,
+        pin_memory=True,
     )
 
     criterion = nn.MSELoss()  # mean squared loss
-    #adjust for each learned section of the model
-    optimizer = torch.optim.AdamW([ 
-    {"params": model.model.layer3.parameters(), "lr":1e-5},
-    {"params": model.model.layer4.parameters(), "lr":1e-5},
-    {"params": model.model.fc.parameters(), "lr":1e-4}])
-    
-
+    # adjust for each learned section of the model
+    optimizer = torch.optim.AdamW(
+        [
+            {"params": model.model.layer3.parameters(), "lr": 1e-5},
+            {"params": model.model.layer4.parameters(), "lr": 1e-5},
+            {"params": model.model.fc.parameters(), "lr": 1e-4},
+        ]
+    )
 
     scaler = torch.cuda.amp.GradScaler()
 
     # training loop
-    epochs = 70
+    epochs = 25
 
     model.train()  # enable training behavior
 
@@ -129,11 +131,8 @@ def main():
         print(f"train Epoch {epoch+1}: {avg_loss:.4f}")
 
     # save the trained model weights
-    torch.save(
-        model.state_dict(),
-        "/kaggle/working/resnet-unfrozen-l3.pth"
-)
-    print("Saved model to models/resnet_unfrozen_l3.pth")
+    torch.save(model.state_dict(), "/kaggle/working/resnet-unfrozen-l3.pth")
+    print("Saved model to /kaggle/working/resnet-unfrozen-l3.pth")
 
 
 if __name__ == "__main__":
