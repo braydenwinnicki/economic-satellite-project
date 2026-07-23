@@ -32,7 +32,7 @@ def main():
 
     # load trained weights onto the selected device
     model.load_state_dict(
-        torch.load(PROJECT_ROOT / "models" / "resnet18_frozen.pth", map_location=device)
+        torch.load(PROJECT_ROOT / "models" / "resnet-frozen.pth", map_location=device)
     )
     model.to(device)
     model.eval()

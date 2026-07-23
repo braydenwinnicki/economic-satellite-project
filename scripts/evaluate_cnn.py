@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader
 import torch
 from torchvision import transforms
 from torch.utils.data import DataLoader
-from models.cnn import ConvNN
+from models.CNN import ConvNN
 import torch.nn as nn
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import numpy as np
@@ -128,14 +128,6 @@ def main():
     print(f"TESTING RMSE: {rmse}")
     print(f"TESTING Rsquared: {r2}")
 
-    # quick histogram of tract median incomes (original, not predictions)
-    import matplotlib.pyplot as plt
-
-    plt.xlabel("Median income")
-    plt.ylabel("Number of tracts")
-    tract_level = df.drop_duplicates(subset="GEOID")
-    plt.hist(tract_level["median_income"], bins=40)
-    plt.show()
 
     # assemble results DataFrame and show worst errors
     results = pd.DataFrame(
@@ -151,6 +143,8 @@ def main():
     worst = results.sort_values(by="error", ascending=False)
 
     print(worst.head(10))
+
+    results.to_csv("/Users/braydenwinnicki/Desktop/econ_project/results/cnn_multi_results.csv", index=False)
 
 
 if __name__ == "__main__":
