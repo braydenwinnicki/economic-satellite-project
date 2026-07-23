@@ -70,7 +70,7 @@ def main():
     )
 
     # choose batch size based on device to avoid MPS OOM
-    default_batch = 32
+    default_batch = 8
 
     if device.type == "mps":
         default_batch = 8
