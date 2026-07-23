@@ -73,8 +73,8 @@ def main():
         "/kaggle/input/datasets/braydenwinnicki/census-images-cache-pt/census_images_cache.pt",
     )
 
-    # Safety batch sizing: mini-batch 16 + accumulation steps = effective batch 32
-    mini_batch = 16 if device.type == "cuda" else 8
+    # Safety batch sizing 
+    mini_batch = 42 if device.type == "cuda" else 2
     accumulation_steps = 2 if device.type == "cuda" else 4
 
     pin_memory = device.type == "cuda"
