@@ -40,8 +40,7 @@ def main():
 
     # load CSV of tiles and GEOIDs
     df = pd.read_csv(
-        "/Users/braydenwinnicki/CODE/econ_project/data/processed/processed_ct_tracts_tiles.csv",
-        dtype={"GEOID": str},
+        "/kaggle/input/datasets/braydenwinnicki/processed-csv-tracts-tiles/processed_ct_tracts_tiles.csv",
     )
 
     df.columns = df.columns.str.strip()
@@ -61,7 +60,7 @@ def main():
     # create dataset using cached images
     train_dataset = CensusDataset(
         df_train,
-        "/Users/braydenwinnicki/CODE/econ_project/data/processed/census_images_cache.pt",
+        "/kaggle/input/datasets/braydenwinnicki/census-images-cache-pt/census_images_cache.pt",
     )
 
     # choose batch size based on device to avoid MPS OOM
@@ -120,10 +119,8 @@ def main():
         print(f"train Epoch {epoch+1}: {avg_loss:.4f}")
 
     # save the trained model weights
-    torch.save(model.state_dict(), PROJECT_ROOT / "models" / "resnet18_frozen.pth")
-
-    print("Saved model to models/resnet18_frozen.pth")
-
+    torch.save(model.state_dict(), "/kaggle/working/resnet-frozen.pth")
+    print("Saved model to /kaggle/working/resnet-frozen.pth")
 
 if __name__ == "__main__":
     main()

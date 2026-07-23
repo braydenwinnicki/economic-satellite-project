@@ -155,6 +155,8 @@ def main():
 
     print(worst.head(10))
 
+    results.to_csv("/Users/braydenwinnicki/Desktop/econ_project/results/resnet_unfrozen_l3_results.csv", index=False)
+
 if __name__ == "__main__":
     main()
 
