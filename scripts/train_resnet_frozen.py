@@ -75,7 +75,7 @@ def main():
 
     # Safety batch sizing 
     mini_batch = 42 if device.type == "cuda" else 2
-    accumulation_steps = 2 if device.type == "cuda" else 4
+    accumulation_steps = 8 if device.type == "cuda" else 16
 
     pin_memory = device.type == "cuda"
     train_loader = DataLoader(
