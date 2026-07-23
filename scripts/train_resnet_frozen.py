@@ -74,8 +74,8 @@ def main():
     )
 
     # Safety batch sizing 
-    mini_batch = 42 if device.type == "cuda" else 2
-    accumulation_steps = 8 if device.type == "cuda" else 16
+    mini_batch = 2
+    accumulation_steps = 16
 
     pin_memory = device.type == "cuda"
     train_loader = DataLoader(
@@ -83,7 +83,7 @@ def main():
         batch_size=mini_batch,
         shuffle=True,
         collate_fn=collate_fn,
-        num_workers=4,
+        num_workers=2,
         persistent_workers=True,
         pin_memory=pin_memory,
     )
