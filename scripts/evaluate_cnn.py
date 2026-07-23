@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader
 import torch
 from torchvision import transforms
 from torch.utils.data import DataLoader
-from models.cnn import ConvNN
+from models.CNN import ConvNN
 import torch.nn as nn
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
@@ -25,7 +25,12 @@ model.eval()
 # split data
 
 df = pd.read_csv(
-    "/Users/braydenwinnicki/CODE/econ_project/data/processed/processed_ct_tracts.csv"
+    "/Users/braydenwinnicki/Desktop/econ_project/data/processed/processed_ct_tracts.csv"
+)
+
+df["image_path"] = df["image_path"].str.replace(
+    "/Users/braydenwinnicki/CODE/econ_project",
+    "/Users/braydenwinnicki/Desktop/econ_project"
 )
 
 df_train, df_test = train_test_split(df, test_size=0.20, random_state=42)
