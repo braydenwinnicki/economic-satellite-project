@@ -4,7 +4,7 @@ import pandas as pd
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
-from models.dataset import CensusDataset
+from models.dataset_multi import CensusDataset
 from torch.utils.data import DataLoader
 import torch
 from torchvision import transforms
@@ -82,7 +82,8 @@ def main():
         model.parameters(), lr=0.001
     )
 
-    # testing / evaluation loop
+    # testing / evaluation loop — no gradients needed, so we wrap in torch.no_grad()
+    # to save memory and speed things up
     all_predictions = []
     all_targets = []
     all_geoids = []
@@ -90,30 +91,26 @@ def main():
     with torch.no_grad():
         total_loss = 0
 
-        model.eval()  # ensure model is in eval mode
+        model.eval()
 
         for images, mask, incomes, geoids in test_loader:
-            # move tensors to device and ensure float dtype for images
             images = images.float().to(device)
             mask = mask.to(device)
             incomes = incomes.to(device)
 
-            # forward pass to get tract-level predictions
             predictions = model(images, mask)
 
-            # collect results into python lists for later metrics/plots
+            # squeeze() removes the extra dimension from (B, 1) -> (B,)
             all_predictions.extend(predictions.squeeze().tolist())
             all_targets.extend(incomes.tolist())
             all_geoids.extend(geoids)
 
-            # compute batch loss for reporting
             loss = criterion(predictions.squeeze(), incomes.float())
-
             total_loss += loss.item()
 
         avg_test_loss = total_loss / len(test_loader)
 
-    # convert normalized predictions back to dollar values for human-readable metrics
+    # convert normalized predictions back to dollar values
     predictions_dollars = [p * std_income + mean_income for p in all_predictions]
     targets_dollars = [t * std_income + mean_income for t in all_targets]
 

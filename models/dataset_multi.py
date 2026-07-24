@@ -8,6 +8,16 @@ from torch.utils.data import DataLoader  # data loader (used by callers)
 
 
 class CensusDataset(Dataset):
+    """
+    Wraps the prebuilt image cache so we can feed it into a PyTorch DataLoader.
+
+    Each tract has a variable number of satellite tiles. The cache already has
+    all the images stacked into tensors, so this class just looks them up by
+    GEOID and pairs them with the income label.
+
+    The DataLoader (used in the training/eval scripts) will call __getitem__
+    repeatedly and batch the results using collate_fn.
+    """
 
     def __init__(self, data, cache_file):
 

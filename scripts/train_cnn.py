@@ -4,7 +4,7 @@ import pandas as pd  # data handling
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))  # make project importable
-from models.dataset import CensusDataset  # dataset class that loads cached images
+from models.dataset_multi import CensusDataset  # dataset class that loads cached images
 from torch.utils.data import DataLoader  # loader to batch/pad data
 import torch  # main PyTorch package
 from torchvision import transforms  # image transforms (not heavily used here)
@@ -98,10 +98,10 @@ for epoch in range(epochs):
         mask = mask.to(device)
         incomes = incomes.to(device)
 
-        # forward pass: model returns per-tract predictions (batched)
+        # forward pass: model returns per-tract predictions
         predictions = model(images, mask)
 
-        # compute loss between predictions and targets (squeeze removes extra dims)
+        # squeeze() removes the extra dimension so (B, 1) -> (B,) for loss calc
         loss = criterion(predictions.squeeze(), incomes.float())
 
         # zero existing gradients before backward pass
@@ -113,9 +113,9 @@ for epoch in range(epochs):
         # optimizer step applies gradient updates to model parameters
         optimizer.step()
 
-        total_loss += loss.item()  # accumulate scalar loss
+        total_loss += loss.item()
 
-    avg_loss = total_loss / len(train_loader)  # average loss per batch
+    avg_loss = total_loss / len(train_loader)
 
     print(f"train Epoch {epoch+1}: {avg_loss:.4f}")
 

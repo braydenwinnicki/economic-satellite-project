@@ -1,15 +1,21 @@
-import pandas as pd
+import pandas as pd  
 
+# read the raw CSV that has all tiles and their (possibly invalid) income labels
 df = pd.read_csv(
     "/Users/braydenwinnicki/CODE/econ_project/data/raw/ct_tracts_tiles.csv"
 )
 
+# strip any whitespace from column names (common issue with CSV exports)
 df.columns = df.columns.str.strip()
 
+# -666666666 is a sentinel value meaning "no data" in the Census API
+# replace it with pd.NA so dropna() can clean it up properly
 df["median_income"] = df["median_income"].replace(-666666666, pd.NA)
 
+# drop rows where income is missing — no point training on tracts without labels
 df = df.dropna(subset="median_income")
 
+# save cleaned data to processed directory for use by training/eval scripts
 df.to_csv(
     "/Users/braydenwinnicki/CODE/econ_project/data/processed/processed_ct_tracts_tiles.csv",
     index=False,

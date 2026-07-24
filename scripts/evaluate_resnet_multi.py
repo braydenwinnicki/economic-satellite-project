@@ -3,9 +3,9 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
-from models.resnet_frozen import ResNetRegressor
+from models.resnet_multi import ResNetRegressor
 import pandas as pd
-from models.dataset import CensusDataset
+from models.dataset_multi import CensusDataset
 from torch.utils.data import DataLoader
 import torch
 from torch.utils.data import DataLoader
@@ -31,14 +31,15 @@ def main():
             device = torch.device("cpu")
 
     # load trained weights onto the selected device
+    # map_location ensures the weights get loaded onto whatever device we're using,
+    # even if they were saved from a different device (e.g. saved from GPU, loading on CPU)
     model.load_state_dict(
         torch.load(PROJECT_ROOT / "models" / "resnet-frozen.pth", map_location=device)
     )
     model.to(device)
-    model.eval()
+    model.eval()  # disable dropout/batchnorm training behavior — important for consistent predictions
 
-    # split data using the tile-level processed CSV that exists in this repo
-    # (same dataset form used by train_resnet_frozen.py)
+    # split data using the tile-level processed CSV
     input_csv = PROJECT_ROOT / "data" / "processed" / "processed_ct_tracts_tiles.csv"
     if not input_csv.exists():
         raise FileNotFoundError(f"Evaluation CSV missing: {input_csv}")
@@ -56,6 +57,7 @@ def main():
     if std_income == 0:
         std_income = 1.0
 
+    # Apply the same normalization to both train and test using training stats
     df_train["median_income"] = (df_train["median_income"] - mean_income) / std_income
     df_test["median_income"] = (df_test["median_income"] - mean_income) / std_income
 
@@ -74,7 +76,7 @@ def main():
     test_loader = DataLoader(
         test_dataset,
         batch_size=8,
-        shuffle=False,
+        shuffle=False,  # no need to shuffle for evaluation
         collate_fn=collate_fn,
         pin_memory=pin_memory,
         num_workers=4,
@@ -83,12 +85,10 @@ def main():
         f"test loader batch size: {test_loader.batch_size}, num_workers={test_loader.num_workers}"
     )
 
-    criterion = nn.MSELoss()  # mean squared loss
-    optimizer = torch.optim.Adam(  # an optimizer (not needed for eval)
-        model.parameters(), lr=0.001
-    )
+    criterion = nn.MSELoss()
 
-    # testing
+    # testing loop — no gradients needed, so we wrap in torch.no_grad()
+    # to save memory and speed things up
     all_predictions = []
     all_targets = []
     all_geoids = []
@@ -97,21 +97,18 @@ def main():
         total_loss = 0
 
         for images, mask, incomes, geoids in test_loader:
-            # move tensors to device and ensure float dtype for images
             images = images.float().to(device)
             mask = mask.to(device)
             incomes = incomes.to(device)
 
-            # forward pass
             predictions = model(images, mask)
 
+            # squeeze() removes the extra dimension from (B, 1) -> (B,)
             all_predictions.extend(predictions.squeeze().tolist())
             all_targets.extend(incomes.tolist())
             all_geoids.extend(geoids)
 
-            # calculate error
             loss = criterion(predictions.squeeze(), incomes.float())
-
             total_loss += loss.item()
 
         avg_test_loss = total_loss / len(test_loader)
@@ -120,7 +117,7 @@ def main():
     print("target sample:", all_targets[:5])
     print("mean/std:", mean_income, std_income)
 
-    # convert back to dollars
+    # convert normalized predictions back to dollar values
     predictions_dollars = [p * std_income + mean_income for p in all_predictions]
     targets_dollars = [t * std_income + mean_income for t in all_targets]
 
@@ -148,7 +145,7 @@ def main():
 
     print(worst.head(10))
 
-    results.to_csv("/Users/braydenwinnicki/Desktop/econ_project/results/resnet_frozen_results.csv", index=False)
+    results.to_csv("/Users/braydenwinnicki/Desktop/econ_project/results/resnet_multi_results.csv", index=False)
 
 
 if __name__ == "__main__":

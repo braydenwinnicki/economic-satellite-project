@@ -6,7 +6,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from models.resnet_unfrozen_l3 import ResNetRegressorUnfrozenl3
 import pandas as pd
-from models.dataset import CensusDataset
+from models.dataset_multi import CensusDataset
 from torch.utils.data import DataLoader
 import torch
 from models.collate import collate_fn
@@ -29,7 +29,7 @@ def main():
         else:
             device = torch.device("cpu")
 
-    # load trained weights
+    # load trained weights from the L3 unfrozen training run
     model.load_state_dict(
         torch.load(
             PROJECT_ROOT / "models" / "resnet-unfrozen-l3.pth",
@@ -159,5 +159,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

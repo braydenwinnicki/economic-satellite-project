@@ -1,19 +1,23 @@
-import pandas as pd
-from sklearn.model_selection import train_test_split
-
+import pandas as pd  
+from sklearn.model_selection import train_test_split  
 
 def split_by_tract(df: pd.DataFrame, test_size: float = 0.2, random_state=42):
-    """Split a tile-level dataframe by tract so all tiles from one tract stay together."""
+    """
+    Split a tile-level dataframe by tract so all tiles from one tract stay together.
+    """
     if "GEOID" not in df.columns:
         raise KeyError("Input dataframe must include a GEOID column.")
 
+    # grab all unique tract IDs so we split by tract, not by tile
     tract_ids = df["GEOID"].drop_duplicates().to_numpy()
+    # train_test_split splits the array of tract IDs, not the rows directly
     train_tracts, test_tracts = train_test_split(
         tract_ids,
         test_size=test_size,
         random_state=random_state,
     )
 
+    # .isin() returns a boolean mask — True for rows whose GEOID is in the train set
     train_df = df[df["GEOID"].isin(train_tracts)].copy()
     test_df = df[df["GEOID"].isin(test_tracts)].copy()
 

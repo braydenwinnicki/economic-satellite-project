@@ -5,7 +5,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 from models.resnet_unfrozen_l4 import ResNetRegressorUnfrozenl4
 import pandas as pd
-from models.dataset import CensusDataset
+from models.dataset_multi import CensusDataset
 from torch.utils.data import DataLoader
 import torch
 from torch.utils.data import DataLoader
@@ -30,7 +30,7 @@ def main():
         else:
             device = torch.device("cpu")
 
-    # load trained weights onto the selected device
+    # load trained weights from the L4 unfrozen training run
     model.load_state_dict(
         torch.load(
             PROJECT_ROOT / "models" / "resnet-unfrozen-l4.pth", map_location=device
@@ -39,8 +39,7 @@ def main():
     model.to(device)
     model.eval()
 
-    # split data using the tile-level processed CSV that exists in this repo
-    # (same dataset form used by train_resnet_frozen.py)
+    # load the processed tile CSV and split the same way as training
     input_csv = PROJECT_ROOT / "data" / "processed" / "processed_ct_tracts_tiles.csv"
     if not input_csv.exists():
         raise FileNotFoundError(f"Evaluation CSV missing: {input_csv}")
@@ -85,12 +84,9 @@ def main():
         f"test loader batch size: {test_loader.batch_size}, num_workers={test_loader.num_workers}"
     )
 
-    criterion = nn.MSELoss()  # mean squared loss
-    optimizer = torch.optim.Adam(  # an optimizer (not needed for eval)
-        model.parameters(), lr=0.001
-    )
+    criterion = nn.MSELoss()
 
-    # testing
+    # run through test set without computing gradients
     all_predictions = []
     all_targets = []
     all_geoids = []
@@ -99,21 +95,17 @@ def main():
         total_loss = 0
 
         for images, mask, incomes, geoids in test_loader:
-            # move tensors to device and ensure float dtype for images
             images = images.float().to(device)
             mask = mask.to(device)
             incomes = incomes.to(device)
 
-            # forward pass
             predictions = model(images, mask)
 
             all_predictions.extend(predictions.squeeze().tolist())
             all_targets.extend(incomes.tolist())
             all_geoids.extend(geoids)
 
-            # calculate error
             loss = criterion(predictions.squeeze(), incomes.float())
-
             total_loss += loss.item()
 
         avg_test_loss = total_loss / len(test_loader)
@@ -122,7 +114,7 @@ def main():
     print("target sample:", all_targets[:5])
     print("mean/std:", mean_income, std_income)
 
-    # convert back to dollars
+    # convert normalized predictions back to dollar values
     predictions_dollars = [p * std_income + mean_income for p in all_predictions]
     targets_dollars = [t * std_income + mean_income for t in all_targets]
 
@@ -135,7 +127,7 @@ def main():
     print(f"TESTING RMSE: {rmse}")
     print(f"TESTING Rsquared: {r2}")
 
-    # put results in a dataframe for inspection
+    # save results to CSV for analysis
     results = pd.DataFrame(
         {
             "GEOID": all_geoids,

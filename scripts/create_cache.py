@@ -8,7 +8,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 import pandas as pd  # read csv of image metadata
 from models.caching import create_image_cache  # helper to build the cache
-from models.resnet_frozen import ResNetRegressor  # model used to get transforms
+from models.resnet_multi import ResNetRegressor  # model used to get transforms
 
 
 # read the processed CSV that lists all tiles and GEOIDs

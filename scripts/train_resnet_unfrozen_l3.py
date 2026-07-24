@@ -1,4 +1,4 @@
-# optimzed for kaggle GPU run
+# optimized for kaggle GPU run
 
 
 def main():
@@ -6,7 +6,8 @@ def main():
     import sys
     from pathlib import Path
 
-    # ensure project imports work when run as a script
+    # The imports are inside main() so they don't run until the function is called.
+    # This is a Kaggle-friendly pattern — it keeps the global scope clean.
     PROJECT_ROOT = Path.cwd()
 
     if PROJECT_ROOT.name != "economic-satellite-project":
@@ -15,7 +16,7 @@ def main():
 
     from models.resnet_unfrozen_l3 import ResNetRegressorUnfrozenl3
     import pandas as pd
-    from models.dataset import CensusDataset
+    from models.dataset_multi import CensusDataset
     from torch.utils.data import DataLoader
     import torch
     from torch.utils.data import DataLoader
@@ -24,7 +25,7 @@ def main():
     from models.collate import collate_fn
     from src.splitting import split_by_tract
 
-    # instantiate frozen resnet and get its preprocessing transforms
+    # instantiate unfrozen resnet (layer 3+4 unfrozen) and grab its transforms
     model = ResNetRegressorUnfrozenl3()
     transform = model.weights.transforms()
 
@@ -87,8 +88,11 @@ def main():
         pin_memory=True,
     )
 
-    criterion = nn.MSELoss()  # mean squared loss
-    # adjust for each learned section of the model
+    criterion = nn.MSELoss()
+    # Different learning rates for different parts of the model.
+    # The unfrozen conv layers get a lower LR (1e-5) because they already
+    # know useful features — we just want to fine-tune.
+    # The regression head (fc) gets a higher LR (1e-4) since it starts from scratch.
     optimizer = torch.optim.AdamW(
         [
             {"params": model.model.layer3.parameters(), "lr": 1e-5},
@@ -102,19 +106,18 @@ def main():
     # training loop
     epochs = 25
 
-    model.train()  # enable training behavior
+    model.train()
 
     for epoch in range(epochs):
 
         total_loss = 0
 
         for batch_idx, (images, mask, incomes, geoids) in enumerate(train_loader):
-            # move tensors to device; cached images are float32
+            # move tensors to device
             images = images.float().to(device)
             mask = mask.to(device)
             incomes = incomes.to(device)
 
-            # forward pass
             with torch.cuda.amp.autocast():
                 predictions = model(images, mask)
                 loss = criterion(predictions.squeeze(), incomes.float())
