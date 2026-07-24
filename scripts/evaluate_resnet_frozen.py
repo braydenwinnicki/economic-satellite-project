@@ -18,9 +18,11 @@ model = ResNetRegressor()
 transform = model.weights.transforms()
 
 
+# load the saved weights from training. .state_dict() was saved as a dict,
+# .load_state_dict() loads it back into the model's parameters.
 model.load_state_dict(torch.load(PROJECT_ROOT / "models" / "resnet18_frozen.pth"))
 
-model.eval()
+model.eval()  # switch to evaluation mode (disables dropout, fixes batchnorm)
 
 
 # split data
@@ -28,6 +30,7 @@ model.eval()
 df = pd.read_csv(
     "/Users/braydenwinnicki/Desktop/econ_project/data/processed/processed_ct_tracts.csv"
 )
+# fix file paths in the CSV if they point to the old CODE directory
 df["image_path"] = df["image_path"].str.replace(
     "/Users/braydenwinnicki/CODE/econ_project",
     "/Users/braydenwinnicki/Desktop/econ_project"
@@ -35,31 +38,27 @@ df["image_path"] = df["image_path"].str.replace(
 
 df_train, df_test = train_test_split(df, test_size=0.20, random_state=42)
 
-# use z-scale normalizing to shrink numbers and help the dataset. dont use test.mean() becuase it would leak
-
+# Z-score normalization — must use the same mean/std from training
+# so the model sees test data in the same scale it was trained on
 mean_income = df_train["median_income"].mean()
 std_income = df_train["median_income"].std()
 
 df_train["median_income"] = (df_train["median_income"] - mean_income) / std_income
-
 df_test["median_income"] = (df_test["median_income"] - mean_income) / std_income
 
 train_dataset = CensusDataset(df_train, transform=transform)
-
 test_dataset = CensusDataset(df_test, transform=transform)
 
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=False)
-
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 
 
-criterion = nn.MSELoss()  # mean squared loss
-optimizer = torch.optim.Adam(  # an optimizer adjusts weights via gradient
-    model.parameters(), lr=0.001
-)
+criterion = nn.MSELoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
 
-# testing
+# testing loop — no gradients needed, so wrap in torch.no_grad()
+# to save memory and speed things up
 
 all_predictions = []
 all_targets = []
@@ -71,13 +70,13 @@ with torch.no_grad():
 
     for images, incomes in test_loader:
 
-        # forward pass
         predictions = model(images)
 
+        # extend appends each element of the list individually
+        # so we build up a flat list of all predictions/targets
         all_predictions.extend(predictions.squeeze().tolist())
         all_targets.extend(incomes.tolist())
 
-        # calculate error
         loss = criterion(predictions.squeeze(), incomes.float())
 
         total_loss += loss.item()
@@ -85,10 +84,9 @@ with torch.no_grad():
     avg_test_loss = total_loss / len(test_loader)
 
 
-# calculate error via MAE
-
+# Convert normalized predictions back to dollar amounts
+# undo the z-score: prediction * std + mean = original dollar value
 predictions_dollars = [p * std_income + mean_income for p in all_predictions]
-
 targets_dollars = [t * std_income + mean_income for t in all_targets]
 
 mae = mean_absolute_error(targets_dollars, predictions_dollars)

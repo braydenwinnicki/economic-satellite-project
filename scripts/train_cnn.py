@@ -25,13 +25,12 @@ df = pd.read_csv(
 
 df_train, df_test = train_test_split(df, test_size=0.20, random_state=42)
 
-# use z-scale normalizing to shrink numbers and help the dataset. dont use test.mean() becuase it would leak
-
+# Z-score normalization: shift incomes to mean=0, std=1.
+# Only use train's stats to avoid leaking test info into training.
 mean_income = df_train["median_income"].mean()
 std_income = df_train["median_income"].std()
 
 df_train["median_income"] = (df_train["median_income"] - mean_income) / std_income
-
 df_test["median_income"] = (df_test["median_income"] - mean_income) / std_income
 
 
@@ -39,25 +38,21 @@ transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTens
 
 
 train_dataset = CensusDataset(df_train, transform=transform)
-
 test_dataset = CensusDataset(df_test, transform=transform)
 
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
-
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True)
 
 
-criterion = nn.MSELoss()  # mean squared loss
-optimizer = torch.optim.Adam(  # an optimizer adjusts weights via gradient
-    model.parameters(), lr=0.001
-)
+criterion = nn.MSELoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
 
-# training
+# training loop
 
 epochs = 10
 
-model.train()  # turn on train mode
+model.train()
 
 for epoch in range(epochs):
 
@@ -65,19 +60,14 @@ for epoch in range(epochs):
 
     for images, incomes in train_loader:
 
-        # forward pass
+        # images shape: (batch_size, 3, 224, 224)
         predictions = model(images)
 
-        # calculate error
+        # squeeze() removes the extra dim: (batch_size, 1) → (batch_size,)
         loss = criterion(predictions.squeeze(), incomes.float())
 
-        # clear old gradients
         optimizer.zero_grad()
-
-        # calculate gradients
         loss.backward()
-
-        # update weights
         optimizer.step()
 
         total_loss += loss.item()
@@ -87,7 +77,7 @@ for epoch in range(epochs):
     print(f"train Epoch {epoch+1}: {avg_loss:.4f}")
 
 
-# save model
+# save the trained weights
 torch.save(model.state_dict(), PROJECT_ROOT / "models" / "cnn_v1.pth")
 
 print("Saved model to models/cnn_v1.pth")
