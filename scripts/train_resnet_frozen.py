@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 
+# Path(__file__) = this script's path; .resolve() makes it absolute; .parents[1] = 2 directories up = project root
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 from models.resnet_frozen import ResNetRegressor
@@ -15,6 +16,10 @@ from sklearn.metrics import mean_absolute_error
 
 
 model = ResNetRegressor()
+
+# .transforms() returns the exact image preprocessing that this pretrained model expects
+# This includes resizing to 224x224 AND normalizing with ImageNet's mean/std values
+# If you use basic transforms instead, the pretrained weights won't work as well
 transform = model.weights.transforms()
 
 
@@ -29,11 +34,15 @@ df_train, df_test = train_test_split(df, test_size=0.20, random_state=42)
 # Z-score normalization: shift incomes so they have mean=0 and std=1.
 # This helps the model converge faster. We only use train's mean/std
 # to avoid leaking information from test into training.
+# .mean() = average of the column; .std() = standard deviation (spread)
 mean_income = df_train["median_income"].mean()
 std_income = df_train["median_income"].std()
 
+# (value - mean) / std shifts each value so the new average is 0 and spread is 1
 df_train["median_income"] = (df_train["median_income"] - mean_income) / std_income
 
+# Apply the same transformation to test data using train's derived stats
+# If you used test.mean() here you'd be leaking info from test into training
 df_test["median_income"] = (df_test["median_income"] - mean_income) / std_income
 
 # Create datasets — CensusDataset loads images on-the-fly from file paths
@@ -42,33 +51,42 @@ test_dataset = CensusDataset(df_test, transform=transform)
 
 # DataLoader batches the data and shuffles it each epoch.
 # batch_size=32 means 32 images get processed together in one forward pass.
+# shuffle=True randomizes sample order each epoch (prevents overfitting to order)
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True)
 
 
-criterion = nn.MSELoss()  # mean squared error — penalizes large errors more
+# nn.MSELoss() = mean squared error — penalizes large errors more than small ones
+criterion = nn.MSELoss()
+# torch.optim.Adam adjusts model weights using gradient descent
+# model.parameters() gives the optimizer access to all trainable weights
+# lr=0.001 is the learning rate — controls how big each weight update is
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
 # training loop
 
 epochs = 10
 
-model.train()  # enables training-specific behavior (affects things like dropout/batchnorm)
+# model.train() enables training-specific behavior (affects batchnorm, dropout, etc.)
+model.train()
 
 for epoch in range(epochs):
 
     total_loss = 0
 
+    # Each inner loop iteration processes one batch of 32 images
     for images, incomes in train_loader:
 
-        # images shape: (batch_size, 3, 224, 224)
+        # images shape: (batch_size=32, 3 color channels, 224 height, 224 width)
+        # model(images) runs the forward pass through all ResNet layers
         predictions = model(images)
 
         # squeeze() removes the extra dimension: (batch_size, 1) → (batch_size,)
         # so it matches the shape of incomes for the loss calculation
+        # .float() ensures incomes are float32 (might be int64 from CSV)
         loss = criterion(predictions.squeeze(), incomes.float())
 
-        # zero_grad clears old gradient values so they don't accumulate
+        # zero_grad clears old gradient values so they don't accumulate across batches
         optimizer.zero_grad()
 
         # backward() computes the gradient of the loss with respect to
@@ -78,7 +96,8 @@ for epoch in range(epochs):
         # step() uses the gradients to update the model weights
         optimizer.step()
 
-        total_loss += loss.item()  # .item() extracts the scalar from a 1-element tensor
+        # .item() extracts the scalar value from a 1-element tensor as a Python float
+        total_loss += loss.item()
 
     avg_loss = total_loss / len(train_loader)
 

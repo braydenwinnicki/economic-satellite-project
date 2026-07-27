@@ -15,27 +15,3 @@ df.to_csv(
 )
 
 
-# matplotlib setup if needed
-"""
-import matplotlib.pyplot as plt
-
-# 1. Create data
-x = df.index
-y = df.median_income
-
-# 2. Setup canv as (width, height in inches)
-fig, ax = plt.subplots(figsize=(7, 4))
-
-# 3. Plot the data
-ax.plot(x, y, color="royalblue", linewidth=2)
-
-# 4. Customize labels & titles
-ax.set_title("Median Incomes", fontsize=14, fontweight="bold")
-ax.set_xlabel("IDX")
-ax.set_ylabel("Median Income")
-ax.grid(True, linestyle="--", alpha=0.6) # Adds a clean background grid
-
-
-# 5. Show it
-plt.show()
-"""

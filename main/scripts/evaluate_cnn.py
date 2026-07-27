@@ -109,35 +109,7 @@ print(f"TESTING MAE: {mae}")
 print(f"TESTING RMSE: {rmse}")
 print(f"TESTING Rsquared: {r2}")
 
-"""
-# graph results
-import matplotlib.pyplot as plt
 
-
-# Scatter plot
-plt.scatter(targets_dollars, predictions_dollars, alpha=0.6)
-
-# Perfect prediction line
-min_income = min(targets_dollars)
-max_income = max(targets_dollars)
-
-plt.plot(
-    [min_income, max_income],
-    [min_income, max_income],
-    "r--",
-    linewidth=2,
-    label="Perfect Prediction",
-)
-
-plt.xlabel("Actual Median Income ($)")
-plt.ylabel("Predicted Median Income ($)")
-plt.title("Predicted vs Actual Median Income")
-
-plt.legend()
-
-plt.tight_layout()
-plt.show()
-"""
 # put results in a dataframe
 
 results = df_test.copy().reset_index(drop=True)

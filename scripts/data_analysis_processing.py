@@ -2,40 +2,23 @@ import pandas as pd
 
 df = pd.read_csv("/Users/braydenwinnicki/CODE/econ_project/data/raw/ct_tracts.csv")
 
+# .columns returns all column names as an Index
+# .str.strip() removes leading/trailing whitespace from each column name
 df.columns = df.columns.str.strip()
 
 
+# -666666666 is a sentinel value used by the Census Bureau to mean "no data"
+# .replace(-666666666, pd.NA) replaces that sentinel with a proper missing value
+# pd.NA is pandas' own missing value type (type-aware, preserves dtypes)
 df["median_income"] = df["median_income"].replace(-666666666, pd.NA)
 
+# .dropna(subset="median_income") removes any row where median_income is NA
+# subset="median_income" limits the NA check to just that one column
 df = df.dropna(subset="median_income")
 
 
+# .to_csv() writes the DataFrame to a CSV file
+# index=False means don't write row numbers as a separate column
 df.to_csv(
     "/Users/braydenwinnicki/CODE/econ_project/data/processed_ct_tracts.csv", index=False
 )
-
-
-# matplotlib setup if needed
-"""
-import matplotlib.pyplot as plt
-
-# 1. Create data
-x = df.index
-y = df.median_income
-
-# 2. Setup canv as (width, height in inches)
-fig, ax = plt.subplots(figsize=(7, 4))
-
-# 3. Plot the data
-ax.plot(x, y, color="royalblue", linewidth=2)
-
-# 4. Customize labels & titles
-ax.set_title("Median Incomes", fontsize=14, fontweight="bold")
-ax.set_xlabel("IDX")
-ax.set_ylabel("Median Income")
-ax.grid(True, linestyle="--", alpha=0.6) # Adds a clean background grid
-
-
-# 5. Show it
-plt.show()
-"""

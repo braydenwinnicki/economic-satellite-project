@@ -120,7 +120,7 @@ def make_bar_chart(metrics_df):
         ax.set_ylabel(metric.upper())
 
         for i, v in enumerate(values):
-            ax.text(i, v + max(values) * 0.01, str(round(v, 4)), ha="center", fontsize=9)
+            ax.text(i, v + max(values) * 0.01, f"{v:.4f}", ha="center", fontsize=9)
 
     fig.suptitle("Model Performance Comparison", fontsize=15, fontweight="bold", y=1.02)
     plt.tight_layout()
@@ -139,8 +139,6 @@ def make_scatter_plots(models):
     fig, axes = plt.subplots(n_rows, n_cols, figsize=(14, 5 * n_rows))
     if n_rows == 1:
         axes = [axes]
-    if n_cols == 1:
-        axes = [[ax] for ax in axes]
 
     for i, name in enumerate(model_names):
         row = i // n_cols
@@ -159,7 +157,7 @@ def make_scatter_plots(models):
         ax.plot([min_val, max_val], [min_val, max_val], "r--", linewidth=1.5, label="Ideal (y=x)")
 
         r2 = r2_score(actual, predicted)
-        ax.text(0.05, 0.95, "R2 = " + str(round(r2, 4)),
+        ax.text(0.05, 0.95, f"R2 = {r2:.4f}",
                 transform=ax.transAxes, fontsize=10, fontweight="bold",
                 verticalalignment="top",
                 bbox=dict(boxstyle="round", facecolor="white", edgecolor="gray"))
@@ -209,10 +207,6 @@ def make_residual_plot(models):
 
 
 def main():
-    print("=" * 60)
-    print("make_comparison_charts.py")
-    print("=" * 60)
-
     sns.set_theme(style="whitegrid")
 
     print("\nLoading CSV files from results/ ...")
