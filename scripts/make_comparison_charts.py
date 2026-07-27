@@ -13,6 +13,7 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -90,13 +91,17 @@ def calculate_metrics(models):
         rmse = np.sqrt(mean_squared_error(actual, predicted))
         r2 = r2_score(actual, predicted)
 
-        results.append({
-            "model": name,
-            "mae": mae,
-            "rmse": rmse,
-            "r2": r2
-        })
-        print("  ", name, "  MAE =", round(mae, 2), "  RMSE =", round(rmse, 2), "  R2 =", round(r2, 4))
+        results.append({"model": name, "mae": mae, "rmse": rmse, "r2": r2})
+        print(
+            "  ",
+            name,
+            "  MAE =",
+            round(mae, 2),
+            "  RMSE =",
+            round(rmse, 2),
+            "  R2 =",
+            round(r2, 4),
+        )
 
     return pd.DataFrame(results)
 
@@ -124,7 +129,11 @@ def make_bar_chart(metrics_df):
 
     fig.suptitle("Model Performance Comparison", fontsize=15, fontweight="bold", y=1.02)
     plt.tight_layout()
-    plt.savefig(os.path.join(FIGURES_DIR, "model_performance_comparison.png"), dpi=300, bbox_inches="tight")
+    plt.savefig(
+        os.path.join(FIGURES_DIR, "model_performance_comparison.png"),
+        dpi=300,
+        bbox_inches="tight",
+    )
     plt.close()
     print("  Saved model_performance_comparison.png")
 
@@ -154,13 +163,25 @@ def make_scatter_plots(models):
         all_values = list(actual) + list(predicted)
         min_val = min(all_values)
         max_val = max(all_values)
-        ax.plot([min_val, max_val], [min_val, max_val], "r--", linewidth=1.5, label="Ideal (y=x)")
+        ax.plot(
+            [min_val, max_val],
+            [min_val, max_val],
+            "r--",
+            linewidth=1.5,
+            label="Ideal (y=x)",
+        )
 
         r2 = r2_score(actual, predicted)
-        ax.text(0.05, 0.95, f"R2 = {r2:.4f}",
-                transform=ax.transAxes, fontsize=10, fontweight="bold",
-                verticalalignment="top",
-                bbox=dict(boxstyle="round", facecolor="white", edgecolor="gray"))
+        ax.text(
+            0.05,
+            0.95,
+            f"R2 = {r2:.4f}",
+            transform=ax.transAxes,
+            fontsize=10,
+            fontweight="bold",
+            verticalalignment="top",
+            bbox=dict(boxstyle="round", facecolor="white", edgecolor="gray"),
+        )
 
         ax.set_xlabel("Actual Median Income ($)")
         ax.set_ylabel("Predicted Median Income ($)")
@@ -173,9 +194,15 @@ def make_scatter_plots(models):
         col = i % n_cols
         axes[row][col].set_visible(False)
 
-    fig.suptitle("Predicted vs Actual Median Income", fontsize=15, fontweight="bold", y=1.01)
+    fig.suptitle(
+        "Predicted vs Actual Median Income", fontsize=15, fontweight="bold", y=1.01
+    )
     plt.tight_layout()
-    plt.savefig(os.path.join(FIGURES_DIR, "predicted_vs_actual.png"), dpi=300, bbox_inches="tight")
+    plt.savefig(
+        os.path.join(FIGURES_DIR, "predicted_vs_actual.png"),
+        dpi=300,
+        bbox_inches="tight",
+    )
     plt.close()
     print("  Saved predicted_vs_actual.png")
 
@@ -188,7 +215,15 @@ def make_residual_plot(models):
         residuals = df["actual"].values - df["prediction"].values
         color = COLORS.get(name, "gray")
 
-        sns.kdeplot(residuals, ax=ax, label=name, color=color, fill=True, alpha=0.15, linewidth=2)
+        sns.kdeplot(
+            residuals,
+            ax=ax,
+            label=name,
+            color=color,
+            fill=True,
+            alpha=0.15,
+            linewidth=2,
+        )
 
         mean_res = np.mean(residuals)
         ax.axvline(mean_res, color=color, linestyle=":", linewidth=1.2)
@@ -201,7 +236,11 @@ def make_residual_plot(models):
     ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig(os.path.join(FIGURES_DIR, "residual_distributions.png"), dpi=300, bbox_inches="tight")
+    plt.savefig(
+        os.path.join(FIGURES_DIR, "residual_distributions.png"),
+        dpi=300,
+        bbox_inches="tight",
+    )
     plt.close()
     print("  Saved residual_distributions.png")
 

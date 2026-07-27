@@ -30,7 +30,7 @@ df = pd.read_csv(
 
 df["image_path"] = df["image_path"].str.replace(
     "/Users/braydenwinnicki/CODE/econ_project",
-    "/Users/braydenwinnicki/Desktop/econ_project"
+    "/Users/braydenwinnicki/Desktop/econ_project",
 )
 
 df_train, df_test = train_test_split(df, test_size=0.20, random_state=42)

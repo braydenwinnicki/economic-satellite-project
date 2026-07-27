@@ -13,5 +13,3 @@ df = df.dropna(subset="median_income")
 df.to_csv(
     "/Users/braydenwinnicki/CODE/econ_project/data/processed_ct_tracts.csv", index=False
 )
-
-

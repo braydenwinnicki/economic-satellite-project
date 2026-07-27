@@ -34,8 +34,8 @@ class ConvNN(nn.Module):
         # maps of size 54x54. We flatten that into a 1D vector of 16*54*54 = 46656
         # values, then pass through three fully-connected layers.
         self.fc1 = nn.Linear(16 * 54 * 54, 120)  # compress down to 120 neurons
-        self.fc2 = nn.Linear(120, 84)             # further compress to 84
-        self.fc3 = nn.Linear(84, 1)               # final output: 1 income prediction
+        self.fc2 = nn.Linear(120, 84)  # further compress to 84
+        self.fc3 = nn.Linear(84, 1)  # final output: 1 income prediction
 
     def forward(self, X):
         # X shape: (batch_size, 3, 224, 224)
