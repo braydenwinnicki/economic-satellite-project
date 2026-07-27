@@ -19,7 +19,7 @@ class CensusDataset(Dataset):
     """
 
     def __init__(self, data, transform=transform):
-        # `data` is a DataFrame — each row = one tile + its income
+        # `data` is a DataFrame -- each row = one tile + its income
         self.data = data
         self.transform = transform
 

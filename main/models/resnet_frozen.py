@@ -15,7 +15,7 @@ class ResNetRegressor(nn.Module):
         super().__init__()
 
         # ResNet18_Weights.DEFAULT loads the best available pretrained weights
-        # (trained on ImageNet — 1000 object categories)
+        # (trained on ImageNet -- 1000 object categories)
         self.weights = ResNet18_Weights.DEFAULT
         self.model = resnet18(weights=self.weights)
 
@@ -31,7 +31,7 @@ class ResNetRegressor(nn.Module):
         self.model.fc = nn.Linear(self.model.fc.in_features, 1)
 
     def forward(self, x):
-        # x shape: (batch_size, 3, 224, 224) — one image per sample
+        # x shape: (batch_size, 3, 224, 224) -- one image per sample
         # The model runs each image through ResNet's conv layers, then the
         # new fc layer, and outputs (batch_size, 1).
         return self.model(x)
