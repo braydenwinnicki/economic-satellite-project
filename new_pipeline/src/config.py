@@ -54,10 +54,13 @@ else:
     FIGURES_DIR = DATA_DIR / "figures"
     MODELS_DIR = DATA_DIR / "models"
 
-# Create output directories if they don't exist (only on local Mac, not on Kaggle)
+# Create output directories if they don't exist
+# On Kaggle, IMAGE_DIR points to the read-only input dataset so we skip it
+_dirs_to_create = [CACHE_DIR, RESULTS_DIR, FIGURES_DIR, MODELS_DIR]
 if ENV != "kaggle":
-    for d in [IMAGE_DIR, CACHE_DIR, RESULTS_DIR, FIGURES_DIR, MODELS_DIR]:
-        d.mkdir(parents=True, exist_ok=True)
+    _dirs_to_create.append(IMAGE_DIR)
+for d in _dirs_to_create:
+    d.mkdir(parents=True, exist_ok=True)
 
 
 # ── DataLoader defaults ────────────────────────────────────────────────
