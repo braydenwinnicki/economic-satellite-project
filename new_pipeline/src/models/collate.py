@@ -1,7 +1,7 @@
 import torch
 
 
-def collate_fn(batch, device=None):
+def collate_fn(batch):
     """
     Custom collate function - required because each tract has a DIFFERENT
     number of tiles, so torch can't just stack them into one tensor like
@@ -12,10 +12,9 @@ def collate_fn(batch, device=None):
     marking which entries are real tiles (True) vs padding (False), so the
     model's pooling step can ignore the padded entries.
 
-    Parameters
-    ----------
-    device : torch.device, optional
-        Device to place tensors on (e.g. mps, cuda, cpu). If None, stays on CPU.
+    All tensors are created on CPU. The training/evaluation loop moves them
+    to the target device after the DataLoader worker returns them. This
+    avoids CUDA re-initialization errors in forked worker processes.
     """
 
     images_list, incomes, geoids = zip(
@@ -29,8 +28,8 @@ def collate_fn(batch, device=None):
 
     # allocate padded tensors, all zeros to start
     padded_images = torch.zeros(
-        batch_size, max_n, 3, 224, 224, device=device
-    )  # create a tensor of zeros, one for each image
+        batch_size, max_n, 3, 224, 224
+    )  # create a tensor of zeros, one for each image (on CPU)
     """
         if n = 5
         padded images:
@@ -41,8 +40,8 @@ def collate_fn(batch, device=None):
         """
 
     mask = torch.zeros(
-        batch_size, max_n, dtype=torch.bool, device=device
-    )  # turns all zeros into falses
+        batch_size, max_n, dtype=torch.bool
+    )  # turns all zeros into falses (on CPU)
 
     """
         if n = 5
@@ -55,8 +54,6 @@ def collate_fn(batch, device=None):
 
     for i, imgs in enumerate(images_list):
         n = imgs.shape[0]
-        # move images to the target device if needed
-        imgs = imgs.to(device) if device is not None else imgs
         padded_images[i, :n] = (
             imgs  # fill in the real tiles, tract 1, tile slots 0 through n-1, all channels, all rows, all columns(ommited in code)
         )
@@ -96,6 +93,6 @@ def collate_fn(batch, device=None):
 
         """
 
-    incomes = torch.tensor(incomes, dtype=torch.float32, device=device)
+    incomes = torch.tensor(incomes, dtype=torch.float32)
 
     return padded_images, mask, incomes, geoids

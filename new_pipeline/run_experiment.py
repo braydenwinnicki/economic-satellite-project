@@ -347,7 +347,7 @@ def main():
             shuffle=True,
             num_workers=num_workers,
             persistent_workers=(num_workers > 0),
-            collate_fn=lambda batch: collate_fn(batch, device=device),
+            collate_fn=collate_fn,
         )
         test_loader = DataLoader(
             test_dataset,
@@ -355,7 +355,7 @@ def main():
             shuffle=False,
             num_workers=num_workers,
             persistent_workers=(num_workers > 0),
-            collate_fn=lambda batch: collate_fn(batch, device=device),
+            collate_fn=collate_fn,
         )
     else:
         # Single-tile dataset: flat tensors
