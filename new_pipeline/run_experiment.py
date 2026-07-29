@@ -31,11 +31,15 @@ Usage
         --device mps \\
         --num-workers 4
 
-    # On Kaggle (set ECON_ENV=kaggle for different paths):
-    export ECON_ENV=kaggle
-    python3 new_pipeline/run_experiment.py \\
-        --cache /kaggle/input/data/cache/09_tracts.pt \\
-        --model resnet_frozen
+    # On Kaggle:
+        import os
+        os.environ["ECON_ENV"] = "kaggle"
+        os.environ["ECON_KAGGLE_DATASET"] = "test1data"  # optional, has a default
+
+        !rm -rf economic-satellite-project
+        !cd /kaggle/working && git clone -b main https://github.com/braydenwinnicki/economic-satellite-project.git
+
+        !python3 /kaggle/working/economic-satellite-project/new_pipeline/run_experiment.py --cache /kaggle/input/datasets/braydenwinnicki/test1data/09_tracts_multi.pt --model resnet_frozen --mode train --epochs 10 --batch-size 8 --lr 0.001 --random-state 42 --num-workers 2 --csv /kaggle/input/datasets/braydenwinnicki/test1data/09_tracts_multi.csv 
 
 The pipeline:
   1. Loads the pre-computed .pt cache
