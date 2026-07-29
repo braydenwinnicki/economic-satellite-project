@@ -1,0 +1,78 @@
+# =========================
+# Data (do not commit)
+# =========================
+
+data/raw/
+data/processed/
+
+# Large ML datasets / caches
+*.pt
+*.pth
+*.npy
+*.npz
+*.h5
+*.hdf5
+
+
+# =========================
+# Model checkpoints
+# =========================
+
+models/*.pth
+models/*.pt
+checkpoints/
+
+
+# =========================
+# Python
+# =========================
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+
+# =========================
+# Jupyter
+# =========================
+
+.ipynb_checkpoints/
+
+
+# =========================
+# macOS
+# =========================
+
+.DS_Store
+
+
+# =========================
+# IDE
+# =========================
+
+.vscode/
+.idea/
+
+
+# =========================
+# Logs / experiments
+# =========================
+
+*.log
+runs/
+wandb/
+tensorboard/
+
+
+# =========================
+# Temporary files
+# =========================
+
+*.tmp
+*.temp
+*.swp

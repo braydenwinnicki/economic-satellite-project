@@ -1,0 +1,1 @@
+python3 new_pipeline/get_new_data.py --shapefile "/Users/braydenwinnicki/Downloads/cb_2025_09_tract_500k/cb_2025_09_tract_500k.shp"  --fips 09 --mode multi --census-api-link "https://api.census.gov/data/2023/acs/acs5"
