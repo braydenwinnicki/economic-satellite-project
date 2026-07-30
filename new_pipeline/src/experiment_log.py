@@ -47,6 +47,8 @@ class ExperimentLog:
                 "lr": args.lr,
                 "random_state": args.random_state,
                 "test_size": args.test_size,
+                "weights": str(args.weights) if hasattr(args, "weights") and args.weights else None,
+                "notes": args.notes if hasattr(args, "notes") and args.notes else None,
             },
             "data_info": {
                 "is_multi_tile": is_multi_tile,
