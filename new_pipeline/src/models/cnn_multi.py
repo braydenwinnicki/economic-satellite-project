@@ -1,9 +1,52 @@
+"""
+cnn_multi.py — Multi-tile CNN for satellite imagery regression.
+
+Extends the single-tile CNN architecture to handle multiple satellite images
+per census tract. Each tile is processed independently through the same
+convolutional layers, then tile-level predictions are averaged (using a
+mask to ignore padding) to produce a single tract-level income prediction.
+
+See Also
+--------
+cnn.py : The single-tile version of this model.
+collate.py : Custom batching logic that pads variable-length tile sets.
+"""
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 
 class MultiTileConvNN(nn.Module):
+    """
+    A small convolutional neural network for multi-tile satellite imagery.
+
+    Processes each tile independently through shared conv layers, then
+    averages tile-level predictions (masked to ignore padding) into a
+    single tract-level income estimate.
+
+    Architecture:
+      Conv1 (3->6) - ReLU - MaxPool2D
+      Conv2 (6->16) - ReLU - MaxPool2D
+      Flatten -> FC1 (16*54*54 -> 120) - ReLU
+      FC2 (120 -> 84) - ReLU
+      FC3 (84 -> 1) -> tile-level prediction
+      Masked average over tiles -> tract-level prediction
+
+    Parameters
+    ----------
+    X : torch.Tensor
+        Shape ``(B, T, C, H, W)`` where B=batch, T=tiles, C=channels,
+        H=height, W=width.
+    mask : torch.Tensor
+        Shape ``(B, T)`` — boolean mask where True indicates a real tile
+        and False indicates padding.
+
+    Returns
+    -------
+    torch.Tensor
+        Shape ``(B, 1)`` — one income prediction per tract.
+    """
 
     def __init__(self):
         super().__init__()

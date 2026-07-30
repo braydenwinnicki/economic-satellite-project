@@ -1,3 +1,19 @@
+"""
+config.py — Central configuration for the ML pipeline.
+
+Handles environment detection (Mac vs Kaggle), device selection (MPS, CUDA,
+CPU), file path resolution, and DataLoader worker defaults.
+
+Environment Variables
+---------------------
+ECON_ENV : str
+    "mac" (default) or "kaggle" — switches file paths and defaults.
+ECON_KAGGLE_DATASET : str
+    Name of the Kaggle Dataset input (default: "economic-satellite-data").
+ECON_NUM_WORKERS : int
+    Override the default DataLoader worker count.
+"""
+
 import os
 from pathlib import Path
 

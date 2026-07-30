@@ -1,22 +1,53 @@
+"""
+collate.py — Custom collation for variable-length multi-tile batches.
+
+PyTorch's default collation cannot handle datasets where each sample has a
+different number of tiles. This module provides ``collate_fn``, which pads
+all tile sets in a batch to the same length and produces a boolean mask so
+downstream models can ignore the padded entries.
+
+All tensors are created on CPU. The training loop moves them to the target
+device after the DataLoader returns them, avoiding CUDA re-initialization
+errors in forked worker processes.
+"""
+
 import torch
 
 
 def collate_fn(batch):
     """
-    Custom collate function - required because each tract has a DIFFERENT
-    number of tiles, so torch can't just stack them into one tensor like
-    it would with fixed-size items.
+    Custom collate function for variable-length multi-tile batches.
 
-    Pads every bag in this batch up to the size of the LARGEST bag in this
-    specific batch (not the dataset-wide max), and returns a boolean mask
-    marking which entries are real tiles (True) vs padding (False), so the
-    model's pooling step can ignore the padded entries.
+    Because each tract has a different number of tiles, PyTorch's default
+    ``default_collate`` cannot stack them. This function pads every tract's
+    tile set to the size of the largest set *in this batch* and returns a
+    boolean mask indicating which tiles are real vs. padding.
 
-    All tensors are created on CPU. The training/evaluation loop moves them
-    to the target device after the DataLoader worker returns them. This
-    avoids CUDA re-initialization errors in forked worker processes.
+    Parameters
+    ----------
+    batch : list of tuples
+        Each element is ``(images, income, geoid)`` where:
+          - images: ``torch.Tensor`` of shape ``(n_tiles, 3, 224, 224)``
+          - income: float (the z-score normalized median income)
+          - geoid: str (the GEOID for the tract)
+
+    Returns
+    -------
+    padded_images : torch.Tensor
+        Shape ``(B, max_n, 3, 224, 224)`` — zero-padded image tensor.
+    mask : torch.BoolTensor
+        Shape ``(B, max_n)`` — True where a real tile exists, False for padding.
+    incomes : torch.Tensor
+        Shape ``(B,)`` — float32 tensor of z-score normalized incomes.
+    geoids : tuple of str
+        The GEOIDs for each sample in the batch (not padded).
+
+    Notes
+    -----
+    Padding occurs at the batch level only, so ``max_n`` can vary between
+    batches. This is more memory-efficient than padding to the dataset-wide
+    maximum tile count.
     """
-
     images_list, incomes, geoids = zip(
         *batch
     )  # unzip the list of (images, income) tuples into seperate lists

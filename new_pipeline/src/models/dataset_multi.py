@@ -1,3 +1,14 @@
+"""
+dataset_multi.py — PyTorch Dataset for multi-tile satellite imagery.
+
+Each census tract has a variable number of satellite tiles. This dataset
+wraps the pre-built .pt cache (produced by ``build_tract_cache``) and
+looks up image stacks by GEOID, pairing them with their income labels.
+
+The companion ``collate_fn`` in ``collate.py`` handles padding the
+variable-length tile sets into fixed-size batches.
+"""
+
 import pandas as pd  # DataFrame handling for CSVs and tabular data
 from PIL import Image  # Image IO utilities (used elsewhere in project)
 import torch  # main PyTorch package for tensors and I/O
@@ -17,6 +28,25 @@ class MultiTileDataset(Dataset):
 
     The DataLoader (used in the training/eval scripts) will call __getitem__
     repeatedly and batch the results using collate_fn.
+
+    Parameters
+    ----------
+    data : pd.DataFrame
+        Tile-level DataFrame with a ``GEOID`` column. Rows are grouped by
+        GEOID to define the dataset samples (one per tract).
+    cache_file : str or Path
+        Path to the .pt cache file produced by ``build_tract_cache``.
+        Must contain ``cache["images"]`` (dict mapping GEOID -> tensor)
+        and ``cache["income"]`` (dict mapping GEOID -> float).
+
+    Yields (via __getitem__)
+    ------------------------
+    images : torch.Tensor
+        Shape ``(n_tiles, 3, 224, 224)`` — all tiles for this tract.
+    income : float
+        The median household income for this tract (z-score normalized).
+    geoid : str
+        The GEOID string for this tract.
     """
 
     def __init__(self, data, cache_file):
