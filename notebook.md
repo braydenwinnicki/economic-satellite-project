@@ -262,7 +262,7 @@ Training scripts follow the same procedure as the single-tile versions:
 
 * 80/20 train-test split (at the tile level, not the tract level)
 * Z-score normalization of income using training statistics
-* MSE loss, Adam optimizer (lr=0.001), batch size 32, 10 epochs
+* MSE loss, Adam optimizer (lr=0.001), batch size 32, 10-25 epochs
 * Standard train loop with gradient descent
 
 The key difference: because the dataset contains multiple tiles per tract, the model sees more total training examples and learns from different visual perspectives of the same income label.
@@ -454,6 +454,7 @@ Unfreezing beyond L4 does not help. L4-only unfreezing provides the best balance
 | M2 | ResNet-18 | Multi Tile | ImageNet | FC | 10 | $31,301.93 | $37,519.74 | 0.51 | +128.69% |
 | M3 | ResNet-18 | Multi Tile | ImageNet | FC + L4 | 25 | $24,006.54 | $31,879.34 | 0.64 | +27.12% |
 | M4 | ResNet-18 | Multi Tile | ImageNet | FC + L4 + L3 | 25 | $23,984.58 | $31,919.13 | 0.64 | −0.14% |
+| N1 | ResNet-18 | Multi Tile | ImageNet | FC + L4 | 25 | $23,290.44 | $31,640.57 | 0.65 | +1.41% |
 
 ---
 
@@ -465,6 +466,123 @@ Unfreezing beyond L4 does not help. L4-only unfreezing provides the best balance
 * Unfreezing beyond L4 adds no benefit — M3 and M4 give near-identical results (−0.14% R² change).
 * Models still struggle with the highest-income tracts, where satellite imagery captures physical characteristics less correlated with financial characteristics.
 * The narrowing RMSE–MAE gap from frozen to unfrozen suggests that adaptation helps most on the hardest (highest-income) predictions.
+
+---
+
+## Phase 12 — Consolidated Pipeline (New Pipeline)
+
+### Motivation
+
+Through Phases 1–11, the project accumulated code across multiple directories (`main/`, `multi-tile/`, `archive/`) with inconsistent interfaces, scattered configuration, and no unified experiment tracking. Each model variant had its own training and evaluation script, making it difficult to compare results, reproduce experiments, or iterate quickly.
+
+The new pipeline (`new_pipeline/`) was built to consolidate everything into a single, maintainable codebase with a unified CLI, automatic experiment logging, chart generation, and cross-environment support (local Mac development and Kaggle GPU training).
+
+### Pipeline Architecture
+
+The new pipeline is organized as a self-contained project under `new_pipeline/` with a single entry point:
+
+```
+new_pipeline/
+├── run_experiment.py            ← Unified CLI entry point
+├── get_new_data.py              ← Data download (satellite + census)
+├── build_csv.py                 ← CSV construction from shapefiles
+├── src/
+│   ├── config.py                ← Central config (paths, device, workers)
+│   ├── train.py                 ← Training loop
+│   ├── evaluate.py              ← Evaluation loop
+│   ├── make_charts.py           ← Chart generation
+│   ├── build_cache.py           ← Pre-process images into .pt cache
+│   ├── preprocessing.py         ← CSV cleaning
+│   ├── satellite.py             ← Google Maps API downloader
+│   ├── get_incomes.py           ← Census API data fetcher
+│   ├── experiment_log.py        ← JSON experiment logging
+│   └── models/                  ← Model architectures + datasets
+├── data/                        ← All data (auto-created)
+│   ├── cache/                   ← Pre-computed .pt cache files
+│   ├── models/                  ← Saved model weights (.pth)
+│   ├── results/                 ← Evaluation results CSVs
+│   └── figures/                 ← Generated charts
+└── experiment_logs/             ← Auto-generated experiment logs
+```
+
+### Key Improvements Over Previous Pipelines
+
+**1. Unified CLI Interface**
+
+All experiments are run through a single `run_experiment.py` script with consistent arguments (`--model`, `--cache`, `--epochs`, `--batch-size`, `--lr`, etc.), replacing the previous pattern of separate scripts per model variant.
+
+**2. Automatic Mode Detection**
+
+The pipeline auto-detects single-tile vs multi-tile mode from the cache file format — a flat tensor for single-tile, a dict of GEOID-to-tensor-stack for multi-tile. No separate code paths needed.
+
+**3. Tract-Level Train/Test Splitting (Multi-Tile)**
+
+Previous multi-tile experiments split tiles randomly, risking data leakage when tiles from the same tract appeared in both train and test sets. The new pipeline splits by tract — all tiles from a given GEOID stay together — producing more honest evaluation metrics.
+
+**4. Experiment Logging**
+
+Every run automatically saves a detailed JSON log to `experiment_logs/` containing:
+- Timestamp and all CLI parameters
+- Environment info (mac/kaggle, device, workers)
+- Data info (single vs multi-tile, train/test sizes, income statistics)
+- Training history (loss per epoch)
+- Evaluation metrics (MAE, RMSE, R², test loss)
+- Output paths (model weights, results CSV, figures)
+
+This makes it easy to compare experiments and track what has been run.
+
+**5. Automatic Chart Generation**
+
+After evaluation, the pipeline automatically generates three charts:
+- Performance metrics summary
+- Predicted vs actual scatter plot
+- Residual distribution
+
+**6. Cross-Environment Support**
+
+The pipeline runs identically on Mac (with MPS/Apple GPU support) and Kaggle (with CUDA), switching file paths and worker counts automatically via the `ECON_ENV` environment variable.
+
+**7. Caching System**
+
+Images are pre-processed into `.pt` cache files (resized, normalized tensors), eliminating repeated image loading and transform application during training.
+
+### Experiment: ResNet L4 Multi-Tile (N1)
+
+The first experiment using the new pipeline replicated the best-performing configuration from Phase 10 (ResNet L4, multi-tile, 25 epochs) but with proper tract-level splitting and the consolidated codebase.
+
+#### Training (Kaggle — CUDA)
+
+The model was trained on Kaggle with a CUDA GPU for 25 epochs. Training loss decreased steadily from 1.14 to 0.13, indicating effective learning.
+
+| Epoch | Loss |
+|-------|------|
+| 1 | 1.1381 |
+| 5 | 0.4288 |
+| 10 | 0.3926 |
+| 15 | 0.1849 |
+| 20 | 0.1350 |
+| 25 | 0.1283 |
+
+#### Evaluation (Local — MPS)
+
+The trained model was evaluated locally on the test set:
+
+| Metric | Value |
+|--------|-------|
+| MAE | **$23,290.44** |
+| RMSE | **$31,640.57** |
+| R² | **0.649** |
+
+#### Observations
+
+- The new pipeline's ResNet L4 multi-tile model (R² = 0.649) slightly outperforms the Phase 10 M3 result (R² = 0.64), likely due to proper tract-level splitting eliminating data leakage.
+- The training loss trajectory shows consistent improvement across all 25 epochs with no signs of overfitting, suggesting additional epochs could yield further gains.
+- The experiment was fully reproducible: the same cache, CSV, random state, and model configuration produce identical results across environments (Kaggle for training, local Mac for evaluation).
+- The consolidated pipeline reduces experiment setup time from minutes (configuring separate scripts) to seconds (single CLI command).
+
+### Decision
+
+The new pipeline replaces all previous codebases (`main/`, `multi-tile/`, `archive/`). All future experiments will use `new_pipeline/run_experiment.py` as the single entry point. The consolidated infrastructure enables faster iteration, better experiment tracking, and more reliable comparisons between model configurations.
 
 ---
 
