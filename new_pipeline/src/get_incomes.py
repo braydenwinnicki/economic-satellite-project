@@ -1,10 +1,41 @@
+"""
+get_incomes.py — Fetch median household income from the U.S. Census API.
+
+For each given FIPS code, retrieves the B19013_001E variable (median household
+income) for all tracts in that state. Returns a DataFrame keyed by GEOID.
+
+Requires the CENSUS_API_KEY environment variable to be set.
+"""
+
 import os
 import requests
 import pandas as pd
 
 
 def get_income_data(fips_code, census_api_link):
+    """
+    Fetch median household income for all tracts in a state from the Census API.
 
+    Parameters
+    ----------
+    fips_code : str
+        State FIPS code (e.g. "09" for Connecticut).
+    census_api_link : str
+        Census API base URL (e.g. "https://api.census.gov/data/2023/acs/acs5").
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame with columns ``GEOID`` (str) and ``median_income`` (str,
+        parsed from the API response).
+
+    Notes
+    -----
+    The Census API returns data as a JSON list-of-lists. The first row is a
+    header, and subsequent rows are data. The ``B19013_001E`` variable holds
+    median household income. The API may return the string ``-666666666`` as a
+    sentinel for missing values; downstream preprocessing handles this.
+    """
     # os.getenv() reads an environment variable from your system
     # You need to set CENSUS_API_KEY in your shell profile or .env file
     api_key = os.getenv("CENSUS_API_KEY")
@@ -12,8 +43,7 @@ def get_income_data(fips_code, census_api_link):
     if api_key is None:
         raise ValueError("CENSUS_API_KEY not found.")
 
-    # access census api
-    # params dict gets converted to URL query parameters by requests.get()
+    # Build query parameters for the Census API
     # "get": "B19013_001E" — Census variable code for median household income
     # "for": "tract:*" — request data for all census tracts
     # "in": "state:XX" — filter to the specified FIPS code

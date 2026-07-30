@@ -1,3 +1,20 @@
+"""
+build_csv.py — Download satellite images and build tile-level CSVs.
+
+Two modes:
+  - Single-tile: one centroid image per census tract (build_csv)
+  - Multi-tile: multiple grid-sampled images per tract (build_csv_multi)
+
+Both modes:
+  1. Read a census-tract shapefile
+  2. Compute sampling points (centroid or grid)
+  3. Download satellite images via the Google Maps Static API
+  4. Merge with Census income data
+  5. Save as a CSV with one row per tile
+
+Requires the GOOGLE_MAPS_API_KEY environment variable to be set.
+"""
+
 import sys
 from pathlib import Path
 import pandas as pd
@@ -22,7 +39,18 @@ MAX_TILES = 50
 def tiles_for_area(area_sq_m):
     """Scale tile count with the square root of area (so tile count
     scales with linear dimension, not raw area - keeps things from
-    exploding for huge rural tracts)."""
+    exploding for huge rural tracts).
+
+    Parameters
+    ----------
+    area_sq_m : float
+        Tract area in square meters (after reprojection to EPSG:3857).
+
+    Returns
+    -------
+    int
+        Number of tiles to sample, clamped between MIN_TILES and MAX_TILES.
+    """
     area_sq_km = area_sq_m / 1_000_000  # convert to km for ease
     n = (
         int(np.sqrt(area_sq_km)) * 3 + MIN_TILES
@@ -34,7 +62,20 @@ def tiles_for_area(area_sq_m):
 
 def get_grid_points(polygon, n):
     """Return up to n points spread across the polygon's bounding box,
-    keeping only ones that fall inside the actual tract shape."""
+    keeping only ones that fall inside the actual tract shape.
+
+    Parameters
+    ----------
+    polygon : shapely.geometry.Polygon
+        The tract polygon (in lat/lon coordinates).
+    n : int
+        Desired number of sample points.
+
+    Returns
+    -------
+    list of (float, float)
+        List of (lat, lon) tuples that fall within the polygon.
+    """
     minx, miny, maxx, maxy = (
         polygon.bounds
     )  # get x,y of smallest rectangle that can fully fit the tract
@@ -67,7 +108,28 @@ def get_grid_points(polygon, n):
 
 
 def build_csv_multi(shapefile_path, fips_code, census_api_link):
-    """Build a CSV with multiple tiles per tract using grid sampling."""
+    """Build a CSV with multiple tiles per tract using grid sampling.
+
+    Uses a grid-based sampling approach to select image coordinates within
+    each tract polygon. Tile count scales with tract area (via sqrt) to
+    provide proportionate coverage. Saves checkpoints every 500 rows to
+    avoid data loss on long downloads.
+
+    Parameters
+    ----------
+    shapefile_path : str or Path
+        Path to the census tract shapefile (.shp).
+    fips_code : str
+        State FIPS code (e.g. "09" for Connecticut).
+    census_api_link : str
+        Census API base URL for income data.
+
+    Notes
+    -----
+    The CSV is saved to ``{PROJECT_ROOT}/data/{fips_code}_tracts_multi.csv``
+    and includes columns: GEOID, tile_idx, n_tiles_total, lat, lon,
+    image_path, median_income.
+    """
     # get median_incomes from census api
     income_df = get_income_data(fips_code, census_api_link)
 
@@ -119,7 +181,25 @@ def build_csv_multi(shapefile_path, fips_code, census_api_link):
 
 
 def build_csv(shapefile_path, fips_code, census_api_link):
-    """Build a CSV with one image per tract (centroid)."""
+    """Build a CSV with one image per tract (centroid).
+
+    For each tract in the shapefile, computes the centroid point and
+    downloads a single satellite image. Saves checkpoints every 100 rows.
+
+    Parameters
+    ----------
+    shapefile_path : str or Path
+        Path to the census tract shapefile (.shp).
+    fips_code : str
+        State FIPS code (e.g. "09" for Connecticut).
+    census_api_link : str
+        Census API base URL for income data.
+
+    Notes
+    -----
+    The CSV is saved to ``{PROJECT_ROOT}/data/{fips_code}_tracts.csv``
+    and includes columns: GEOID, lat, lon, image_path, median_income.
+    """
     # get median_incomes from census api
     income_df = get_income_data(fips_code, census_api_link)
 
