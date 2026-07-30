@@ -1,0 +1,134 @@
+{
+  "timestamp": "2026-07-29_20-18-25",
+  "environment": {
+    "env": "kaggle",
+    "device": "cuda",
+    "num_workers": 2
+  },
+  "parameters": {
+    "cache": "/kaggle/input/datasets/braydenwinnicki/test1data/09_tracts_multi.pt",
+    "csv": "/kaggle/input/datasets/braydenwinnicki/test1data/processed_09_tracts_multi.csv",
+    "model": "resnet_l4",
+    "mode": "train",
+    "epochs": 25,
+    "batch_size": 8,
+    "lr": 0.001,
+    "random_state": 42,
+    "test_size": 0.2
+  },
+  "data_info": {
+    "is_multi_tile": true,
+    "n_train": 8983,
+    "n_test": 2221,
+    "mean_income": 104292.01,
+    "std_income": 49422.01
+  },
+  "training": {
+    "epochs": [
+      {
+        "epoch": 1,
+        "loss": 1.1381
+      },
+      {
+        "epoch": 2,
+        "loss": 0.5563
+      },
+      {
+        "epoch": 3,
+        "loss": 0.5077
+      },
+      {
+        "epoch": 4,
+        "loss": 0.5611
+      },
+      {
+        "epoch": 5,
+        "loss": 0.4288
+      },
+      {
+        "epoch": 6,
+        "loss": 0.4301
+      },
+      {
+        "epoch": 7,
+        "loss": 0.35
+      },
+      {
+        "epoch": 8,
+        "loss": 0.3143
+      },
+      {
+        "epoch": 9,
+        "loss": 0.4437
+      },
+      {
+        "epoch": 10,
+        "loss": 0.3926
+      },
+      {
+        "epoch": 11,
+        "loss": 0.3133
+      },
+      {
+        "epoch": 12,
+        "loss": 0.2676
+      },
+      {
+        "epoch": 13,
+        "loss": 0.2276
+      },
+      {
+        "epoch": 14,
+        "loss": 0.1864
+      },
+      {
+        "epoch": 15,
+        "loss": 0.1849
+      },
+      {
+        "epoch": 16,
+        "loss": 0.1498
+      },
+      {
+        "epoch": 17,
+        "loss": 0.1571
+      },
+      {
+        "epoch": 18,
+        "loss": 0.1254
+      },
+      {
+        "epoch": 19,
+        "loss": 0.1383
+      },
+      {
+        "epoch": 20,
+        "loss": 0.135
+      },
+      {
+        "epoch": 21,
+        "loss": 0.1169
+      },
+      {
+        "epoch": 22,
+        "loss": 0.1601
+      },
+      {
+        "epoch": 23,
+        "loss": 0.1815
+      },
+      {
+        "epoch": 24,
+        "loss": 0.1045
+      },
+      {
+        "epoch": 25,
+        "loss": 0.1283
+      }
+    ]
+  },
+  "evaluation": {},
+  "outputs": {},
+  "duration_seconds": 737.6,
+  "duration_minutes": 12.3
+}

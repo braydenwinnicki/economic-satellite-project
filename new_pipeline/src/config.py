@@ -69,6 +69,10 @@ for d in _dirs_to_create:
 if ENV == "kaggle":
     _DEFAULT_WORKERS = 2
 else:
-    _DEFAULT_WORKERS = 4
+    # macOS multiprocessing with MPS can hang with workers > 0
+    # due to fork safety issues with Metal/MPS. Use 0 workers
+    # to avoid DataLoader hangs. Override with ECON_NUM_WORKERS
+    # or --num-workers if you want parallel loading.
+    _DEFAULT_WORKERS = 0
 
 NUM_WORKERS = int(os.getenv("ECON_NUM_WORKERS", str(_DEFAULT_WORKERS)))

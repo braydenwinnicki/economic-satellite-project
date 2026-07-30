@@ -381,8 +381,10 @@ def main():
             persistent_workers=(num_workers > 0),
         )
 
-    # Build output paths
-    safe_name = args.model
+    # Extract FIPS code from cache filename (e.g., "09" from "09_tracts_multi.pt")
+    cache_path = Path(args.cache)
+    fips_code = cache_path.stem.split("_")[0]  # "09"
+    safe_name = f"{fips_code}_{args.model}"
     if is_multi_tile:
         safe_name = f"{safe_name}_multi"
     model_save_path = MODELS_DIR / f"{safe_name}.pth"
