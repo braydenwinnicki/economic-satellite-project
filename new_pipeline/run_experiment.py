@@ -429,8 +429,11 @@ def main():
 
         # If we didn't just train, load saved weights
         if args.mode == "eval":
+            # Use custom weights path if provided, otherwise auto-derive
+            weights_path = args.weights if args.weights else model_save_path
+            print(f"  Loading weights from: {weights_path}")
             # Load weights to CPU first, then move to device
-            state_dict = torch.load(model_save_path, map_location="cpu")
+            state_dict = torch.load(weights_path, map_location="cpu")
             model.load_state_dict(state_dict)
             if device is not None:
                 model = model.to(device)
