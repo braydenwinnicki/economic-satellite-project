@@ -217,6 +217,18 @@ def main():
         default=None,
         help="Number of DataLoader worker processes (default: from config, based on env)",
     )
+    parser.add_argument(
+        "--weights",
+        default=None,
+        help="Path to a saved .pth model file to load for evaluation "
+        "(default: auto-derived from FIPS and model name)",
+    )
+    parser.add_argument(
+        "--notes",
+        default=None,
+        type=str,
+        help="Optional notes to include in the experiment log (e.g., 'ran with lr=0.01')",
+    )
 
     args = parser.parse_args()
 
