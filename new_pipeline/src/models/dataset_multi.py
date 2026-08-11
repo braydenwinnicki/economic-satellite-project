@@ -51,14 +51,20 @@ class MultiTileDataset(Dataset):
 
     def __init__(self, data, cache_file):
 
-        # `data` is a DataFrame listing tiles and GEOIDs; group rows by tract GEOID
-        self.groups = list(data.groupby("GEOID"))
-
         # load the prebuilt cache (maps GEOID -> tensor of images, and income)
         # Some PyTorch versions default to `weights_only=True` which prevents
         # loading arbitrary python objects. The cache was saved as a full
         # dict of tensors, so explicitly allow full loading.
         self.cache = torch.load(cache_file, weights_only=False)
+
+        # Only keep tracts whose GEOIDs exist in the cache.  build_tract_cache
+        # skips tracts whose tile images all failed to load, so the input
+        # `data` DataFrame may contain GEOIDs that are absent from the cache.
+        cache_geoids = set(str(g) for g in self.cache["images"].keys())
+        data = data[data["GEOID"].astype(str).isin(cache_geoids)].copy()
+
+        # `data` is a DataFrame listing tiles and GEOIDs; group rows by tract GEOID
+        self.groups = list(data.groupby("GEOID"))
 
     def __len__(self):
         # dataset length = number of unique GEOIDs (tracts)

@@ -52,6 +52,7 @@ The pipeline:
 """
 
 import argparse
+import re
 import sys
 from pathlib import Path
 
@@ -148,6 +149,47 @@ def split_by_tract(df, test_size=0.2, random_state=42):
     test_df = df[df["GEOID"].isin(test_tracts)].copy()
 
     return train_df, test_df
+
+
+def infer_state_fips(path_value):
+    """Return the 2-digit state/FIPS code embedded in a file path or filename.
+
+    Looks for a two-digit number (not part of a longer digit sequence)
+    in the filename stem — e.g. '09' from '09_resnet_l4_multi.pth'.
+    Returns None if no match is found or the input is None/empty.
+    """
+    if path_value is None:
+        return None
+    text = str(path_value)
+    if not text:
+        return None
+    # Prefer the stem (filename without extension) to avoid matching digits
+    # in directory paths.
+    stem = Path(text).stem
+    match = re.search(r"(?<!\d)(\d{2})(?!\d)", stem)
+    if match:
+        return match.group(1)
+    return None
+
+
+def build_experiment_safe_name(
+    model_name, is_multi_tile, target_fips, source_fips=None
+):
+    """Build a state-aware name that reflects cross-state evaluation.
+
+    In-state (source == target):
+        <target_fips>_<model>[_multi]
+
+    Cross-state (source != target):
+        <source_fips>_to_<target_fips>_<model>[_multi]
+    """
+    if source_fips and target_fips and source_fips != target_fips:
+        safe_name = f"{source_fips}_to_{target_fips}_{model_name}"
+    else:
+        safe_name = f"{target_fips}_{model_name}"
+    if is_multi_tile:
+        safe_name = f"{safe_name}_multi"
+    return safe_name
 
 
 def main():
@@ -279,6 +321,17 @@ def main():
         df = pd.read_csv(args.csv, dtype={"GEOID": str})
         df.columns = df.columns.str.strip()
 
+        # Only keep tracts that have cached images.  build_tract_cache skips
+        # tracts whose tile images all failed to load, so the CSV may contain
+        # GEOIDs that are absent from cache["images"] — leaving them in would
+        # cause a KeyError in MultiTileDataset.__getitem__ during iteration.
+        cache_geoids = {str(g) for g in cache["images"]}
+        before_tracts = df["GEOID"].nunique()
+        df = df[df["GEOID"].astype(str).isin(cache_geoids)].copy()
+        dropped = before_tracts - df["GEOID"].nunique()
+        if dropped:
+            print(f"  Filtered CSV: {dropped} tracts not in cache were dropped.")
+
         df_train, df_test = split_by_tract(
             df, test_size=args.test_size, random_state=args.random_state
         )
@@ -393,12 +446,35 @@ def main():
             persistent_workers=(num_workers > 0),
         )
 
-    # Extract FIPS code from cache filename (e.g., "09" from "09_tracts_multi.pt")
+            # Extract FIPS codes from cache (target state) and weights (source state)
     cache_path = Path(args.cache)
-    fips_code = cache_path.stem.split("_")[0]  # "09"
-    safe_name = f"{fips_code}_{args.model}"
-    if is_multi_tile:
-        safe_name = f"{safe_name}_multi"
+    target_fips = infer_state_fips(cache_path) or cache_path.stem.split("_")[0]
+    source_fips = infer_state_fips(args.weights) if args.weights else None
+
+    # For training runs, the source state is the target state being trained on.
+    if args.mode == "train" and source_fips is None:
+        source_fips = target_fips
+    if args.mode in ("eval", "both") and source_fips is None and args.weights is None:
+        source_fips = target_fips
+
+    state_mismatch = bool(
+        source_fips and target_fips and source_fips != target_fips
+    )
+    if state_mismatch:
+        print(
+            f"  Cross-state evaluation detected: trained on {source_fips}, "
+            f"evaluating on {target_fips}."
+        )
+    else:
+        print(f"  In-state evaluation: {target_fips} (no source/target mismatch)")
+
+    safe_name = build_experiment_safe_name(
+        model_name=args.model,
+        is_multi_tile=is_multi_tile,
+        target_fips=target_fips,
+        source_fips=source_fips,
+    )
+    log.add_state_info(source_state=source_fips, target_state=target_fips)
     model_save_path = MODELS_DIR / f"{safe_name}.pth"
     results_save_path = RESULTS_DIR / f"{safe_name}_results.csv"
 

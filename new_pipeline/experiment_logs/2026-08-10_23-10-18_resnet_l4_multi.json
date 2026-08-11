@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-08-10_23-10-18",
+  "environment": {
+    "env": "mac",
+    "device": "mps",
+    "num_workers": 0
+  },
+  "parameters": {
+    "cache": "new_pipeline/data/cache/25_tracts_multi.pt",
+    "csv": "new_pipeline/data/25_tracts_multi.csv",
+    "model": "resnet_l4",
+    "mode": "eval",
+    "epochs": 10,
+    "batch_size": 8,
+    "lr": 0.001,
+    "random_state": 42,
+    "test_size": 0.2,
+    "weights": "new_pipeline/data/models/09_resnet_l4_multi.pth",
+    "notes": null
+  },
+  "data_info": {
+    "is_multi_tile": true,
+    "n_train": 14439,
+    "n_test": 3267,
+    "mean_income": 109959.85,
+    "std_income": 47606.5
+  },
+  "training": {
+    "epochs": []
+  },
+  "evaluation": {
+    "mae": 1705505.1404,
+    "rmse": 1781637.6686,
+    "r2": -1425.5226,
+    "avg_test_loss": 1395.8204
+  },
+  "outputs": {
+    "model_weights": "/Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/models/25_resnet_l4_multi.pth",
+    "results_csv": "/Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/results/25_resnet_l4_multi_results.csv",
+    "figures_dir": "/Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/figures"
+  },
+  "duration_seconds": 248.0,
+  "duration_minutes": 4.1
+}

@@ -8,7 +8,7 @@ in experiment_logs/ for easy comparison and tracking.
 
 import json
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -25,10 +25,10 @@ class ExperimentLog:
 
     def __init__(self, args, device, num_workers, is_multi_tile):
         self.start_time = time.time()
-        self.timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        self.timestamp = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
 
         # Environment
-        from new_pipeline.src.config import ENV, NUM_WORKERS
+        from new_pipeline.src.config import ENV
 
         self.data = {
             "timestamp": self.timestamp,
@@ -47,7 +47,11 @@ class ExperimentLog:
                 "lr": args.lr,
                 "random_state": args.random_state,
                 "test_size": args.test_size,
-                "weights": str(args.weights) if hasattr(args, "weights") and args.weights else None,
+                "weights": (
+                    str(args.weights)
+                    if hasattr(args, "weights") and args.weights
+                    else None
+                ),
                 "notes": args.notes if hasattr(args, "notes") and args.notes else None,
             },
             "data_info": {
@@ -72,6 +76,25 @@ class ExperimentLog:
             self.data["data_info"]["mean_income"] = round(mean_income, 2)
         if std_income is not None:
             self.data["data_info"]["std_income"] = round(std_income, 2)
+
+    def add_state_info(self, source_state=None, target_state=None):
+        """Record cross-state evaluation information.
+
+        Parameters
+        ----------
+        source_state : str or None
+            FIPS code of the state the model was trained on.
+        target_state : str or None
+            FIPS code of the state being evaluated on.
+        """
+        if source_state is not None:
+            self.data["source_state"] = source_state
+        if target_state is not None:
+            self.data["target_state"] = target_state
+        if source_state and target_state and source_state != target_state:
+            self.data["cross_state"] = True
+        elif source_state and target_state:
+            self.data["cross_state"] = False
 
     def add_training_epoch(self, epoch, loss):
         """Record loss for a single training epoch."""
