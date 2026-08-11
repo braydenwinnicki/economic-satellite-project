@@ -310,6 +310,65 @@ def main():
     # Initialize experiment log (after is_multi_tile is known)
     log = ExperimentLog(args, device, num_workers, is_multi_tile)
 
+    # ── Resolve state codes and derived output paths ──────────────────
+    cache_path = Path(args.cache)
+    target_fips = infer_state_fips(cache_path) or cache_path.stem.split("_")[0]
+    source_fips = infer_state_fips(args.weights) if args.weights else None
+
+    # For training runs, the source state is the target state being trained on.
+    if args.mode == "train" and source_fips is None:
+        source_fips = target_fips
+    if args.mode in ("eval", "both") and source_fips is None and args.weights is None:
+        source_fips = target_fips
+
+    state_mismatch = bool(
+        source_fips and target_fips and source_fips != target_fips
+    )
+    if state_mismatch:
+        print(
+            f"  Cross-state evaluation detected: trained on {source_fips}, "
+            f"evaluating on {target_fips}."
+        )
+    else:
+        print(f"  In-state evaluation: {target_fips} (no source/target mismatch)")
+
+    safe_name = build_experiment_safe_name(
+        model_name=args.model,
+        is_multi_tile=is_multi_tile,
+        target_fips=target_fips,
+        source_fips=source_fips,
+    )
+    log.add_state_info(source_state=source_fips, target_state=target_fips)
+    model_save_path = MODELS_DIR / f"{safe_name}.pth"
+    results_save_path = RESULTS_DIR / f"{safe_name}_results.csv"
+
+    # ── Resolve the normalization frame ───────────────────────────────
+    # Training runs always normalize labels with stats computed from the
+    # target train split (saved with the model). For pure evaluation we reuse
+    # the stats that were used to TRAIN the loaded model, so cross-state
+    # evaluation denormalizes predictions back into the correct dollar frame
+    # instead of the target state's own (incorrect) frame.
+    loaded_ckpt = None
+    norm_mean = None
+    norm_std = None
+    if args.mode == "eval":
+        eval_weights_path = args.weights if args.weights else model_save_path
+        loaded_ckpt = torch.load(eval_weights_path, map_location="cpu")
+        print(f"  Loading weights from: {eval_weights_path}")
+        if isinstance(loaded_ckpt, dict) and "mean_income" in loaded_ckpt:
+            norm_mean = loaded_ckpt["mean_income"]
+            norm_std = loaded_ckpt["std_income"]
+            print(
+                f"  Using normalization stats saved with the source model "
+                f"(mean={norm_mean:.2f}, std={norm_std:.2f})."
+            )
+        else:
+            print(
+                "  ⚠ Checkpoint has no saved normalization stats (legacy "
+                "format); falling back to the target dataset's own stats. "
+                "Cross-state numbers will NOT be reliable."
+            )
+
     # Step 2: Split data into train/test
     print("\n" + "=" * 60)
     print("Step 2: Splitting data...")
@@ -321,13 +380,19 @@ def main():
         df = pd.read_csv(args.csv, dtype={"GEOID": str})
         df.columns = df.columns.str.strip()
 
+        # Canonicalize GEOIDs to zero-padded 11-digit form. Caches built before
+        # the fix (or GEOIDs read as int) can drop the leading zero for states
+        # whose FIPS starts with 0 (e.g. 09 = Connecticut), which would otherwise
+        # make every tract look "missing" when matched against the cache.
+        df["GEOID"] = df["GEOID"].astype(str).str.zfill(11)
+
         # Only keep tracts that have cached images.  build_tract_cache skips
         # tracts whose tile images all failed to load, so the CSV may contain
         # GEOIDs that are absent from cache["images"] — leaving them in would
         # cause a KeyError in MultiTileDataset.__getitem__ during iteration.
-        cache_geoids = {str(g) for g in cache["images"]}
+        cache_geoids = {str(g).zfill(11) for g in cache["images"]}
         before_tracts = df["GEOID"].nunique()
-        df = df[df["GEOID"].astype(str).isin(cache_geoids)].copy()
+        df = df[df["GEOID"].isin(cache_geoids)].copy()
         dropped = before_tracts - df["GEOID"].nunique()
         if dropped:
             print(f"  Filtered CSV: {dropped} tracts not in cache were dropped.")
@@ -336,10 +401,19 @@ def main():
             df, test_size=args.test_size, random_state=args.random_state
         )
 
-        # Compute normalization stats from training tracts only (avoid data leakage)
-        train_tract_labels = df_train.drop_duplicates(subset="GEOID")["median_income"]
-        mean_income = train_tract_labels.mean()
-        std_income = train_tract_labels.std()
+        # Determine the normalization frame.
+        #  - Training runs: compute from the training tracts only (avoids data
+        #    leakage) and save those stats with the model when it is saved.
+        #  - Pure eval with weights: reuse the stats saved with the source
+        #    model, so cross-state predictions denormalize into the correct
+        #    dollar frame rather than the target state's own frame.
+        if norm_mean is not None and norm_std is not None:
+            mean_income = norm_mean
+            std_income = norm_std
+        else:
+            train_tract_labels = df_train.drop_duplicates(subset="GEOID")["median_income"]
+            mean_income = train_tract_labels.mean()
+            std_income = train_tract_labels.std()
         if std_income == 0:
             std_income = 1.0
 
@@ -377,9 +451,17 @@ def main():
 
         print(f"  Train: {len(train_images)}  Test: {len(test_images)}")
 
-        # Z-score normalization
-        mean_income = train_incomes.mean().item()
-        std_income = train_incomes.std().item()
+        # Z-score normalization. Training runs compute stats from the training
+        # split; pure eval with weights reuses the stats saved with the source
+        # model so cross-state predictions denormalize into the correct frame.
+        if norm_mean is not None and norm_std is not None:
+            mean_income = norm_mean
+            std_income = norm_std
+        else:
+            mean_income = train_incomes.mean().item()
+            std_income = train_incomes.std().item()
+        if std_income == 0:
+            std_income = 1.0
 
         train_incomes = (train_incomes - mean_income) / std_income
         test_incomes = (test_incomes - mean_income) / std_income
@@ -404,9 +486,11 @@ def main():
     transform = get_transform(model)
 
     if is_multi_tile:
-        # Multi-tile dataset: groups by GEOID, looks up image stacks from cache
-        train_dataset = MultiTileDataset(df_train, args.cache)
-        test_dataset = MultiTileDataset(df_test, args.cache)
+        # Multi-tile dataset: groups by GEOID, looks up image stacks from cache.
+        # Pass the model's expected transform (ImageNet normalization for ResNet)
+        # so pretrained backbones receive properly normalized input.
+        train_dataset = MultiTileDataset(df_train, args.cache, transform=transform)
+        test_dataset = MultiTileDataset(df_test, args.cache, transform=transform)
 
         # DataLoader with custom collate_fn for variable tile counts
         # persistent_workers=True avoids re-creating workers each epoch
@@ -446,38 +530,6 @@ def main():
             persistent_workers=(num_workers > 0),
         )
 
-            # Extract FIPS codes from cache (target state) and weights (source state)
-    cache_path = Path(args.cache)
-    target_fips = infer_state_fips(cache_path) or cache_path.stem.split("_")[0]
-    source_fips = infer_state_fips(args.weights) if args.weights else None
-
-    # For training runs, the source state is the target state being trained on.
-    if args.mode == "train" and source_fips is None:
-        source_fips = target_fips
-    if args.mode in ("eval", "both") and source_fips is None and args.weights is None:
-        source_fips = target_fips
-
-    state_mismatch = bool(
-        source_fips and target_fips and source_fips != target_fips
-    )
-    if state_mismatch:
-        print(
-            f"  Cross-state evaluation detected: trained on {source_fips}, "
-            f"evaluating on {target_fips}."
-        )
-    else:
-        print(f"  In-state evaluation: {target_fips} (no source/target mismatch)")
-
-    safe_name = build_experiment_safe_name(
-        model_name=args.model,
-        is_multi_tile=is_multi_tile,
-        target_fips=target_fips,
-        source_fips=source_fips,
-    )
-    log.add_state_info(source_state=source_fips, target_state=target_fips)
-    model_save_path = MODELS_DIR / f"{safe_name}.pth"
-    results_save_path = RESULTS_DIR / f"{safe_name}_results.csv"
-
     # Step 4: Train (if requested)
     if args.mode in ("train", "both"):
         print("\n" + "=" * 60)
@@ -491,6 +543,8 @@ def main():
             lr=args.lr,
             model_save_path=model_save_path,
             device=device,
+            mean_income=mean_income,
+            std_income=std_income,
         )
 
         # Record training history in log
@@ -503,14 +557,15 @@ def main():
         print("Step 5: Evaluating model...")
         print("=" * 60)
 
-        # If we didn't just train, load saved weights
+        # If we didn't just train, load saved weights from the checkpoint that
+        # was already loaded up front (it also carries the normalization stats).
         if args.mode == "eval":
-            # Use custom weights path if provided, otherwise auto-derive
-            weights_path = args.weights if args.weights else model_save_path
-            print(f"  Loading weights from: {weights_path}")
-            # Load weights to CPU first, then move to device
-            state_dict = torch.load(weights_path, map_location="cpu")
-            model.load_state_dict(state_dict)
+            # The checkpoint may be the new {state_dict, mean_income, std_income}
+            # format or a legacy raw state_dict.
+            if isinstance(loaded_ckpt, dict) and "state_dict" in loaded_ckpt:
+                model.load_state_dict(loaded_ckpt["state_dict"])
+            else:
+                model.load_state_dict(loaded_ckpt)
             if device is not None:
                 model = model.to(device)
 

@@ -99,6 +99,23 @@ def evaluate_model(
     # Same denormalization for the actual income values
     targets_dollars = [t * std_income + mean_income for t in all_targets]
 
+    # ── Sanity guard ──────────────────────────────────────────────────
+    # Cross-state evaluation with a normalization frame that doesn't match the
+    # model's training frame (or a degenerate model) often produces wildly
+    # implausible dollar predictions (e.g. negative millions). Warn loudly so a
+    # broken evaluation isn't silently accepted.
+    if predictions_dollars and targets_dollars:
+        pred_mean = float(np.mean(predictions_dollars))
+        target_mean = float(np.mean(targets_dollars))
+        if pred_mean < 0 or abs(pred_mean - target_mean) > 5 * abs(mean_income):
+            print(
+                "  ⚠ SANITY CHECK FAILED: mean prediction "
+                f"${pred_mean:,.0f} vs mean actual ${target_mean:,.0f}. "
+                "Predictions are implausible — check that the normalization "
+                "frame matches the model's training frame (e.g. cross-state "
+                "evaluation without saved stats)."
+            )
+
     mae = mean_absolute_error(targets_dollars, predictions_dollars)
 
     rmse = np.sqrt(mean_squared_error(targets_dollars, predictions_dollars))

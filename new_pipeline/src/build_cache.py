@@ -157,11 +157,15 @@ def build_tract_cache(csv_path, cache_path, transform=DEFAULT_TRANSFORM):
         # stack per-tract images into a single float32 tensor
         images = torch.stack(images).float()
 
-        # store images in cache under the stringified GEOID
-        cache["images"][str(geoid)] = images
+        # canonical key: zero-padded 11-digit GEOID string.  (Reading a GEOID as
+        # int drops a leading zero for states whose FIPS starts with 0, e.g. 09.)
+        geoid_key = str(geoid).zfill(11)
+
+        # store images in cache under the canonical GEOID
+        cache["images"][geoid_key] = images
 
         # store the median income label once for this GEOID (first row)
-        cache["income"][str(geoid)] = group["median_income"].iloc[0]
+        cache["income"][geoid_key] = group["median_income"].iloc[0]
 
     # Guard: if no tracts had valid images, we can't save a useful cache
     if len(cache["images"]) == 0:

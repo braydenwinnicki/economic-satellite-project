@@ -3,7 +3,10 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 
 
-def train_model(model, train_loader, epochs, lr, model_save_path, device=None):
+def train_model(
+    model, train_loader, epochs, lr, model_save_path, device=None,
+    mean_income=None, std_income=None,
+):
     """
     Train a regression model on satellite image data.
 
@@ -23,6 +26,14 @@ def train_model(model, train_loader, epochs, lr, model_save_path, device=None):
     device : torch.device, optional
         Device to run training on (e.g. mps, cuda, cpu).
         If None, stays on whatever device the model is already on.
+    mean_income : float, optional
+        Mean of the income labels used to z-score normalize them during
+        training. If provided, it is saved alongside the weights so later
+        (including cross-state) evaluation can denormalize predictions back
+        into the correct dollar frame.
+    std_income : float, optional
+        Std of the income labels used for z-score normalization. Saved with
+        the weights alongside ``mean_income``.
 
     Returns
     -------
@@ -100,9 +111,16 @@ def train_model(model, train_loader, epochs, lr, model_save_path, device=None):
     # save the trained weights
     # Move model to CPU before saving so weights are portable (can load on CPU later)
     model_cpu = model.cpu()
-    # .state_dict() returns all learnable parameters as a dictionary of tensors
-    # torch.save() writes that dictionary to disk
-    torch.save(model_cpu.state_dict(), model_save_path)
+    # .state_dict() returns all learnable parameters as a dictionary of tensors.
+    # We save it inside a checkpoint dict together with the z-score stats used
+    # during training, so later (potentially cross-state) evaluation can map
+    # predictions back into the correct dollar frame.
+    checkpoint = {"state_dict": model_cpu.state_dict()}
+    if mean_income is not None:
+        checkpoint["mean_income"] = float(mean_income)
+    if std_income is not None:
+        checkpoint["std_income"] = float(std_income)
+    torch.save(checkpoint, model_save_path)
 
     print(f"Saved model to {model_save_path}")
 
