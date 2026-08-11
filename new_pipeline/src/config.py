@@ -48,7 +48,10 @@ if ENV == "kaggle":
     # — this is writeable and persists as Kaggle "Output" after the run.
     KAGGLE_WORKING_DIR = Path("/kaggle/working/data")
     DATA_DIR = KAGGLE_WORKING_DIR
-    MODELS_DIR = KAGGLE_WORKING_DIR / "models"
+    # Model weights are saved directly under data/ (NOT data/models/) so they
+    # persist as Kaggle "Output" without relying on a subfolder that the
+    # GitHub repo ignores.
+    MODELS_DIR = KAGGLE_WORKING_DIR
     RESULTS_DIR = KAGGLE_WORKING_DIR / "results"
     FIGURES_DIR = KAGGLE_WORKING_DIR / "figures"
     CACHE_DIR = KAGGLE_WORKING_DIR / "cache"
