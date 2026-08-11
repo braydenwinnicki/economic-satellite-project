@@ -157,26 +157,49 @@ python3 new_pipeline/run_experiment.py --cache data/cache/09_tracts.pt --model r
 
 ### On Kaggle
 
-Step 1: Zip your local `new_pipeline/data/` folder and upload it as a Kaggle Dataset.
+The Kaggle notebook clones the repo from GitHub into `/kaggle/working/economic-satellite-project/`,
+so the entry point actually lives at:
 
-Step 2: In your Kaggle notebook, add that Dataset as an input and set the environment variables:
 ```
+/kaggle/working/economic-satellite-project/new_pipeline/run_experiment.py
+```
+
+Note that `new_pipeline/` is nested one folder deep inside the cloned repo.
+
+Step 1: In your Kaggle notebook, set the environment variables:
+```python
 import os
 os.environ["ECON_ENV"] = "kaggle"
-os.environ["ECON_KAGGLE_DATASET"] = "economic-satellite-data"
+os.environ["ECON_KAGGLE_DATASET"] = "test1data"   # name of the Dataset you uploaded
 ```
 
-Step 3: Run the experiment:
+Step 2: Clone the repo (copies the code into `/kaggle/working/economic-satellite-project/`):
 ```
-!python3 new_pipeline/run_experiment.py \
-    --cache /kaggle/input/economic-satellite-data/cache/09_tracts.pt \
+!rm -rf economic-satellite-project
+!cd /kaggle/working && git clone -b main https://github.com/braydenwinnicki/economic-satellite-project.git
+```
+
+Step 3: Run the experiment using the **full cloned path**:
+```
+!python3 /kaggle/working/economic-satellite-project/new_pipeline/run_experiment.py \
+    --cache /kaggle/input/datasets/braydenwinnicki/test1data/09_tracts_multi.pt \
+    --csv   /kaggle/input/datasets/braydenwinnicki/test1data/09_tracts_multi.csv \
     --model resnet_frozen \
-    --mode both \
-    --epochs 10
+    --mode train \
+    --epochs 10 \
+    --batch-size 8 \
+    --lr 0.001 \
+    --random-state 42 \
+    --num-workers 2
 ```
+
+> **Common mistake:** running `python3 new_pipeline/run_experiment.py` (or
+> `/kaggle/working/new_pipeline/run_experiment.py`) fails with
+> `can't open file ...: No such file or directory` because the code is kept under
+> the cloned `economic-satellite-project/` folder. Always use the full path above.
 
 What happens on Kaggle:
-- Inputs (cache, CSVs) are read from `/kaggle/input/<dataset-name>/`
+- Inputs (cache, CSVs) are read from your uploaded Dataset.
 - Outputs (models, results, figures) are written to `/kaggle/working/data/`
 - Device auto-detects CUDA GPU
 - Workers default to 2
