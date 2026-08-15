@@ -353,7 +353,7 @@ def main():
     norm_std = None
     if args.mode == "eval":
         eval_weights_path = args.weights if args.weights else model_save_path
-        loaded_ckpt = torch.load(eval_weights_path, map_location="cpu")
+        loaded_ckpt = torch.load(eval_weights_path, map_location="cpu", weights_only=False)
         print(f"  Loading weights from: {eval_weights_path}")
         if isinstance(loaded_ckpt, dict) and "mean_income" in loaded_ckpt:
             norm_mean = loaded_ckpt["mean_income"]

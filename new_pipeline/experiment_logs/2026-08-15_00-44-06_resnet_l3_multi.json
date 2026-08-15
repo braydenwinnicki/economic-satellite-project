@@ -1,0 +1,148 @@
+{
+  "timestamp": "2026-08-15_00-44-06",
+  "environment": {
+    "env": "kaggle",
+    "device": "cuda",
+    "num_workers": 2
+  },
+  "parameters": {
+    "cache": "/kaggle/input/datasets/braydenwinnicki/test1data/09_tracts_multi.pt",
+    "csv": "/kaggle/input/datasets/braydenwinnicki/test1data/processed_09_tracts_multi.csv",
+    "model": "resnet_l3",
+    "mode": "both",
+    "epochs": 25,
+    "batch_size": 8,
+    "lr": 0.001,
+    "random_state": 42,
+    "test_size": 0.2,
+    "weights": null,
+    "notes": "resnet_l3 ct on ct "
+  },
+  "data_info": {
+    "is_multi_tile": true,
+    "n_train": 8983,
+    "n_test": 2221,
+    "mean_income": 104292.01,
+    "std_income": 49422.01
+  },
+  "training": {
+    "epochs": [
+      {
+        "epoch": 1,
+        "loss": 1.3793
+      },
+      {
+        "epoch": 2,
+        "loss": 0.6434
+      },
+      {
+        "epoch": 3,
+        "loss": 0.6183
+      },
+      {
+        "epoch": 4,
+        "loss": 0.6075
+      },
+      {
+        "epoch": 5,
+        "loss": 0.5561
+      },
+      {
+        "epoch": 6,
+        "loss": 0.5873
+      },
+      {
+        "epoch": 7,
+        "loss": 0.5042
+      },
+      {
+        "epoch": 8,
+        "loss": 0.4619
+      },
+      {
+        "epoch": 9,
+        "loss": 0.4327
+      },
+      {
+        "epoch": 10,
+        "loss": 0.4293
+      },
+      {
+        "epoch": 11,
+        "loss": 0.4036
+      },
+      {
+        "epoch": 12,
+        "loss": 0.4311
+      },
+      {
+        "epoch": 13,
+        "loss": 0.2882
+      },
+      {
+        "epoch": 14,
+        "loss": 0.2859
+      },
+      {
+        "epoch": 15,
+        "loss": 0.2409
+      },
+      {
+        "epoch": 16,
+        "loss": 0.2112
+      },
+      {
+        "epoch": 17,
+        "loss": 0.2794
+      },
+      {
+        "epoch": 18,
+        "loss": 0.2132
+      },
+      {
+        "epoch": 19,
+        "loss": 0.1639
+      },
+      {
+        "epoch": 20,
+        "loss": 0.194
+      },
+      {
+        "epoch": 21,
+        "loss": 0.129
+      },
+      {
+        "epoch": 22,
+        "loss": 0.1824
+      },
+      {
+        "epoch": 23,
+        "loss": 0.1451
+      },
+      {
+        "epoch": 24,
+        "loss": 0.1365
+      },
+      {
+        "epoch": 25,
+        "loss": 0.1319
+      }
+    ]
+  },
+  "evaluation": {
+    "mae": 26304.402,
+    "rmse": 32419.5693,
+    "r2": 0.6314,
+    "avg_test_loss": 0.4306
+  },
+  "outputs": {
+    "model_weights": "/kaggle/working/data/09_resnet_l3_multi.pth",
+    "results_csv": "/kaggle/working/data/results/09_resnet_l3_multi_results.csv",
+    "figures_dir": "/kaggle/working/data/figures"
+  },
+  "source_state": "09",
+  "target_state": "09",
+  "cross_state": false,
+  "duration_seconds": 939.2,
+  "duration_minutes": 15.7
+}
