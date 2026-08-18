@@ -95,6 +95,16 @@ class MultiTileDataset(Dataset):
         # get stacked image tensors for this tract from the cache
         images = self.cache["images"][geoid]
 
+        # Normalize cache images into the float32 [0, 1] range that the models
+        # were trained on. Some caches (e.g. older state builds) store raw
+        # uint8 0-255 tensors instead of the float32 [0,1] tensors produced by
+        # build_tract_cache's ToTensor transform. Feeding 0-255 values into a
+        # from-scratch CNN (which has no input normalization) explodes the
+        # activations and produces garbage predictions. Scaling here makes the
+        # pipeline robust to cache format regardless of how a cache was built.
+        if images.dtype == torch.uint8:
+            images = images.float().div(255.0)
+
         # Cache images are raw [0, 1] tensors.  Pretrained models (ResNet)
         # expect their ImageNet mean/std normalization, which we apply here
         # per tile.  CNN models pass transform=None and are used as-is.

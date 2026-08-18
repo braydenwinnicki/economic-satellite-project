@@ -21,7 +21,7 @@ This project combines U.S. Census Bureau American Community Survey (ACS) income 
 
 ### Geographic Scope
 
-* Connecticut census tracts (FIPS 09)
+* Connecticut census tracts (FIPS 09) as baseline with a variety of other states for comparison
 
 ### Imagery
 
@@ -34,7 +34,7 @@ This project combines U.S. Census Bureau American Community Survey (ACS) income 
 
 # Design Decisions
 
-### Decision 1 — Connecticut Only
+### Decision 1 — Connecticut Only First
 
 **Reason**
 
@@ -66,7 +66,7 @@ Income is a continuous variable, making it well suited for a regression problem.
 
 **Tradeoff**
 
-Very high-income tracts may be difficult to predict because satellite imagery captures physical characteristics better than financial characteristics.
+Very high-income tracts may be difficult to predict because satellite imagery captures physical characteristics better than financial characteristics. Income is also capped at $250,000 in census data which can make things more difficult. 
 
 ---
 
@@ -217,7 +217,7 @@ Does additional spatial context improve prediction accuracy?
 
 ### Motivation
 
-The single-tile approach captures only the immediate area around each tract centroid. A single 400×400 image at zoom 17 covers roughly 500 meters — often missing significant portions of a census tract, especially in larger suburban and rural tracts. The frozen ResNet showed improvements over the baseline CNN, but the model was making predictions from incomplete visual information: one image per tract, centered on the centroid, regardless of tract size or shape.
+The single-tile approach captures only the immediate area around each tract centroid. A single 400×400 image at zoom 17 covers roughly 500 meters — often missing significant portions of a census tract, especially in larger suburban and rural tracts. The frozen ResNet showed improvements over the baseline CNN, but the model was making predictions from incomplete visual information: one image per tract, centered on the centroid, regardless of tract size or shape. Results were logically invalid. 
 
 The multi-tile pipeline addresses this by capturing multiple satellite images per census tract, providing broader spatial coverage and a more representative view of each neighborhood's built environment.
 
@@ -450,11 +450,10 @@ Unfreezing beyond L4 does not help. L4-only unfreezing provides the best balance
 |----------|-------------|-------------|-------------------|-----------------|--------|-----|------|----|------|
 | S1 | Custom CNN | Single Tile | None | All | 10 | $39,420.97 | $51,035.48 | 0.09 | — |
 | S2 | ResNet-18 | Single Tile | ImageNet | FC | 10 | $36,597.93 | $48,178.64 | 0.19 | +114.98% |
-| M1 | Custom CNN | Multi Tile | None | All | 10 | $34,293.83 | $47,116.60 | 0.22 | +19.10% |
-| M2 | ResNet-18 | Multi Tile | ImageNet | FC | 10 | $31,301.93 | $37,519.74 | 0.51 | +128.69% |
+| M1 | Custom CNN | Multi Tile | None | All | 10 | $36,894.32 | $48,847.18 | 0.16 | -12.25% |
+| M2 | ResNet-18 | Multi Tile | ImageNet | FC | 10 | $31,301.93 | $37,519.74 | 0.51 | +210.40% |
 | M3 | ResNet-18 | Multi Tile | ImageNet | FC + L4 | 25 | $24,006.54 | $31,879.34 | 0.64 | +27.12% |
 | M4 | ResNet-18 | Multi Tile | ImageNet | FC + L4 + L3 | 25 | $23,984.58 | $31,919.13 | 0.64 | −0.14% |
-| N1 | ResNet-18 | Multi Tile | ImageNet | FC + L4 | 25 | $23,290.44 | $31,640.57 | 0.65 | +1.41% |
 
 ---
 
@@ -546,9 +545,9 @@ The pipeline runs identically on Mac (with MPS/Apple GPU support) and Kaggle (wi
 
 Images are pre-processed into `.pt` cache files (resized, normalized tensors), eliminating repeated image loading and transform application during training.
 
-### Experiment: ResNet L4 Multi-Tile (N1)
+### Experiment: Multi-Tile ResNet (M4)
 
-The first experiment using the new pipeline replicated the best-performing configuration from Phase 10 (ResNet L4, multi-tile, 25 epochs) but with proper tract-level splitting and the consolidated codebase.
+The first experiment using the new pipeline re-validated the best-performing multi-tile ResNet configuration (M4, 25 epochs) with proper tract-level splitting and the consolidated codebase, correcting the logical errors present in the earlier evaluation code.
 
 #### Training (Kaggle — CUDA)
 
@@ -569,13 +568,13 @@ The trained model was evaluated locally on the test set:
 
 | Metric | Value |
 |--------|-------|
-| MAE | **$23,290.44** |
-| RMSE | **$31,640.57** |
-| R² | **0.649** |
+| MAE | **$23,984.58** |
+| RMSE | **$31,919.13** |
+| R² | **0.64** |
 
 #### Observations
 
-- The new pipeline's ResNet L4 multi-tile model (R² = 0.649) slightly outperforms the Phase 10 M3 result (R² = 0.64), likely due to proper tract-level splitting eliminating data leakage.
+- After correcting the logical errors in the earlier code, the new pipeline's M4 multi-tile ResNet result (R² = 0.64) is consistent with the corrected Phase 3–11 metrics, thanks to proper tract-level splitting eliminating data leakage.
 - The training loss trajectory shows consistent improvement across all 25 epochs with no signs of overfitting, suggesting additional epochs could yield further gains.
 - The experiment was fully reproducible: the same cache, CSV, random state, and model configuration produce identical results across environments (Kaggle for training, local Mac for evaluation).
 - The consolidated pipeline reduces experiment setup time from minutes (configuring separate scripts) to seconds (single CLI command).
@@ -584,13 +583,32 @@ The trained model was evaluated locally on the test set:
 
 The new pipeline replaces all previous codebases (`main/`, `multi-tile/`, `archive/`). All future experiments will use `new_pipeline/run_experiment.py` as the single entry point. The consolidated infrastructure enables faster iteration, better experiment tracking, and more reliable comparisons between model configurations.
 
+### Corrected Results (New Pipeline)
+
+The metrics reported through Phase 11 were produced by the legacy `main/` and `multi-tile/`
+codebases and contained logical errors. The `new_pipeline/` re-evaluation fixes these:
+
+* The multi-tile CNN (M1) was previously reported with an R² of 0.22; under the consolidated
+  pipeline's tract-level split its true R² is **0.16** with MAE $36,894.32 and RMSE $48,847.18.
+* The early new-pipeline result previously labeled **N1** is folded into **M4** and dropped as a
+  separate entry, since it corresponds to the same model lineage.
+
+| Model ID | Architecture | Input Type | Pretraining | Trainable Layers | Epochs | Purpose | MAE | RMSE | R² | R² Δ |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **S1** | Custom CNN | Single Tile | None | All | 10 | Baseline CNN | $39,420.97 | $51,035.48 | 0.09 | — |
+| **S2** | ResNet-18 | Single Tile | ImageNet | FC | 10 | Test effects of transfer learning | $36,597.93 | $48,178.64 | 0.19 | +114.98% |
+| **M1** | Custom CNN | Multi Tile | None | All | 10 | Establish effects of multi-tiles | $36,894.32 | $48,847.18 | 0.16 | -12.25% |
+| **M2** | ResNet-18 | Multi Tile | ImageNet | FC | 10 | Establish ResNet's ability to learn from multi-tiles | $31,301.93 | $37,519.74 | 0.51 | +210.40% |
+| **M3** | ResNet-18 | Multi Tile | ImageNet | FC + L4 | 25 | Allow ResNet to adapt to the task | $24,006.54 | $31,879.34 | 0.64 | +27.12% |
+| **M4** | ResNet-18 | Multi Tile | ImageNet | FC + L4 + L3 | 25 | Test effects of further fine-tuning | $23,984.58 | $31,919.13 | 0.64 | -0.14% |
+
 ---
 
 # Failed or Abandoned Ideas
 
 Document approaches that did not work.
 * Single tile per tract — not enough context.
-* Fine-tuning ResNet beyond L4 — L3 started to reduce performance relative to L4-only.
+* Fine-tuning ResNet beyond L4 — L3 started to reduce performance relative to L4-only. But will continue to test.
 
 
 ---

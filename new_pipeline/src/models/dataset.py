@@ -23,6 +23,11 @@ class CacheDataset(Dataset):
         image = self.images[idx]
         income = self.incomes[idx]
 
+        # Normalize any uint8 [0,255] cache to float32 [0,1] so model input is
+        # consistent with the float32 [0,1] caches (see dataset_multi.py note).
+        if image.dtype == torch.uint8:
+            image = image.float().div(255.0)
+
         if self.transform:
             image = self.transform(image)
 
