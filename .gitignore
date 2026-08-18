@@ -1,11 +1,17 @@
 # =========================
 # Data (do not commit)
 # =========================
+# Note: patterns below only cover the HEAVY subdirs (the image caches / weights).
+# Source & processed CSVs (data/raw/*.csv, data/processed/*.csv) plus results/
+# and experiment_logs/ are intentionally KEPT tracked for reproducibility.
 
-data/raw/
-data/processed/
+**/raw/images/
+**/processed/images/
+**/data/cache/
+**/data/figures/
+**/data/models/
 
-# Large ML datasets / caches
+# Large ML datasets / images
 *.pt
 *.pth
 *.npy
@@ -13,12 +19,12 @@ data/processed/
 *.h5
 *.hdf5
 *.png
+*.jpg
+*.jpeg
 # =========================
 # Model checkpoints
 # =========================
 
-models/*.pth
-models/*.pt
 checkpoints/
 
 
