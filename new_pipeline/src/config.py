@@ -61,6 +61,10 @@ if ENV == "kaggle":
     KAGGLE_DATASET_NAME = os.getenv("ECON_KAGGLE_DATASET", "economic-satellite-data")
     KAGGLE_INPUT_DIR = Path(f"/kaggle/input/{KAGGLE_DATASET_NAME}")
 
+    # Input CSVs (raw + processed) come from the Kaggle Dataset input; they are
+    # read directly from there (never written) on Kaggle.
+    CSV_DIR = KAGGLE_INPUT_DIR
+
     # Image directory — on Kaggle, images are bundled in the input dataset
     IMAGE_DIR = KAGGLE_INPUT_DIR / "raw" / "images"
 else:
@@ -68,16 +72,20 @@ else:
     DATA_DIR = PROJECT_ROOT / "data"
     RAW_DIR = DATA_DIR / "raw"
     IMAGE_DIR = RAW_DIR / "images"
+    # Raw + processed dataset CSVs live in their own subfolder (kept separate
+    # from model outputs like results/, models/, figures/).
+    CSV_DIR = DATA_DIR / "data_csvs"
     CACHE_DIR = DATA_DIR / "cache"
     RESULTS_DIR = DATA_DIR / "results"
     FIGURES_DIR = DATA_DIR / "figures"
     MODELS_DIR = DATA_DIR / "models"
 
 # Create output directories if they don't exist
-# On Kaggle, IMAGE_DIR points to the read-only input dataset so we skip it
+# On Kaggle, IMAGE_DIR/CSV_DIR point to the read-only input dataset so we skip them
 _dirs_to_create = [CACHE_DIR, RESULTS_DIR, FIGURES_DIR, MODELS_DIR]
 if ENV != "kaggle":
     _dirs_to_create.append(IMAGE_DIR)
+    _dirs_to_create.append(CSV_DIR)
 for d in _dirs_to_create:
     d.mkdir(parents=True, exist_ok=True)
 

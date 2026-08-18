@@ -16,7 +16,7 @@ Usage
     # Multi-tile (multiple images per tract, auto-detected from cache format):
     python3 new_pipeline/run_experiment.py \\
         --cache new_pipeline/data/cache/09_tracts_multi.pt \\
-        --csv new_pipeline/data/09_tracts.csv \\
+        --csv new_pipeline/data/data_csvs/09_tracts.csv \\
         --model resnet_frozen \\
         --mode both \\
         --epochs 10 \\
@@ -364,9 +364,7 @@ def main():
             )
         else:
             print(
-                "  ⚠ Checkpoint has no saved normalization stats (legacy "
-                "format); falling back to the target dataset's own stats. "
-                "Cross-state numbers will NOT be reliable."
+                "  WARNING: Loaded checkpoint does not contain normalization stats. "
             )
 
     # Step 2: Split data into train/test

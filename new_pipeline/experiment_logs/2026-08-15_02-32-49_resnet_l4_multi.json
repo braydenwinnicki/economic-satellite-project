@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-08-15_02-32-49",
+  "environment": {
+    "env": "kaggle",
+    "device": "cuda",
+    "num_workers": 2
+  },
+  "parameters": {
+    "cache": "/kaggle/input/datasets/braydenwinnicki/test1data/25_tracts_multi.pt",
+    "csv": "/kaggle/input/datasets/braydenwinnicki/test1data/processed_25_tracts_multi.csv",
+    "model": "resnet_l4",
+    "mode": "eval",
+    "epochs": 25,
+    "batch_size": 8,
+    "lr": 0.001,
+    "random_state": 42,
+    "test_size": 0.2,
+    "weights": "/kaggle/input/datasets/braydenwinnicki/test1data/09_resnet_l4_multi-2.pth",
+    "notes": "resnet_l4 ct on ma first test"
+  },
+  "data_info": {
+    "is_multi_tile": true,
+    "n_train": 14439,
+    "n_test": 3267,
+    "mean_income": 104292.01,
+    "std_income": 49422.01
+  },
+  "training": {
+    "epochs": []
+  },
+  "evaluation": {
+    "mae": 32278.5667,
+    "rmse": 42285.2515,
+    "r2": 0.1964,
+    "avg_test_loss": 0.7277
+  },
+  "outputs": {
+    "model_weights": "/kaggle/working/data/09_to_25_resnet_l4_multi.pth",
+    "results_csv": "/kaggle/working/data/results/09_to_25_resnet_l4_multi_results.csv",
+    "figures_dir": "/kaggle/working/data/figures"
+  },
+  "source_state": "09",
+  "target_state": "25",
+  "cross_state": true,
+  "duration_seconds": 17.9,
+  "duration_minutes": 0.3
+}

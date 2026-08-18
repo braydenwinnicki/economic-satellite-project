@@ -36,7 +36,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from new_pipeline.build_csv import build_csv, build_csv_multi
 from new_pipeline.src.build_cache import build_cache, build_tract_cache
-from new_pipeline.src.config import CACHE_DIR, DATA_DIR
+from new_pipeline.src.config import CACHE_DIR, CSV_DIR
 from new_pipeline.src.preprocessing import preprocess_data
 
 
@@ -72,9 +72,10 @@ def main():
     is_multi = args.mode == "multi"
     suffix = "_multi" if is_multi else ""
 
-    # File paths — multi-tile uses _multi suffix to avoid collisions
-    raw_csv = DATA_DIR / f"{args.fips}_tracts{suffix}.csv"
-    processed_csv = DATA_DIR / f"processed_{args.fips}_tracts{suffix}.csv"
+    # File paths — multi-tile uses _multi suffix to avoid collisions.
+    # Raw/processed CSVs go in data/data_csvs/, caches stay in data/cache/.
+    raw_csv = CSV_DIR / f"{args.fips}_tracts{suffix}.csv"
+    processed_csv = CSV_DIR / f"processed_{args.fips}_tracts{suffix}.csv"
     cache_file = CACHE_DIR / f"{args.fips}_tracts{suffix}.pt"
 
     # Step 1: Build raw CSV + download images

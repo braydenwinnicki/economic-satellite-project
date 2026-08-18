@@ -17,6 +17,7 @@ Requires the GOOGLE_MAPS_API_KEY environment variable to be set.
 
 import sys
 from pathlib import Path
+
 import pandas as pd
 
 # Path(__file__) = this script's path; .resolve() = absolute path; .parents[1] = project root
@@ -24,13 +25,11 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 import geopandas as gpd
-import pandas as pd
 import numpy as np
 
-from new_pipeline.src.satellite import get_image
-from new_pipeline.src.config import PROJECT_ROOT
+from new_pipeline.src.config import CSV_DIR
 from new_pipeline.src.get_incomes import get_income_data
-
+from new_pipeline.src.satellite import get_image
 
 MIN_TILES = 4
 MAX_TILES = 50
@@ -126,7 +125,7 @@ def build_csv_multi(shapefile_path, fips_code, census_api_link):
 
     Notes
     -----
-    The CSV is saved to ``{PROJECT_ROOT}/data/{fips_code}_tracts_multi.csv``
+    The CSV is saved to ``{CSV_DIR}/{fips_code}_tracts_multi.csv``
     and includes columns: GEOID, tile_idx, n_tiles_total, lat, lon,
     image_path, median_income.
     """
@@ -136,7 +135,7 @@ def build_csv_multi(shapefile_path, fips_code, census_api_link):
     # get tracts for google maps api
     tracts = gpd.read_file(shapefile_path)
 
-    csv_path = PROJECT_ROOT / "data" / f"{fips_code}_tracts_multi.csv"
+    csv_path = CSV_DIR / f"{fips_code}_tracts_multi.csv"
 
     # reproject to a meters-based CRS so area is in real units, not degrees
     tracts = tracts.to_crs(epsg=3857)
@@ -165,7 +164,7 @@ def build_csv_multi(shapefile_path, fips_code, census_api_link):
                 result["tile_idx"] = tile_idx
                 result["n_tiles_total"] = len(points)
                 rows.append(result)
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 print(f"Failed at tract {i} ({geoid}), tile {tile_idx}: {e}")
 
         if len(rows) > 0 and len(rows) % 500 == 0:
@@ -197,7 +196,7 @@ def build_csv(shapefile_path, fips_code, census_api_link):
 
     Notes
     -----
-    The CSV is saved to ``{PROJECT_ROOT}/data/{fips_code}_tracts.csv``
+    The CSV is saved to ``{CSV_DIR}/{fips_code}_tracts.csv``
     and includes columns: GEOID, lat, lon, image_path, median_income.
     """
     # get median_incomes from census api
@@ -208,7 +207,7 @@ def build_csv(shapefile_path, fips_code, census_api_link):
     # Each row in the shapefile is one census tract with its boundary polygon
     tracts = gpd.read_file(shapefile_path)
 
-    csv_path = PROJECT_ROOT / "data" / f"{fips_code}_tracts.csv"
+    csv_path = CSV_DIR / f"{fips_code}_tracts.csv"
 
     # build dataset
     rows = []
@@ -231,7 +230,7 @@ def build_csv(shapefile_path, fips_code, census_api_link):
             # get_image downloads a satellite image from Google Maps at (lat, lon)
             # and returns a dict with GEOID, lat, lon, and the saved file path
             rows.append(get_image(lat, lon, geoid))
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(f"Failed at {i}: {e}")
 
         # save every 100 file for safety, greater than 0 checks for a none empty datset
