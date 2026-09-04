@@ -1,0 +1,506 @@
+GEOID      , lat               , lon               , image_path                                                                                 , tile_idx, n_tiles_total, median_income
+37119006407, 35.4456416        , -80.8634482       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119006407_0.png ,        0,            10,        123058
+37119006407, 35.450510200000004, -80.8634482       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119006407_1.png ,        1,            10,        123058
+37119006407, 35.4553788        , -80.8634482       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119006407_2.png ,        2,            10,        123058
+37119006407, 35.4456416        , -80.8582904       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119006407_3.png ,        3,            10,        123058
+37119006407, 35.450510200000004, -80.8582904       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119006407_4.png ,        4,            10,        123058
+37119006407, 35.4553788        , -80.8582904       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119006407_5.png ,        5,            10,        123058
+37119006407, 35.4456416        , -80.8531326       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119006407_6.png ,        6,            10,        123058
+37119006407, 35.450510200000004, -80.8531326       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119006407_7.png ,        7,            10,        123058
+37119006407, 35.4553788        , -80.8531326       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119006407_8.png ,        8,            10,        123058
+37119006407, 35.4602474        , -80.8531326       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119006407_9.png ,        9,            10,        123058
+37195000200, 35.717681999999996, -77.92104275      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37195000200_0.png ,        0,             6,         21382
+37195000200, 35.7127565        , -77.9164065       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37195000200_1.png ,        1,             6,         21382
+37195000200, 35.717681999999996, -77.9164065       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37195000200_2.png ,        2,             6,         21382
+37195000200, 35.7226075        , -77.9164065       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37195000200_3.png ,        3,             6,         21382
+37195000200, 35.717681999999996, -77.91177025      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37195000200_4.png ,        4,             6,         21382
+37195000200, 35.7226075        , -77.91177025      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37195000200_5.png ,        5,             6,         21382
+37195000801, 35.70984025       , -77.91191825      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37195000801_0.png ,        0,             6,         14991
+37195000801, 35.7141165        , -77.91191825      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37195000801_1.png ,        1,             6,         14991
+37195000801, 35.70984025       , -77.9065115       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37195000801_2.png ,        2,             6,         14991
+37195000801, 35.7141165        , -77.9065115       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37195000801_3.png ,        3,             6,         14991
+37195000801, 35.71839275000001 , -77.9065115       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37195000801_4.png ,        4,             6,         14991
+37195000801, 35.7141165        , -77.90110475      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37195000801_5.png ,        5,             6,         14991
+37081014408, 35.92671675       , -80.04361225      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014408_0.png ,        0,             7,         35485
+37081014408, 35.9329635        , -80.04361225      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014408_1.png ,        1,             7,         35485
+37081014408, 35.93921025       , -80.04361225      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014408_2.png ,        2,             7,         35485
+37081014408, 35.92671675       , -80.0403555       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014408_3.png ,        3,             7,         35485
+37081014408, 35.9329635        , -80.0403555       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014408_4.png ,        4,             7,         35485
+37081014408, 35.93921025       , -80.0403555       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014408_5.png ,        5,             7,         35485
+37081014408, 35.92671675       , -80.03709875000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014408_6.png ,        6,             7,         35485
+37183051700, 35.8255162        , -78.6657616       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051700_0.png ,        0,            10,        185875
+37183051700, 35.8325066        , -78.6657616       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051700_1.png ,        1,            10,        185875
+37183051700, 35.818525799999996, -78.6576622       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051700_2.png ,        2,            10,        185875
+37183051700, 35.8255162        , -78.6576622       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051700_3.png ,        3,            10,        185875
+37183051700, 35.8325066        , -78.6576622       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051700_4.png ,        4,            10,        185875
+37183051700, 35.8115354        , -78.6495628       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051700_5.png ,        5,            10,        185875
+37183051700, 35.818525799999996, -78.6495628       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051700_6.png ,        6,            10,        185875
+37183051700, 35.8255162        , -78.6495628       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051700_7.png ,        7,            10,        185875
+37183051700, 35.8115354        , -78.6414634       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051700_8.png ,        8,            10,        185875
+37183051700, 35.818525799999996, -78.6414634       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051700_9.png ,        9,            10,        185875
+37079950102, 35.4503           , -77.64558237499999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_0.png ,        0,            33,         59960
+37079950102, 35.469601999999995, -77.64558237499999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_1.png ,        1,            33,         59960
+37079950102, 35.4503           , -77.62111075      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_2.png ,        2,            33,         59960
+37079950102, 35.469601999999995, -77.62111075      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_3.png ,        3,            33,         59960
+37079950102, 35.488904         , -77.62111075      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_4.png ,        4,            33,         59960
+37079950102, 35.430998         , -77.596639125     , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_5.png ,        5,            33,         59960
+37079950102, 35.4503           , -77.596639125     , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_6.png ,        6,            33,         59960
+37079950102, 35.469601999999995, -77.596639125     , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_7.png ,        7,            33,         59960
+37079950102, 35.488904         , -77.596639125     , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_8.png ,        8,            33,         59960
+37079950102, 35.508206         , -77.596639125     , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_9.png ,        9,            33,         59960
+37079950102, 35.527508         , -77.596639125     , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_10.png,       10,            33,         59960
+37079950102, 35.546809999999994, -77.596639125     , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_11.png,       11,            33,         59960
+37079950102, 35.430998         , -77.5721675       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_12.png,       12,            33,         59960
+37079950102, 35.4503           , -77.5721675       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_13.png,       13,            33,         59960
+37079950102, 35.469601999999995, -77.5721675       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_14.png,       14,            33,         59960
+37079950102, 35.488904         , -77.5721675       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_15.png,       15,            33,         59960
+37079950102, 35.508206         , -77.5721675       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_16.png,       16,            33,         59960
+37079950102, 35.527508         , -77.5721675       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_17.png,       17,            33,         59960
+37079950102, 35.546809999999994, -77.5721675       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_18.png,       18,            33,         59960
+37079950102, 35.430998         , -77.547695875     , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_19.png,       19,            33,         59960
+37079950102, 35.4503           , -77.547695875     , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_20.png,       20,            33,         59960
+37079950102, 35.469601999999995, -77.547695875     , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_21.png,       21,            33,         59960
+37079950102, 35.488904         , -77.547695875     , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_22.png,       22,            33,         59960
+37079950102, 35.508206         , -77.547695875     , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_23.png,       23,            33,         59960
+37079950102, 35.527508         , -77.547695875     , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_24.png,       24,            33,         59960
+37079950102, 35.430998         , -77.52322425      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_25.png,       25,            33,         59960
+37079950102, 35.4503           , -77.52322425      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_26.png,       26,            33,         59960
+37079950102, 35.469601999999995, -77.52322425      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_27.png,       27,            33,         59960
+37079950102, 35.488904         , -77.52322425      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_28.png,       28,            33,         59960
+37079950102, 35.508206         , -77.52322425      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_29.png,       29,            33,         59960
+37079950102, 35.430998         , -77.49875262500001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_30.png,       30,            33,         59960
+37079950102, 35.4503           , -77.49875262500001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_31.png,       31,            33,         59960
+37079950102, 35.469601999999995, -77.49875262500001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37079950102_32.png,       32,            33,         59960
+37183053719, 35.92233225       , -78.75350350000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053719_0.png ,        0,             7,        146211
+37183053719, 35.9261915        , -78.75350350000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053719_1.png ,        1,             7,        146211
+37183053719, 35.92233225       , -78.748797        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053719_2.png ,        2,             7,        146211
+37183053719, 35.9261915        , -78.748797        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053719_3.png ,        3,             7,        146211
+37183053719, 35.93005075       , -78.748797        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053719_4.png ,        4,             7,        146211
+37183053719, 35.92233225       , -78.7440905       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053719_5.png ,        5,             7,        146211
+37183053719, 35.9261915        , -78.7440905       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053719_6.png ,        6,             7,        146211
+37119005617, 35.2344528        , -80.7138498       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005617_0.png ,        0,            10,         74875
+37119005617, 35.2399116        , -80.7138498       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005617_1.png ,        1,            10,         74875
+37119005617, 35.2453704        , -80.7138498       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005617_2.png ,        2,            10,         74875
+37119005617, 35.2508292        , -80.7138498       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005617_3.png ,        3,            10,         74875
+37119005617, 35.2344528        , -80.7077136       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005617_4.png ,        4,            10,         74875
+37119005617, 35.2399116        , -80.7077136       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005617_5.png ,        5,            10,         74875
+37119005617, 35.2453704        , -80.7077136       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005617_6.png ,        6,            10,         74875
+37119005617, 35.2508292        , -80.7077136       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005617_7.png ,        7,            10,         74875
+37119005617, 35.2399116        , -80.7015774       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005617_8.png ,        8,            10,         74875
+37119005617, 35.2453704        , -80.7015774       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005617_9.png ,        9,            10,         74875
+37015960402, 35.86209066666667 , -77.00506611111112, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_0.png ,        0,            39,         53689
+37015960402, 35.887201999999995, -77.00506611111112, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_1.png ,        1,            39,         53689
+37015960402, 35.91231333333333 , -77.00506611111112, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_2.png ,        2,            39,         53689
+37015960402, 35.887201999999995, -76.96467222222223, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_3.png ,        3,            39,         53689
+37015960402, 35.91231333333333 , -76.96467222222223, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_4.png ,        4,            39,         53689
+37015960402, 35.937424666666665, -76.96467222222223, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_5.png ,        5,            39,         53689
+37015960402, 35.91231333333333 , -76.92427833333333, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_6.png ,        6,            39,         53689
+37015960402, 35.937424666666665, -76.92427833333333, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_7.png ,        7,            39,         53689
+37015960402, 35.962536         , -76.92427833333333, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_8.png ,        8,            39,         53689
+37015960402, 35.98764733333333 , -76.92427833333333, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_9.png ,        9,            39,         53689
+37015960402, 35.83697933333333 , -76.88388444444445, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_10.png,       10,            39,         53689
+37015960402, 35.86209066666667 , -76.88388444444445, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_11.png,       11,            39,         53689
+37015960402, 35.887201999999995, -76.88388444444445, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_12.png,       12,            39,         53689
+37015960402, 35.91231333333333 , -76.88388444444445, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_13.png,       13,            39,         53689
+37015960402, 35.937424666666665, -76.88388444444445, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_14.png,       14,            39,         53689
+37015960402, 35.962536         , -76.88388444444445, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_15.png,       15,            39,         53689
+37015960402, 35.98764733333333 , -76.88388444444445, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_16.png,       16,            39,         53689
+37015960402, 36.01275866666666 , -76.88388444444445, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_17.png,       17,            39,         53689
+37015960402, 35.86209066666667 , -76.84349055555556, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_18.png,       18,            39,         53689
+37015960402, 35.887201999999995, -76.84349055555556, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_19.png,       19,            39,         53689
+37015960402, 35.91231333333333 , -76.84349055555556, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_20.png,       20,            39,         53689
+37015960402, 35.937424666666665, -76.84349055555556, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_21.png,       21,            39,         53689
+37015960402, 35.962536         , -76.84349055555556, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_22.png,       22,            39,         53689
+37015960402, 35.98764733333333 , -76.84349055555556, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_23.png,       23,            39,         53689
+37015960402, 36.01275866666666 , -76.84349055555556, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_24.png,       24,            39,         53689
+37015960402, 35.887201999999995, -76.80309666666668, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_25.png,       25,            39,         53689
+37015960402, 35.91231333333333 , -76.80309666666668, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_26.png,       26,            39,         53689
+37015960402, 35.937424666666665, -76.80309666666668, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_27.png,       27,            39,         53689
+37015960402, 35.962536         , -76.80309666666668, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_28.png,       28,            39,         53689
+37015960402, 35.98764733333333 , -76.80309666666668, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_29.png,       29,            39,         53689
+37015960402, 36.01275866666666 , -76.80309666666668, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_30.png,       30,            39,         53689
+37015960402, 35.887201999999995, -76.76270277777778, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_31.png,       31,            39,         53689
+37015960402, 35.91231333333333 , -76.76270277777778, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_32.png,       32,            39,         53689
+37015960402, 35.937424666666665, -76.76270277777778, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_33.png,       33,            39,         53689
+37015960402, 35.962536         , -76.76270277777778, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_34.png,       34,            39,         53689
+37015960402, 35.98764733333333 , -76.76270277777778, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_35.png,       35,            39,         53689
+37015960402, 36.01275866666666 , -76.76270277777778, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_36.png,       36,            39,         53689
+37015960402, 35.962536         , -76.72230888888889, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_37.png,       37,            39,         53689
+37015960402, 35.98764733333333 , -76.72230888888889, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37015960402_38.png,       38,            39,         53689
+37031970401, 34.726345         , -76.76215275      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37031970401_0.png ,        0,             7,         36307
+37031970401, 34.729023999999995, -76.76215275      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37031970401_1.png ,        1,             7,         36307
+37031970401, 34.731702999999996, -76.76215275      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37031970401_2.png ,        2,             7,         36307
+37031970401, 34.726345         , -76.7550435       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37031970401_3.png ,        3,             7,         36307
+37031970401, 34.729023999999995, -76.7550435       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37031970401_4.png ,        4,             7,         36307
+37031970401, 34.731702999999996, -76.7550435       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37031970401_5.png ,        5,             7,         36307
+37031970401, 34.726345         , -76.74793425      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37031970401_6.png ,        6,             7,         36307
+37067003908, 36.1063524        , -80.34982880000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067003908_0.png ,        0,            10,        146655
+37067003908, 36.1106408        , -80.34982880000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067003908_1.png ,        1,            10,        146655
+37067003908, 36.1149292        , -80.34982880000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067003908_2.png ,        2,            10,        146655
+37067003908, 36.1063524        , -80.3409436       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067003908_3.png ,        3,            10,        146655
+37067003908, 36.1106408        , -80.3409436       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067003908_4.png ,        4,            10,        146655
+37067003908, 36.1149292        , -80.3409436       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067003908_5.png ,        5,            10,        146655
+37067003908, 36.1063524        , -80.33205840000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067003908_6.png ,        6,            10,        146655
+37067003908, 36.1106408        , -80.33205840000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067003908_7.png ,        7,            10,        146655
+37067003908, 36.1149292        , -80.33205840000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067003908_8.png ,        8,            10,        146655
+37067003908, 36.1192176        , -80.33205840000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067003908_9.png ,        9,            10,        146655
+37199960400, 35.93620422222222 , -82.48474235595832, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_0.png ,        0,            41,         56287
+37199960400, 35.96587177777778 , -82.48474235595832, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_1.png ,        1,            41,         56287
+37199960400, 35.90653666666667 , -82.46403056146353, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_2.png ,        2,            41,         56287
+37199960400, 35.93620422222222 , -82.46403056146353, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_3.png ,        3,            41,         56287
+37199960400, 35.96587177777778 , -82.46403056146353, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_4.png ,        4,            41,         56287
+37199960400, 35.99553933333333 , -82.46403056146353, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_5.png ,        5,            41,         56287
+37199960400, 35.90653666666667 , -82.44331876696873, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_6.png ,        6,            41,         56287
+37199960400, 35.93620422222222 , -82.44331876696873, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_7.png ,        7,            41,         56287
+37199960400, 35.96587177777778 , -82.44331876696873, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_8.png ,        8,            41,         56287
+37199960400, 35.99553933333333 , -82.44331876696873, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_9.png ,        9,            41,         56287
+37199960400, 36.02520688888889 , -82.44331876696873, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_10.png,       10,            41,         56287
+37199960400, 35.87686911111111 , -82.42260697247394, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_11.png,       11,            41,         56287
+37199960400, 35.90653666666667 , -82.42260697247394, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_12.png,       12,            41,         56287
+37199960400, 35.93620422222222 , -82.42260697247394, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_13.png,       13,            41,         56287
+37199960400, 35.96587177777778 , -82.42260697247394, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_14.png,       14,            41,         56287
+37199960400, 35.99553933333333 , -82.42260697247394, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_15.png,       15,            41,         56287
+37199960400, 36.02520688888889 , -82.42260697247394, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_16.png,       16,            41,         56287
+37199960400, 36.054874444444444, -82.42260697247394, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_17.png,       17,            41,         56287
+37199960400, 35.84720155555556 , -82.40189517797916, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_18.png,       18,            41,         56287
+37199960400, 35.87686911111111 , -82.40189517797916, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_19.png,       19,            41,         56287
+37199960400, 35.90653666666667 , -82.40189517797916, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_20.png,       20,            41,         56287
+37199960400, 35.93620422222222 , -82.40189517797916, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_21.png,       21,            41,         56287
+37199960400, 35.96587177777778 , -82.40189517797916, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_22.png,       22,            41,         56287
+37199960400, 35.99553933333333 , -82.40189517797916, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_23.png,       23,            41,         56287
+37199960400, 36.02520688888889 , -82.40189517797916, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_24.png,       24,            41,         56287
+37199960400, 36.054874444444444, -82.40189517797916, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_25.png,       25,            41,         56287
+37199960400, 35.90653666666667 , -82.38118338348437, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_26.png,       26,            41,         56287
+37199960400, 35.93620422222222 , -82.38118338348437, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_27.png,       27,            41,         56287
+37199960400, 35.96587177777778 , -82.38118338348437, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_28.png,       28,            41,         56287
+37199960400, 35.99553933333333 , -82.38118338348437, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_29.png,       29,            41,         56287
+37199960400, 36.02520688888889 , -82.38118338348437, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_30.png,       30,            41,         56287
+37199960400, 36.054874444444444, -82.38118338348437, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_31.png,       31,            41,         56287
+37199960400, 35.90653666666667 , -82.36047158898957, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_32.png,       32,            41,         56287
+37199960400, 35.93620422222222 , -82.36047158898957, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_33.png,       33,            41,         56287
+37199960400, 35.96587177777778 , -82.36047158898957, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_34.png,       34,            41,         56287
+37199960400, 35.99553933333333 , -82.36047158898957, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_35.png,       35,            41,         56287
+37199960400, 36.02520688888889 , -82.36047158898957, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_36.png,       36,            41,         56287
+37199960400, 36.054874444444444, -82.36047158898957, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_37.png,       37,            41,         56287
+37199960400, 35.96587177777778 , -82.33975979449478, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_38.png,       38,            41,         56287
+37199960400, 36.02520688888889 , -82.33975979449478, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_39.png,       39,            41,         56287
+37199960400, 36.054874444444444, -82.33975979449478, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37199960400_40.png,       40,            41,         56287
+37167931204, 35.3544236        , -80.200339        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37167931204_0.png ,        0,            10,         50044
+37167931204, 35.358612199999996, -80.200339        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37167931204_1.png ,        1,            10,         50044
+37167931204, 35.3628008        , -80.200339        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37167931204_2.png ,        2,            10,         50044
+37167931204, 35.3544236        , -80.193577        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37167931204_3.png ,        3,            10,         50044
+37167931204, 35.358612199999996, -80.193577        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37167931204_4.png ,        4,            10,         50044
+37167931204, 35.3628008        , -80.193577        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37167931204_5.png ,        5,            10,         50044
+37167931204, 35.3669894        , -80.193577        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37167931204_6.png ,        6,            10,         50044
+37167931204, 35.3544236        , -80.186815        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37167931204_7.png ,        7,            10,         50044
+37167931204, 35.358612199999996, -80.186815        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37167931204_8.png ,        8,            10,         50044
+37167931204, 35.3628008        , -80.186815        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37167931204_9.png ,        9,            10,         50044
+37135011903, 35.950171749999996, -79.0550865       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37135011903_0.png ,        0,             7,        102284
+37135011903, 35.954776499999994, -79.0550865       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37135011903_1.png ,        1,             7,        102284
+37135011903, 35.95938125       , -79.0550865       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37135011903_2.png ,        2,             7,        102284
+37135011903, 35.950171749999996, -79.051635        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37135011903_3.png ,        3,             7,        102284
+37135011903, 35.954776499999994, -79.051635        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37135011903_4.png ,        4,             7,        102284
+37135011903, 35.95938125       , -79.051635        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37135011903_5.png ,        5,             7,        102284
+37135011903, 35.950171749999996, -79.0481835       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37135011903_6.png ,        6,             7,        102284
+37081011201, 36.0657785        , -79.78399775      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081011201_0.png ,        0,             7,         31964
+37081011201, 36.068022         , -79.78399775      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081011201_1.png ,        1,             7,         31964
+37081011201, 36.0657785        , -79.7780485       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081011201_2.png ,        2,             7,         31964
+37081011201, 36.068022         , -79.7780485       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081011201_3.png ,        3,             7,         31964
+37081011201, 36.0702655        , -79.7780485       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081011201_4.png ,        4,             7,         31964
+37081011201, 36.0657785        , -79.77209925      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081011201_5.png ,        5,             7,         31964
+37081011201, 36.068022         , -79.77209925      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081011201_6.png ,        6,             7,         31964
+37183053430, 35.747527399999996, -78.8715136       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053430_0.png ,        0,            10,        133500
+37183053430, 35.7520236        , -78.8715136       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053430_1.png ,        1,            10,        133500
+37183053430, 35.7565198        , -78.8715136       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053430_2.png ,        2,            10,        133500
+37183053430, 35.7430312        , -78.8659152       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053430_3.png ,        3,            10,        133500
+37183053430, 35.747527399999996, -78.8659152       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053430_4.png ,        4,            10,        133500
+37183053430, 35.7520236        , -78.8659152       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053430_5.png ,        5,            10,        133500
+37183053430, 35.7565198        , -78.8659152       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053430_6.png ,        6,            10,        133500
+37183053430, 35.7430312        , -78.86031679999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053430_7.png ,        7,            10,        133500
+37183053430, 35.747527399999996, -78.86031679999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053430_8.png ,        8,            10,        133500
+37183053430, 35.7520236        , -78.86031679999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053430_9.png ,        9,            10,        133500
+37183051502, 35.804102         , -78.68871         , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051502_0.png ,        0,            10,        139550
+37183051502, 35.807142         , -78.68871         , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051502_1.png ,        1,            10,        139550
+37183051502, 35.810182000000005, -78.68871         , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051502_2.png ,        2,            10,        139550
+37183051502, 35.813222         , -78.68871         , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051502_3.png ,        3,            10,        139550
+37183051502, 35.804102         , -78.683808        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051502_4.png ,        4,            10,        139550
+37183051502, 35.807142         , -78.683808        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051502_5.png ,        5,            10,        139550
+37183051502, 35.810182000000005, -78.683808        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051502_6.png ,        6,            10,        139550
+37183051502, 35.813222         , -78.683808        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051502_7.png ,        7,            10,        139550
+37183051502, 35.804102         , -78.678906        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051502_8.png ,        8,            10,        139550
+37183051502, 35.807142         , -78.678906        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183051502_9.png ,        9,            10,        139550
+37119005510, 35.3137004        , -80.83620339999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005510_0.png ,        0,            13,         71346
+37119005510, 35.3200428        , -80.83620339999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005510_1.png ,        1,            13,         71346
+37119005510, 35.3263852        , -80.83620339999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005510_2.png ,        2,            13,         71346
+37119005510, 35.3327276        , -80.83620339999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005510_3.png ,        3,            13,         71346
+37119005510, 35.3137004        , -80.8289358       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005510_4.png ,        4,            13,         71346
+37119005510, 35.3200428        , -80.8289358       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005510_5.png ,        5,            13,         71346
+37119005510, 35.3263852        , -80.8289358       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005510_6.png ,        6,            13,         71346
+37119005510, 35.3327276        , -80.8289358       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005510_7.png ,        7,            13,         71346
+37119005510, 35.3137004        , -80.82166819999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005510_8.png ,        8,            13,         71346
+37119005510, 35.3200428        , -80.82166819999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005510_9.png ,        9,            13,         71346
+37119005510, 35.3263852        , -80.82166819999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005510_10.png,       10,            13,         71346
+37119005510, 35.3327276        , -80.82166819999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005510_11.png,       11,            13,         71346
+37119005510, 35.3137004        , -80.8144006       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005510_12.png,       12,            13,         71346
+37183053004, 35.730237599999995, -78.7750192       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053004_0.png ,        0,            10,        124261
+37183053004, 35.7340582        , -78.7750192       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053004_1.png ,        1,            10,        124261
+37183053004, 35.7378788        , -78.7750192       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053004_2.png ,        2,            10,        124261
+37183053004, 35.730237599999995, -78.7699444       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053004_3.png ,        3,            10,        124261
+37183053004, 35.7340582        , -78.7699444       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053004_4.png ,        4,            10,        124261
+37183053004, 35.7378788        , -78.7699444       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053004_5.png ,        5,            10,        124261
+37183053004, 35.7416994        , -78.7699444       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053004_6.png ,        6,            10,        124261
+37183053004, 35.730237599999995, -78.76486960000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053004_7.png ,        7,            10,        124261
+37183053004, 35.7340582        , -78.76486960000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053004_8.png ,        8,            10,        124261
+37183053004, 35.7378788        , -78.76486960000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37183053004_9.png ,        9,            10,        124261
+37119005859, 35.0468095        , -80.830084        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005859_0.png ,        0,             7,        125588
+37119005859, 35.050276         , -80.830084        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005859_1.png ,        1,             7,        125588
+37119005859, 35.0537425        , -80.830084        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005859_2.png ,        2,             7,        125588
+37119005859, 35.0468095        , -80.82478         , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005859_3.png ,        3,             7,        125588
+37119005859, 35.050276         , -80.82478         , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005859_4.png ,        4,             7,        125588
+37119005859, 35.0537425        , -80.82478         , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005859_5.png ,        5,             7,        125588
+37119005859, 35.050276         , -80.819476        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005859_6.png ,        6,             7,        125588
+37047930500, 34.358617         , -78.99408855555555, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_0.png ,        0,            31,         49242
+37047930500, 34.37664          , -78.99408855555555, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_1.png ,        1,            31,         49242
+37047930500, 34.37664          , -78.9508741111111 , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_2.png ,        2,            31,         49242
+37047930500, 34.394663         , -78.9508741111111 , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_3.png ,        3,            31,         49242
+37047930500, 34.412686         , -78.9508741111111 , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_4.png ,        4,            31,         49242
+37047930500, 34.430709         , -78.9508741111111 , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_5.png ,        5,            31,         49242
+37047930500, 34.448732         , -78.9508741111111 , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_6.png ,        6,            31,         49242
+37047930500, 34.358617         , -78.90765966666666, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_7.png ,        7,            31,         49242
+37047930500, 34.37664          , -78.90765966666666, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_8.png ,        8,            31,         49242
+37047930500, 34.394663         , -78.90765966666666, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_9.png ,        9,            31,         49242
+37047930500, 34.412686         , -78.90765966666666, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_10.png,       10,            31,         49242
+37047930500, 34.430709         , -78.90765966666666, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_11.png,       11,            31,         49242
+37047930500, 34.448732         , -78.90765966666666, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_12.png,       12,            31,         49242
+37047930500, 34.358617         , -78.86444522222222, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_13.png,       13,            31,         49242
+37047930500, 34.37664          , -78.86444522222222, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_14.png,       14,            31,         49242
+37047930500, 34.394663         , -78.86444522222222, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_15.png,       15,            31,         49242
+37047930500, 34.412686         , -78.86444522222222, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_16.png,       16,            31,         49242
+37047930500, 34.430709         , -78.86444522222222, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_17.png,       17,            31,         49242
+37047930500, 34.448732         , -78.86444522222222, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_18.png,       18,            31,         49242
+37047930500, 34.466755         , -78.86444522222222, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_19.png,       19,            31,         49242
+37047930500, 34.37664          , -78.82123077777779, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_20.png,       20,            31,         49242
+37047930500, 34.394663         , -78.82123077777779, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_21.png,       21,            31,         49242
+37047930500, 34.412686         , -78.82123077777779, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_22.png,       22,            31,         49242
+37047930500, 34.430709         , -78.82123077777779, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_23.png,       23,            31,         49242
+37047930500, 34.448732         , -78.82123077777779, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_24.png,       24,            31,         49242
+37047930500, 34.394663         , -78.77801633333334, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_25.png,       25,            31,         49242
+37047930500, 34.430709         , -78.77801633333334, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_26.png,       26,            31,         49242
+37047930500, 34.448732         , -78.77801633333334, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_27.png,       27,            31,         49242
+37047930500, 34.448732         , -78.7348018888889 , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_28.png,       28,            31,         49242
+37047930500, 34.448732         , -78.69158744444445, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_29.png,       29,            31,         49242
+37047930500, 34.466755         , -78.69158744444445, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37047930500_30.png,       30,            31,         49242
+37035010404, 35.748149749999996, -81.3200985       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37035010404_0.png ,        0,             7,         58333
+37035010404, 35.7519925        , -81.3200985       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37035010404_1.png ,        1,             7,         58333
+37035010404, 35.755835250000004, -81.3200985       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37035010404_2.png ,        2,             7,         58333
+37035010404, 35.748149749999996, -81.314262        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37035010404_3.png ,        3,             7,         58333
+37035010404, 35.7519925        , -81.314262        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37035010404_4.png ,        4,             7,         58333
+37035010404, 35.755835250000004, -81.314262        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37035010404_5.png ,        5,             7,         58333
+37035010404, 35.748149749999996, -81.3084255       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37035010404_6.png ,        6,             7,         58333
+37119005929, 35.1075345        , -80.9823635       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005929_0.png ,        0,             5,         80352
+37119005929, 35.11226          , -80.9823635       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005929_1.png ,        1,             5,         80352
+37119005929, 35.1169855        , -80.9823635       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005929_2.png ,        2,             5,         80352
+37119005929, 35.11226          , -80.975675        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005929_3.png ,        3,             5,         80352
+37119005929, 35.1169855        , -80.9689865       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005929_4.png ,        4,             5,         80352
+37119005308, 35.27010675       , -80.77350825      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005308_0.png ,        0,             7,         36727
+37119005308, 35.2730155        , -80.77350825      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005308_1.png ,        1,             7,         36727
+37119005308, 35.27592425       , -80.77350825      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005308_2.png ,        2,             7,         36727
+37119005308, 35.27010675       , -80.77112550000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005308_3.png ,        3,             7,         36727
+37119005308, 35.2730155        , -80.77112550000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005308_4.png ,        4,             7,         36727
+37119005308, 35.27592425       , -80.77112550000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005308_5.png ,        5,             7,         36727
+37119005308, 35.27010675       , -80.76874275      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005308_6.png ,        6,             7,         36727
+37081010602, 36.064523         , -79.8274925       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081010602_0.png ,        0,             7,         58831
+37081010602, 36.067863         , -79.8274925       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081010602_1.png ,        1,             7,         58831
+37081010602, 36.071203         , -79.8274925       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081010602_2.png ,        2,             7,         58831
+37081010602, 36.064523         , -79.823241        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081010602_3.png ,        3,             7,         58831
+37081010602, 36.067863         , -79.823241        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081010602_4.png ,        4,             7,         58831
+37081010602, 36.071203         , -79.823241        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081010602_5.png ,        5,             7,         58831
+37081010602, 36.064523         , -79.8189895       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081010602_6.png ,        6,             7,         58831
+37119003109, 35.1202555        , -80.87825875      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119003109_0.png ,        0,             7,         54964
+37119003109, 35.122889         , -80.87825875      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119003109_1.png ,        1,             7,         54964
+37119003109, 35.1202555        , -80.87535249999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119003109_2.png ,        2,             7,         54964
+37119003109, 35.122889         , -80.87535249999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119003109_3.png ,        3,             7,         54964
+37119003109, 35.125522499999995, -80.87535249999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119003109_4.png ,        4,             7,         54964
+37119003109, 35.1202555        , -80.87244625      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119003109_5.png ,        5,             7,         54964
+37119003109, 35.122889         , -80.87244625      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119003109_6.png ,        6,             7,         54964
+37067000700, 36.096819749999995, -80.2331245       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067000700_0.png ,        0,             7,         27400
+37067000700, 36.0996605        , -80.2331245       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067000700_1.png ,        1,             7,         27400
+37067000700, 36.10250125       , -80.2331245       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067000700_2.png ,        2,             7,         27400
+37067000700, 36.096819749999995, -80.22992099999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067000700_3.png ,        3,             7,         27400
+37067000700, 36.0996605        , -80.22992099999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067000700_4.png ,        4,             7,         27400
+37067000700, 36.10250125       , -80.22992099999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067000700_5.png ,        5,             7,         27400
+37067000700, 36.096819749999995, -80.22671749999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067000700_6.png ,        6,             7,         27400
+37119005517, 35.3762226        , -80.7803074       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005517_0.png ,        0,            10,        105598
+37119005517, 35.3799612        , -80.7803074       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005517_1.png ,        1,            10,        105598
+37119005517, 35.3836998        , -80.7803074       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005517_2.png ,        2,            10,        105598
+37119005517, 35.3874384        , -80.7803074       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005517_3.png ,        3,            10,        105598
+37119005517, 35.3762226        , -80.7738168       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005517_4.png ,        4,            10,        105598
+37119005517, 35.3799612        , -80.7738168       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005517_5.png ,        5,            10,        105598
+37119005517, 35.3836998        , -80.7738168       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005517_6.png ,        6,            10,        105598
+37119005517, 35.3762226        , -80.7673262       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005517_7.png ,        7,            10,        105598
+37119005517, 35.3799612        , -80.7673262       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005517_8.png ,        8,            10,        105598
+37119005517, 35.3799612        , -80.76083560000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37119005517_9.png ,        9,            10,        105598
+37157041502, 36.3342224        , -79.6922438       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37157041502_0.png ,        0,            13,         59152
+37157041502, 36.3411956        , -79.6922438       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37157041502_1.png ,        1,            13,         59152
+37157041502, 36.3481688        , -79.6922438       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37157041502_2.png ,        2,            13,         59152
+37157041502, 36.3272492        , -79.6849916       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37157041502_3.png ,        3,            13,         59152
+37157041502, 36.3342224        , -79.6849916       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37157041502_4.png ,        4,            13,         59152
+37157041502, 36.3411956        , -79.6849916       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37157041502_5.png ,        5,            13,         59152
+37157041502, 36.3481688        , -79.6849916       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37157041502_6.png ,        6,            13,         59152
+37157041502, 36.3272492        , -79.6777394       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37157041502_7.png ,        7,            13,         59152
+37157041502, 36.3342224        , -79.6777394       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37157041502_8.png ,        8,            13,         59152
+37157041502, 36.3411956        , -79.6777394       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37157041502_9.png ,        9,            13,         59152
+37157041502, 36.3481688        , -79.6777394       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37157041502_10.png,       10,            13,         59152
+37157041502, 36.3272492        , -79.6704872       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37157041502_11.png,       11,            13,         59152
+37157041502, 36.3342224        , -79.6704872       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37157041502_12.png,       12,            13,         59152
+37067002100, 36.07272475       , -80.293463        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067002100_0.png ,        0,             7,         82768
+37067002100, 36.075582499999996, -80.293463        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067002100_1.png ,        1,             7,         82768
+37067002100, 36.07272475       , -80.286768        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067002100_2.png ,        2,             7,         82768
+37067002100, 36.075582499999996, -80.286768        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067002100_3.png ,        3,             7,         82768
+37067002100, 36.07272475       , -80.28007299999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067002100_4.png ,        4,             7,         82768
+37067002100, 36.075582499999996, -80.28007299999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067002100_5.png ,        5,             7,         82768
+37067002100, 36.07844025       , -80.28007299999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067002100_6.png ,        6,             7,         82768
+37067000200, 36.10277575       , -80.25587525      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067000200_0.png ,        0,             7,         22188
+37067000200, 36.1057755        , -80.25587525      , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067000200_1.png ,        1,             7,         22188
+37067000200, 36.10277575       , -80.2493595       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067000200_2.png ,        2,             7,         22188
+37067000200, 36.1057755        , -80.2493595       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067000200_3.png ,        3,             7,         22188
+37067000200, 36.10877525       , -80.2493595       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067000200_4.png ,        4,             7,         22188
+37067000200, 36.1057755        , -80.24284374999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067000200_5.png ,        5,             7,         22188
+37067000200, 36.10877525       , -80.24284374999999, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37067000200_6.png ,        6,             7,         22188
+37091950102, 36.52844586314071 , -77.13534394619379, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_0.png ,        0,            42,         43943
+37091950102, 36.42128971578518 , -77.10631782791955, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_1.png ,        1,            42,         43943
+37091950102, 36.45700843157036 , -77.10631782791955, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_2.png ,        2,            42,         43943
+37091950102, 36.47486778946294 , -77.10631782791955, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_3.png ,        3,            42,         43943
+37091950102, 36.52844586314071 , -77.10631782791955, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_4.png ,        4,            42,         43943
+37091950102, 36.42128971578518 , -77.07729170964534, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_5.png ,        5,            42,         43943
+37091950102, 36.43914907367777 , -77.07729170964534, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_6.png ,        6,            42,         43943
+37091950102, 36.45700843157036 , -77.07729170964534, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_7.png ,        7,            42,         43943
+37091950102, 36.47486778946294 , -77.07729170964534, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_8.png ,        8,            42,         43943
+37091950102, 36.51058650524812 , -77.07729170964534, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_9.png ,        9,            42,         43943
+37091950102, 36.52844586314071 , -77.07729170964534, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_10.png,       10,            42,         43943
+37091950102, 36.40343035789259 , -77.04826559137112, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_11.png,       11,            42,         43943
+37091950102, 36.42128971578518 , -77.04826559137112, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_12.png,       12,            42,         43943
+37091950102, 36.43914907367777 , -77.04826559137112, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_13.png,       13,            42,         43943
+37091950102, 36.45700843157036 , -77.04826559137112, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_14.png,       14,            42,         43943
+37091950102, 36.47486778946294 , -77.04826559137112, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_15.png,       15,            42,         43943
+37091950102, 36.49272714735553 , -77.04826559137112, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_16.png,       16,            42,         43943
+37091950102, 36.51058650524812 , -77.04826559137112, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_17.png,       17,            42,         43943
+37091950102, 36.52844586314071 , -77.04826559137112, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_18.png,       18,            42,         43943
+37091950102, 36.40343035789259 , -77.01923947309689, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_19.png,       19,            42,         43943
+37091950102, 36.42128971578518 , -77.01923947309689, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_20.png,       20,            42,         43943
+37091950102, 36.43914907367777 , -77.01923947309689, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_21.png,       21,            42,         43943
+37091950102, 36.45700843157036 , -77.01923947309689, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_22.png,       22,            42,         43943
+37091950102, 36.47486778946294 , -77.01923947309689, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_23.png,       23,            42,         43943
+37091950102, 36.49272714735553 , -77.01923947309689, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_24.png,       24,            42,         43943
+37091950102, 36.51058650524812 , -77.01923947309689, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_25.png,       25,            42,         43943
+37091950102, 36.52844586314071 , -77.01923947309689, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_26.png,       26,            42,         43943
+37091950102, 36.43914907367777 , -76.99021335482267, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_27.png,       27,            42,         43943
+37091950102, 36.45700843157036 , -76.99021335482267, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_28.png,       28,            42,         43943
+37091950102, 36.47486778946294 , -76.99021335482267, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_29.png,       29,            42,         43943
+37091950102, 36.49272714735553 , -76.99021335482267, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_30.png,       30,            42,         43943
+37091950102, 36.51058650524812 , -76.99021335482267, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_31.png,       31,            42,         43943
+37091950102, 36.52844586314071 , -76.99021335482267, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_32.png,       32,            42,         43943
+37091950102, 36.43914907367777 , -76.96118723654845, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_33.png,       33,            42,         43943
+37091950102, 36.45700843157036 , -76.96118723654845, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_34.png,       34,            42,         43943
+37091950102, 36.47486778946294 , -76.96118723654845, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_35.png,       35,            42,         43943
+37091950102, 36.49272714735553 , -76.96118723654845, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_36.png,       36,            42,         43943
+37091950102, 36.51058650524812 , -76.96118723654845, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_37.png,       37,            42,         43943
+37091950102, 36.52844586314071 , -76.96118723654845, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_38.png,       38,            42,         43943
+37091950102, 36.49272714735553 , -76.93216111827422, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_39.png,       39,            42,         43943
+37091950102, 36.51058650524812 , -76.93216111827422, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_40.png,       40,            42,         43943
+37091950102, 36.52844586314071 , -76.93216111827422, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37091950102_41.png,       41,            42,         43943
+37081014300, 35.9357186        , -80.0201416       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014300_0.png ,        0,            10,         45411
+37081014300, 35.9412142        , -80.0201416       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014300_1.png ,        1,            10,         45411
+37081014300, 35.9357186        , -80.0130202       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014300_2.png ,        2,            10,         45411
+37081014300, 35.9412142        , -80.0130202       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014300_3.png ,        3,            10,         45411
+37081014300, 35.9467098        , -80.0130202       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014300_4.png ,        4,            10,         45411
+37081014300, 35.9522054        , -80.0130202       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014300_5.png ,        5,            10,         45411
+37081014300, 35.9357186        , -80.00589880000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014300_6.png ,        6,            10,         45411
+37081014300, 35.9412142        , -80.00589880000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014300_7.png ,        7,            10,         45411
+37081014300, 35.9467098        , -80.00589880000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014300_8.png ,        8,            10,         45411
+37081014300, 35.9522054        , -80.00589880000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37081014300_9.png ,        9,            10,         45411
+37147000304, 35.5762656        , -77.3404774       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000304_0.png ,        0,            10,         81543
+37147000304, 35.5811272        , -77.3404774       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000304_1.png ,        1,            10,         81543
+37147000304, 35.5859888        , -77.3404774       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000304_2.png ,        2,            10,         81543
+37147000304, 35.5908504        , -77.3404774       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000304_3.png ,        3,            10,         81543
+37147000304, 35.5762656        , -77.3331468       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000304_4.png ,        4,            10,         81543
+37147000304, 35.5811272        , -77.3331468       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000304_5.png ,        5,            10,         81543
+37147000304, 35.5859888        , -77.3331468       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000304_6.png ,        6,            10,         81543
+37147000304, 35.5908504        , -77.3331468       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000304_7.png ,        7,            10,         81543
+37147000304, 35.5762656        , -77.3258162       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000304_8.png ,        8,            10,         81543
+37147000304, 35.5811272        , -77.3258162       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000304_9.png ,        9,            10,         81543
+37075920100, 35.387380666666665, -83.974138        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_0.png ,        0,            42,         53155
+37075920100, 35.403207333333334, -83.974138        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_1.png ,        1,            42,         53155
+37075920100, 35.419033999999996, -83.974138        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_2.png ,        2,            42,         53155
+37075920100, 35.434860666666665, -83.974138        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_3.png ,        3,            42,         53155
+37075920100, 35.371554         , -83.925169        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_4.png ,        4,            42,         53155
+37075920100, 35.387380666666665, -83.925169        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_5.png ,        5,            42,         53155
+37075920100, 35.403207333333334, -83.925169        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_6.png ,        6,            42,         53155
+37075920100, 35.419033999999996, -83.925169        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_7.png ,        7,            42,         53155
+37075920100, 35.434860666666665, -83.925169        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_8.png ,        8,            42,         53155
+37075920100, 35.45068733333333 , -83.925169        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_9.png ,        9,            42,         53155
+37075920100, 35.371554         , -83.8762          , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_10.png,       10,            42,         53155
+37075920100, 35.387380666666665, -83.8762          , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_11.png,       11,            42,         53155
+37075920100, 35.403207333333334, -83.8762          , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_12.png,       12,            42,         53155
+37075920100, 35.419033999999996, -83.8762          , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_13.png,       13,            42,         53155
+37075920100, 35.434860666666665, -83.8762          , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_14.png,       14,            42,         53155
+37075920100, 35.45068733333333 , -83.8762          , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_15.png,       15,            42,         53155
+37075920100, 35.371554         , -83.827231        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_16.png,       16,            42,         53155
+37075920100, 35.387380666666665, -83.827231        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_17.png,       17,            42,         53155
+37075920100, 35.403207333333334, -83.827231        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_18.png,       18,            42,         53155
+37075920100, 35.419033999999996, -83.827231        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_19.png,       19,            42,         53155
+37075920100, 35.434860666666665, -83.827231        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_20.png,       20,            42,         53155
+37075920100, 35.387380666666665, -83.778262        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_21.png,       21,            42,         53155
+37075920100, 35.403207333333334, -83.778262        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_22.png,       22,            42,         53155
+37075920100, 35.419033999999996, -83.778262        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_23.png,       23,            42,         53155
+37075920100, 35.434860666666665, -83.778262        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_24.png,       24,            42,         53155
+37075920100, 35.387380666666665, -83.729293        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_25.png,       25,            42,         53155
+37075920100, 35.403207333333334, -83.729293        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_26.png,       26,            42,         53155
+37075920100, 35.419033999999996, -83.729293        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_27.png,       27,            42,         53155
+37075920100, 35.434860666666665, -83.729293        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_28.png,       28,            42,         53155
+37075920100, 35.33990066666667 , -83.680324        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_29.png,       29,            42,         53155
+37075920100, 35.355727333333334, -83.680324        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_30.png,       30,            42,         53155
+37075920100, 35.371554         , -83.680324        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_31.png,       31,            42,         53155
+37075920100, 35.387380666666665, -83.680324        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_32.png,       32,            42,         53155
+37075920100, 35.403207333333334, -83.680324        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_33.png,       33,            42,         53155
+37075920100, 35.419033999999996, -83.680324        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_34.png,       34,            42,         53155
+37075920100, 35.434860666666665, -83.680324        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_35.png,       35,            42,         53155
+37075920100, 35.355727333333334, -83.631355        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_36.png,       36,            42,         53155
+37075920100, 35.371554         , -83.631355        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_37.png,       37,            42,         53155
+37075920100, 35.387380666666665, -83.631355        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_38.png,       38,            42,         53155
+37075920100, 35.403207333333334, -83.631355        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_39.png,       39,            42,         53155
+37075920100, 35.419033999999996, -83.631355        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_40.png,       40,            42,         53155
+37075920100, 35.434860666666665, -83.631355        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37075920100_41.png,       41,            42,         53155
+37097060601, 35.781831         , -80.8565792       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_0.png ,        0,            16,         52366
+37097060601, 35.789578999999996, -80.8565792       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_1.png ,        1,            16,         52366
+37097060601, 35.797327         , -80.8565792       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_2.png ,        2,            16,         52366
+37097060601, 35.805075         , -80.8565792       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_3.png ,        3,            16,         52366
+37097060601, 35.781831         , -80.8493614       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_4.png ,        4,            16,         52366
+37097060601, 35.789578999999996, -80.8493614       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_5.png ,        5,            16,         52366
+37097060601, 35.797327         , -80.8493614       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_6.png ,        6,            16,         52366
+37097060601, 35.805075         , -80.8493614       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_7.png ,        7,            16,         52366
+37097060601, 35.781831         , -80.8421436       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_8.png ,        8,            16,         52366
+37097060601, 35.789578999999996, -80.8421436       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_9.png ,        9,            16,         52366
+37097060601, 35.797327         , -80.8421436       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_10.png,       10,            16,         52366
+37097060601, 35.805075         , -80.8421436       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_11.png,       11,            16,         52366
+37097060601, 35.781831         , -80.83492580000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_12.png,       12,            16,         52366
+37097060601, 35.789578999999996, -80.83492580000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_13.png,       13,            16,         52366
+37097060601, 35.797327         , -80.83492580000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_14.png,       14,            16,         52366
+37097060601, 35.805075         , -80.83492580000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37097060601_15.png,       15,            16,         52366
+37111970400, 35.6801476        , -82.0028822       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37111970400_0.png ,        0,            10,         42738
+37111970400, 35.6861054        , -82.0028822       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37111970400_1.png ,        1,            10,         42738
+37111970400, 35.6801476        , -81.9967554       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37111970400_2.png ,        2,            10,         42738
+37111970400, 35.6861054        , -81.9967554       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37111970400_3.png ,        3,            10,         42738
+37111970400, 35.6741898        , -81.99062860000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37111970400_4.png ,        4,            10,         42738
+37111970400, 35.6801476        , -81.99062860000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37111970400_5.png ,        5,            10,         42738
+37111970400, 35.6861054        , -81.99062860000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37111970400_6.png ,        6,            10,         42738
+37111970400, 35.6920632        , -81.99062860000001, /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37111970400_7.png ,        7,            10,         42738
+37111970400, 35.6741898        , -81.9845018       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37111970400_8.png ,        8,            10,         42738
+37111970400, 35.6861054        , -81.9845018       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37111970400_9.png ,        9,            10,         42738
+37147000101, 35.607265250000005, -77.3747995       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000101_0.png ,        0,             7,         15533
+37147000101, 35.61073450000001 , -77.3747995       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000101_1.png ,        1,             7,         15533
+37147000101, 35.61420375       , -77.3747995       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000101_2.png ,        2,             7,         15533
+37147000101, 35.61073450000001 , -77.369242        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000101_3.png ,        3,             7,         15533
+37147000101, 35.61420375       , -77.369242        , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000101_4.png ,        4,             7,         15533
+37147000101, 35.61073450000001 , -77.3636845       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000101_5.png ,        5,             7,         15533
+37147000101, 35.61420375       , -77.3636845       , /Users/braydenwinnicki/Desktop/econ_project/new_pipeline/data/raw/images/37147000101_6.png ,        6,             7,         15533

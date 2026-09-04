@@ -55,6 +55,8 @@ new_pipeline/
 
 ### 1. Get Data
 
+https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.2025.html#list-tab-1883739534 
+
 Single-tile (one centroid image per tract):
 ```
 python3 new_pipeline/get_new_data.py \
@@ -66,11 +68,11 @@ python3 new_pipeline/get_new_data.py \
 Multi-tile (multiple grid-sampled images per tract):
 ```
 python3 new_pipeline/get_new_data.py \
-    --shapefile /path/to/tracts.shp \
-    --fips 09 \
+    --shapefile "/Users/braydenwinnicki/Desktop/econ_project/cb_2025_40_tract_500k/cb_2025_40_tract_500k.shp" \
+    --fips 40 \
     --mode multi \
-    --census-api-link "https://api.census.gov/data/2023/acs/acs5"
-```
+    --census-api-link "https://api.census.gov/data/2023/acs/acs5" 
+
 
 This downloads satellite images (Google Maps API), fetches median income (Census API), builds a CSV, preprocesses it, and creates a .pt cache. Multi-tile mode uses grid sampling where tile count scales with tract area.
 

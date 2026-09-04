@@ -604,6 +604,62 @@ codebases and contained logical errors. The `new_pipeline/` re-evaluation fixes 
 
 ---
 
+## Phase 13 — Cross-State Generalization (CT → Massachusetts)
+
+### Motivation
+
+All prior phases trained and evaluated models within Connecticut (FIPS 09). This phase tests
+whether models learn generalizable economic signals or simply memorize Connecticut-specific
+patterns, by applying the trained CT models to Massachusetts (FIPS 25) census tracts.
+
+### Dataset & Evaluation Setup
+
+* Models trained on CT multi-tile data (same caches and weights as Phases 8–12).
+* Evaluated on MA multi-tile data (`25_tracts_multi.pt`, 317 test tracts) with no MA training.
+* Eval mode reuses the exact z-score normalization statistics saved with each CT model, so
+  cross-state predictions are denormalized back into the correct dollar frame.
+* MA ground-truth incomes are ACS 2023 median household income, same source as CT.
+
+### Pipeline Bug Found & Fixed
+
+The first cross-state CNN evaluation produced implausible results (MAE ≈ $28M, R² ≈ −380k).
+Root cause: the MA cache (`25_tracts_multi.pt`) stored satellite images as raw `uint8` (0–255),
+while the CT cache stored `float32` (0–1). The from-scratch CNN has no input normalization, so
+feeding 0–255 pixel values into layers trained on 0–1 blew up the activations. After normalizing
+`uint8` caches to `float32 [0,1]` in the dataset loader, the CNN recovered from $28M MAE to
+$37k MAE. The ResNet models were unaffected because their ImageNet preprocessing automatically
+rescales `uint8 → [0,1]`, confirming the fix leaves them unchanged.
+
+### Results
+
+| Model | MAE | RMSE | R² |
+| :--- | :--- | :--- | :--- |
+| Custom CNN | $37,189.66 | $49,901.42 | −0.119 |
+| ResNet-18 (Frozen) | $34,820.64 | $44,287.75 | 0.119 |
+| ResNet-18 (L3) | $33,624.85 | $42,526.25 | 0.187 |
+| ResNet-18 (L4) | $32,278.57 | $42,285.25 | 0.196 |
+
+### Observations
+
+* All four models are now numerically sane on MA (predictions cluster near the true mean of
+  $105,961) — the earlier $28M blow-up is fully resolved.
+* Transfer learning generalizes, but not as strongly as it does in-state: the best MA R² (0.196)
+  is far below the best CT R² (0.64). Domain shift from CT → MA costs meaningful predictive skill.
+* The scratch CNN does not beat predicting the mean on MA (R² = −0.119); pretrained ResNet
+  backbones capture more transferable features.
+* Unfreezing more layers helps slightly in cross-state transfer (Frozen 0.119 → L4 0.196), the
+  same ordering seen in-state.
+* Largest errors are concentrated in the highest-income MA tracts (ACS income is capped at
+  $250,000), consistent with the in-state finding that imagery struggles with high-income areas.
+
+### Decision
+
+Cross-state transfer works best with pretrained ResNet features (L4 ≈ R² 0.20). Continue to
+prioritize ResNet-based models for out-of-state evaluation, and treat the from-scratch CNN as
+unsuitable for cross-state generalization without substantial re-training.
+
+---
+
 # Failed or Abandoned Ideas
 
 Document approaches that did not work.

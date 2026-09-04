@@ -145,6 +145,13 @@ def build_csv_multi(shapefile_path, fips_code, census_api_link):
 
     # build dataset
     rows = []
+    # Track how many rows have been appended since the last checkpoint.
+    # Each tract appends a VARIABLE number of tile rows, so the total row count
+    # jumps around irregularly. Checking `len(rows) % 500 == 0` would silently
+    # miss checkpoints whenever the cumulative count jumps over a multiple of
+    # 500 (e.g. 489 -> 515 skips 500). This counter guarantees a save at least
+    # every 500 appended rows, regardless of how many tiles a tract produces.
+    since_last_checkpoint = 0
 
     for i in range(len(tracts)):  # grab each tract
         geoid = str(tracts.iloc[i]["GEOID"])  # get its GEOID
@@ -157,6 +164,10 @@ def build_csv_multi(shapefile_path, fips_code, census_api_link):
             polygon_latlon, n_tiles
         )  # create the grid points for pic locations
 
+        # Count how many tiles we actually managed to save for this tract. A
+        # tract can add anywhere from 1 to MAX_TILES rows, and some downloads
+        # may fail — so we only count rows that were appended successfully.
+        added_in_this_tract = 0
         for tile_idx, (lat, lon) in enumerate(points):  # for each tile(with locations)
             try:
                 result = get_image(lat, lon, f"{geoid}_{tile_idx}")  # get_image
@@ -164,14 +175,30 @@ def build_csv_multi(shapefile_path, fips_code, census_api_link):
                 result["tile_idx"] = tile_idx
                 result["n_tiles_total"] = len(points)
                 rows.append(result)
+                # Only increment the counter on a successful append so that
+                # failed downloads don't count toward the checkpoint budget.
+                added_in_this_tract += 1
             except Exception as e:  # noqa: BLE001
                 print(f"Failed at tract {i} ({geoid}), tile {tile_idx}: {e}")
 
-        if len(rows) > 0 and len(rows) % 500 == 0:
+        # Advance the checkpoint counter by how many rows this tract really added.
+        since_last_checkpoint += added_in_this_tract
+
+        # Save a checkpoint whenever we've accumulated at least 500 new rows.
+        # Using a counter (>=) instead of a modulo check means we never skip a
+        # checkpoint just because a tract's row count jumped past a multiple of
+        # 500. "> 0" guards against writing an empty/header-only file.
+        if len(rows) > 0 and since_last_checkpoint >= 500:
+            # pd.DataFrame(rows) turns the list of row dicts into a pandas table
             image_df = pd.DataFrame(rows)
+            # Merge each image row with its census income so the checkpoint CSV
+            # has all columns, then write it to disk.
             checkpoint_df = image_df.merge(income_df, on="GEOID", how="left")
             checkpoint_df.to_csv(csv_path, index=False)
             print(f"Checkpoint saved ({len(rows)} rows)")
+            # Reset the counter so the next checkpoint fires after the next
+            # 500 newly-appended rows.
+            since_last_checkpoint = 0
 
     image_df = pd.DataFrame(rows)
     final_df = image_df.merge(income_df, on="GEOID", how="left")
@@ -211,6 +238,11 @@ def build_csv(shapefile_path, fips_code, census_api_link):
 
     # build dataset
     rows = []
+    # Track how many rows have been appended since the last checkpoint. Even
+    # though single-tile mode normally adds one row per tract, using a counter
+    # (instead of len(rows) % 100) keeps the checkpoint correct if some
+    # downloads fail and don't append a row.
+    since_last_checkpoint = 0
 
     for i in range(len(tracts)):
 
@@ -230,12 +262,17 @@ def build_csv(shapefile_path, fips_code, census_api_link):
             # get_image downloads a satellite image from Google Maps at (lat, lon)
             # and returns a dict with GEOID, lat, lon, and the saved file path
             rows.append(get_image(lat, lon, geoid))
+            # Only advance the checkpoint counter on a successful download so a
+            # run of failures doesn't prevent saving.
+            since_last_checkpoint += 1
         except Exception as e:  # noqa: BLE001
             print(f"Failed at {i}: {e}")
 
-        # save every 100 file for safety, greater than 0 checks for a none empty datset
-        # % is the modulo operator — len(rows) % 100 == 0 means "every 100 rows"
-        if len(rows) > 0 and len(rows) % 100 == 0:
+        # Save a checkpoint every 100 rows for safety. Using a counter (>= 100)
+        # instead of a modulo check guarantees the checkpoint fires every 100
+        # appended rows even if a download failed in between. "> 0" guards
+        # against writing an empty/header-only file.
+        if len(rows) > 0 and since_last_checkpoint >= 100:
             # pd.DataFrame(rows) converts the list of dicts into a table
             image_df = pd.DataFrame(rows)
 
@@ -247,6 +284,9 @@ def build_csv(shapefile_path, fips_code, census_api_link):
             # index=False means don't write row numbers to the CSV
             checkpoint_df.to_csv(csv_path, index=False)
             print(f"Checkpoint saved ({len(rows)} rows)")
+            # Reset the counter so the next checkpoint fires after the next
+            # 100 newly-appended rows.
+            since_last_checkpoint = 0
 
     # final save
     image_df = pd.DataFrame(rows)
